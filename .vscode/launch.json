@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Main<rest-service-initial>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bosch.example.Main",
+            "projectName": "rest-service-initial",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
