@@ -6,10 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import java.io.StringReader;
-
-import org.hibernate.annotations.Collate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -34,6 +30,9 @@ public class HabilityData {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "strengh")
+    private HabilityData strengh;
 
     
 
