@@ -1,7 +1,6 @@
 package com.bosch.example.filters;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
