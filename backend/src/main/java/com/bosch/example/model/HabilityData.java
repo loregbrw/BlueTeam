@@ -6,8 +6,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+import com.bosch.example.Enum.HabilityStrenghtEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +24,10 @@ import lombok.Setter;
 @Table(name = "HabilityData")
 public class HabilityData {
 
-    public HabilityData(UserData userData, String name, HabilityData strengh){
+    public HabilityData(UserData userData, String name, HabilityStrenghtEnum strength){
         this.userData = userData;
         this.name = name;
-        this.strengh = strengh;
+        this.strength = strength;
     }
 
     @Id
@@ -37,8 +41,8 @@ public class HabilityData {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "strengh")
-    private HabilityData strengh;
+    @Enumerated(EnumType.STRING) @Column(name = "strength")
+    private HabilityStrenghtEnum strength;
 
     
 

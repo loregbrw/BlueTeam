@@ -6,6 +6,8 @@ import com.bosch.example.Enum.UserRoleEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,8 +17,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-
 
 @Getter
 @Setter
@@ -51,11 +51,9 @@ public class UserData {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "role")
+    @Enumerated(EnumType.STRING) @Column(name = "role")
     private UserRoleEnum role;
 
     @Column(name = "birthDate")
     private Date date;
-    
-    
 }
