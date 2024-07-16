@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,11 @@ import lombok.Setter;
 @Table(name = "ReportData")
 public class ReportData {
     
-    public ReportData(UserData userId, UserData authorId, String description) {
+    public ReportData(UserData userId, UserData authorId, String description, LessonData lessonId) {
         this.userId = userId;
         this.authorId = authorId;
         this.description = description;
+        this.lessonId = lessonId;
     }
 
     @Id
@@ -39,4 +41,8 @@ public class ReportData {
 
     @Column(name = "description")
     private String description;
+
+    @OneToOne
+    @JoinColumn(name = "lessonId", referencedColumnName = "id")
+    private LessonData lessonId;
 }
