@@ -12,8 +12,8 @@ import com.bosch.example.model.SubjectClassData;
 
 public interface LessonService {
     LessonData createLesson(SubjectClassData subjectClassId, String title, String description, LessonShiftEnum shift, Date date);
-    List<LessonData> getByTitle(String title);
-    List<LessonData> getLessonClass(Long id);
+    List<LessonData> getLessonByTitle(String title);
+    List<LessonData> getLessonByClass(Long classId);
     LessonData updateLesson(SubjectClassData subjectClassId, String title, String description, LessonShiftEnum shift, Date date);
     HttpStatusCode deleteLesson(Long id);
 }

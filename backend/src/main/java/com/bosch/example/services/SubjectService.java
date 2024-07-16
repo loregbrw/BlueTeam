@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatusCode;
 import com.bosch.example.model.SubjectData;
 
 public interface SubjectService {
-    SubjectData PostSubject(Long id, String Name, Long ExpectedDuration);
-    SubjectData GetSubject(String Name);
-    List<SubjectData> GetAllSubjects();
-    SubjectData PatchSubject(Long id, String Name, Long ExpectedDuration);
-    HttpStatusCode DeleteSubject(Long id);
-    List<SubjectData> GetSubjectSubjectCourse(Long id);
+    SubjectData createSubject(Long id, String name, Long expectedDuration);
+    List<SubjectData> getSubjectByName(String name);
+    List<SubjectData> getAllSubjects();
+    SubjectData updateSubject(Long id, String name, Long expectedDuration);
+    HttpStatusCode deleteSubject(Long id);
+    List<SubjectData> getSubjectByCourseSubject(Long courseSubjectId);
 }

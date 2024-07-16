@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatusCode;
 import com.bosch.example.model.SubjectClassData;
 
 public interface SubjectClassService {
-    SubjectClassData create(Long courseId, Long classId, String name, Long plannedDuration, Long Duration); // creaate DTO subjectData + subjectClass
-    List<SubjectClassData> getSubjectClassToClass(Long classId);
-    SubjectClassData update(Long duration);
-    HttpStatusCode delete(Long id);
+    SubjectClassData createSubjectClass(Long courseId, Long classId, String name, Long plannedDuration, Long Duration); // creaate DTO subjectData + subjectClass
+    List<SubjectClassData> getSubjectClassByClass(Long classId);
+    SubjectClassData updateSubjectClass(Long id, Long duration);
+    HttpStatusCode deleteSubjectClass(Long id);
 }

@@ -8,9 +8,9 @@ import com.bosch.example.model.CourseData;
 
 public interface CourseService {
     CourseData createCourse(String name);
-    CourseData getCourse(Long id);
-    CourseData getCourseQuery(String query);
+    CourseData getCourseById(Long id);
+    CourseData getCourseByName(String name);
     List<CourseData> getAllCourses();
-    CourseData editCourse(String name);
+    CourseData updateCourse(String name);
     HttpStatusCode deleteCourse(Long id);
 }

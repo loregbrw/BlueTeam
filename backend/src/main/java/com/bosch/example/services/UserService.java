@@ -12,7 +12,7 @@ import com.bosch.example.model.UserData;
 public interface UserService {
     UserData createUser(ClassData classid, Long edv,String name, String foto, String email,UserRoleEnum role, Date birthDate);
     List<UserData> getUserById (long id);
-    UserData editUser(ClassData classid, Long edv,String name, String foto, String email,UserRoleEnum role, Date birthDate);
+    UserData editUser(Long id, ClassData classid, Long edv, String name, String foto, String email, UserRoleEnum role, Date birthDate);
     HttpStatusCode deleteUser(Long id);
     List<UserData> getClassUser(Long classId);
 }

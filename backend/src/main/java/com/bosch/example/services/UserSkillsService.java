@@ -5,8 +5,8 @@ import java.util.List;
 import com.bosch.example.model.UserSkillsData;
 
 public interface UserSkillsService {
-    public UserSkillsData create(Long userId, Long skillsId, Float value);
-    public List<UserSkillsData> getUserSkillsToUser(Long userId);
-    public List<UserSkillsData> get(String name);
-    UserSkillsData update(Float value);
+    public UserSkillsData createUserSkills(Long userId, Long skillsId, Float value);
+    public List<UserSkillsData> getUserSkillsByUser(Long userId);
+    public List<UserSkillsData> getUserSkillsByName(String name);
+    UserSkillsData updateUserSkills(Float value);
 }

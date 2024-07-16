@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatusCode;
 import com.bosch.example.model.SkillsData;
 
 public interface SkillsService {
-    SkillsData PostSkill(Long id, Long SubjectClassId, String Name, String description, Integer weight);
-    List<SkillsData> GetSkillsSubjectClass(Long id);
-    SkillsData GetSkill(String name);
-    SkillsData PatchSkill(Long id, Long SubjectClassId, String Name, String description, Integer weight);
-    HttpStatusCode DeleteSkill(Long id);
+    SkillsData createSkill(Long id, Long subjectClassId, String name, String description, Integer weight);
+    List<SkillsData> getSkillsBySubjectClass(Long subjectClassId);
+    SkillsData getSkillByName(String name);
+    SkillsData updateSkill(Long id, String name, String description, Integer weight);
+    HttpStatusCode deleteSkill(Long id);
 }
