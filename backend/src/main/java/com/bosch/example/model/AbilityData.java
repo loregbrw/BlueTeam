@@ -21,8 +21,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "HabilityData")
-public class HabilityData {
+@Table(name = "AbilityData")
+public class AbilityData {
 
     public HabilityData(UserData userData, String name, HabilityStrenghtEnum strength){
         this.userData = userData;
@@ -43,11 +43,5 @@ public class HabilityData {
 
     @Enumerated(EnumType.STRING) @Column(name = "strength")
     private HabilityStrenghtEnum strength;
-
-    
-
-
-
-
     
 }
