@@ -22,12 +22,11 @@ import lombok.Setter;
 @Table(name = "ReportData")
 public class ReportData {
     
-    public ReportData(UserData userId, UserData authorId, String description, LessonData lessonId, Date date) {
+    public ReportData(UserData userId, UserData authorId, String description, LessonData lessonId) {
         this.userId = userId;
         this.authorId = authorId;
         this.description = description;
         this.lessonId = lessonId;
-        this.date = date;
     }
 
     @Id
@@ -48,7 +47,4 @@ public class ReportData {
     @OneToOne
     @JoinColumn(name = "lessonId", referencedColumnName = "id")
     private LessonData lessonId;
-
-    @Column(name = "date")
-    private Date date;
 }

@@ -1,5 +1,6 @@
 package com.bosch.example.model;
 
+import java.sql.Date;
 import com.bosch.example.Enum.LessonShiftEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,11 +23,12 @@ import lombok.Setter;
 @Table(name = "LessonData")
 public class LessonData {
 
-    public LessonData(SubjectClassData subjectClassId, String title, String description, LessonShiftEnum shift){
+    public LessonData(SubjectClassData subjectClassId, String title, String description, LessonShiftEnum shift, Date date){
         this.subjectClassId = subjectClassId;
         this.title = title;
         this.description = description;
         this.shift = shift;
+        this.date = date;
     }
 
     @Id
@@ -45,4 +47,7 @@ public class LessonData {
 
     @Enumerated(EnumType.STRING) @Column(name = "shift")
     private LessonShiftEnum shift;
+
+    @Column(name = "date")
+    private Date date;
 }
