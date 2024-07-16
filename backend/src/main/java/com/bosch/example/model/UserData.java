@@ -25,13 +25,13 @@ import lombok.Setter;
 @Table(name = "UserData")
 public class UserData {
 
-    public UserData(ClassData classid, Long edv,String name, String email,UserRoleEnum role, Date date){
+    public UserData(ClassData classid, Long edv,String name, String email,UserRoleEnum role, Date birthDate){
         this.classId = classid;
         this.edv = edv;
         this.name = name;
         this.email = email;
         this.role = role;
-        this.date = date;
+        this.birthDate = birthDate;
     }
 
     @Id
@@ -45,6 +45,9 @@ public class UserData {
     @Column(name = "edv")
     private Long edv;
 
+    @Column(name = "foto")
+    private String foto;
+
     @Column(name = "name")
     private String name;
 
@@ -55,5 +58,5 @@ public class UserData {
     private UserRoleEnum role;
 
     @Column(name = "birthDate")
-    private Date date;
+    private Date birthDate;
 }
