@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository;
 import com.bosch.example.model.AbilityData;
 
 @Repository
-public interface HabilityJpaRepository extends JpaRepository<AbilityData, Long> { } 
+public interface AbilityJpaRepository extends JpaRepository<AbilityData, Long> { } 
