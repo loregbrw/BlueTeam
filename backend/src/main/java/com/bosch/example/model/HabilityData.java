@@ -20,6 +20,12 @@ import lombok.Setter;
 @Table(name = "HabilityData")
 public class HabilityData {
 
+    public HabilityData(UserData userData, String name, HabilityData strengh){
+        this.userData = userData;
+        this.name = name;
+        this.strengh = strengh;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
