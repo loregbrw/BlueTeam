@@ -1,4 +1,4 @@
-package com.bosch.example.impl;
+package com.bosch.example.impl.security;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
