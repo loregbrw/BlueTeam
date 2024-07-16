@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatusCode;
 
+import com.bosch.example.dto.dtoRequest.ReportRequest;
 import com.bosch.example.model.ReportData;
 
 public interface ReportService {
-    public ReportData createReport(Long userId, Long authorId, String description);
+    public ReportData createReport(ReportRequest report);
     public ReportData getReportById(Long id);
     public List<ReportData> getReportByUser(Long userId);
     public ReportData getReportByLesson(Long lessonId);

@@ -5,7 +5,6 @@ import java.util.Date;
 import com.bosch.example.Enum.UserRoleEnum;
 
 public record UserRequest(
-    Long id,
     Long classId,
     Long edv,
     String name,
