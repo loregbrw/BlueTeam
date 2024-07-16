@@ -1,6 +1,5 @@
 package com.bosch.example.model;
 
-import java.sql.Time;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
