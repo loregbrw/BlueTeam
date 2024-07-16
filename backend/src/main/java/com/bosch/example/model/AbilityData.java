@@ -24,7 +24,7 @@ import lombok.Setter;
 @Table(name = "AbilityData")
 public class AbilityData {
 
-    public HabilityData(UserData userData, String name, HabilityStrenghtEnum strength){
+    public AbilityData(UserData userData, String name, HabilityStrenghtEnum strength){
         this.userData = userData;
         this.name = name;
         this.strength = strength;
