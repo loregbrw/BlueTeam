@@ -9,6 +9,6 @@ import com.bosch.example.model.ClassData;
 import com.bosch.example.model.SubjectClassData;
 
 @Repository
-public interface SubjectClassJpaRepository extends JpaRepository<SubjectClassData, Long> { 
-    List<SubjectClassData> findByClassId(ClassData classData);
+public interface SubjectClassJpaRepository extends JpaRepository<SubjectClassData, Long> {
+    List<SubjectClassData> findByClassId(ClassData classId);
 }

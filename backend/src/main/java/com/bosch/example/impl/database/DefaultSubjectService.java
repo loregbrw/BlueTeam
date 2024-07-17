@@ -1,7 +1,6 @@
 package com.bosch.example.impl.database;
 
 import java.security.InvalidParameterException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +9,11 @@ import org.springframework.http.HttpStatus;
 
 import com.bosch.example.dto.dtoRequest.SubjectRequest;
 import com.bosch.example.exception.NotFoundException;
-import com.bosch.example.model.ClassData;
 import com.bosch.example.model.CourseData;
 import com.bosch.example.model.CourseSubjectData;
 import com.bosch.example.model.SubjectData;
-import com.bosch.example.model.UserData;
 import com.bosch.example.repositories.CourseJpaRepository;
 import com.bosch.example.repositories.CourseSubjectJpaRepository;
-import com.bosch.example.repositories.SubjectClassJpaRepository;
 import com.bosch.example.repositories.SubjectJpaRepository;
 import com.bosch.example.services.SubjectService;
 

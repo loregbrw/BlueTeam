@@ -8,6 +8,5 @@ import com.bosch.example.model.UserSkillsData;
 public interface UserSkillsService {
     public UserSkillsData createUserSkills(UserSkillRequest userSkill);
     public List<UserSkillsData> getUserSkillsByUser(Long userId);
-    public List<UserSkillsData> getUserSkillsByName(String name);
-    UserSkillsData updateUserSkills(Float value);
+    UserSkillsData updateUserSkills(Long is, Float value);
 }

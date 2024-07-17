@@ -13,5 +13,5 @@ public interface UserService {
     UserData updateUser(Long id, UserRequest user);
     UserData updateUserPassword(Long id, String password);
     HttpStatus deleteUser(Long id);
-    List<UserData> getClassUser(Long classId);
+    List<UserData> getUserByClass(Long classId);
 }

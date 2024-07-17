@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.bosch.example.model.ClassData;
 import com.bosch.example.model.LessonData;
-import com.bosch.example.model.SubjectClassData;
 
 @Repository
 public interface LessonJpaRepository extends JpaRepository<LessonData, Long> {
