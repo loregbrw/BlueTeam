@@ -8,7 +8,7 @@ import { EmptyNav } from "../../components/EmptyNav/EmptyNav"
 
 export const Home = () =>{
 
-    const [userType, setUserType] = useState("default");
+    const [userType, setUserType] = useState("adm");
     let navBarComponent;
 
     switch (userType) {
