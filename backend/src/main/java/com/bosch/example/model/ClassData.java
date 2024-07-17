@@ -14,9 +14,8 @@ import lombok.Setter;
 @Table(name = "ClassData")
 public class ClassData {
 
-    public ClassData(CourseData courseId, UserData instructorId, String name, Long duration, Date initialDate) {
+    public ClassData(CourseData courseId, String name, Long duration, Date initialDate) {
         this.courseId = courseId;
-        this.instructorId = instructorId;
         this.name = name;
         this.duration = duration;
         this.initialDate = initialDate;
@@ -29,10 +28,6 @@ public class ClassData {
     @ManyToOne
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     private CourseData courseId;
-
-    @ManyToOne
-    @JoinColumn(name = "instructorId", referencedColumnName = "id")
-    private UserData instructorId;
    
     @Column(name = "name")
     private String name;

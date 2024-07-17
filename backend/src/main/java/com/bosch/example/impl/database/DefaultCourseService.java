@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import com.bosch.example.dto.dtoRequest.CourseRequest;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.model.CourseData;
 import com.bosch.example.repositories.CourseJpaRepository;
@@ -17,9 +18,9 @@ public class DefaultCourseService implements CourseService {
     CourseJpaRepository repoCourse;
     
     @Override
-    public CourseData createCourse(String name) {
+    public CourseData createCourse(CourseRequest course) {
         try {
-            CourseData newCourse = new CourseData(name);
+            CourseData newCourse = new CourseData(course.name(), course.description());
             repoCourse.save(newCourse);
 
             return newCourse;
@@ -56,7 +57,7 @@ public class DefaultCourseService implements CourseService {
     }
 
     @Override
-    public CourseData updateCourse(Long id, String name) {
+    public CourseData updateCourse(Long id, CourseRequest course) {
         CourseData courseSearch = repoCourse.findById(id).get();
 
         if (courseSearch == null) {
@@ -64,7 +65,8 @@ public class DefaultCourseService implements CourseService {
         }
 
         try {
-            courseSearch.setName(name);
+            courseSearch.setName(course.name());
+            courseSearch.setDescription(course.description());
             
             repoCourse.save(courseSearch);
 

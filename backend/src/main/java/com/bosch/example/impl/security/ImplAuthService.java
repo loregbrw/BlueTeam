@@ -14,6 +14,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bosch.example.Enum.UserRoleEnum;
+import com.bosch.example.dto.AuthTokenDto;
+import com.bosch.example.exception.InternalServerErrorException;
 import com.bosch.example.exception.InvalidPasswordException;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.model.UserData;
@@ -35,7 +37,7 @@ public class ImplAuthService implements AuthService {
     Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) keyPairManager.getPublicKey(), (RSAPrivateKey) keyPairManager.getPrivateKey());
 
     @Override
-    public ResponseEntity<String> login(Long edv, String password) {
+    public ResponseEntity<AuthTokenDto> login(Long edv, String password) {
        
         UserData user = repoUser.findByEdv(edv).get(0);
         
@@ -49,7 +51,13 @@ public class ImplAuthService implements AuthService {
 
         String token = createToken(user.getId(), user.getRole());
 
-        return ResponseEntity.ok().body(token); 
+        try {
+            AuthTokenDto auth = new AuthTokenDto(user.getRole(), token);
+            return ResponseEntity.ok().body(auth); 
+        } catch (Exception e) {
+            throw new InternalServerErrorException();
+        }
+
     }
 
     @Override
