@@ -3,8 +3,10 @@ package com.bosch.example.impl.database;
 import java.security.InvalidParameterException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 
 import com.bosch.example.dto.dtoRequest.UserRequest;
@@ -39,14 +41,12 @@ public class DefaultUserService implements UserService {
         }
 
         try {
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy");
-
-            String password = dateFormatter.format(user.birthDate());
+        
+            String password = (user.edv()).toString();
 
             String salt = cryptographyService.generateSalt();
             password = cryptographyService.hashPassword(password, salt);
-
-            Date dateSql = Date.valueOf((user.birthDate()).toString());
+            Date dateSql = Date.valueOf(user.birthDate());
             UserData newUser = new UserData(classData, user.edv(), user.name(), user.email(), password, user.role(), dateSql);
             
             repoUser.save(newUser);
