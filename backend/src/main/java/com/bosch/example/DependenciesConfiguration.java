@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.bosch.example.filters.AuthFilter;
 import com.bosch.example.impl.security.ImplAuthService;
+import com.bosch.example.impl.security.KeyPairManager;
 import com.bosch.example.services.AuthService;
 import com.bosch.example.sessions.UserSession;
 
@@ -32,5 +33,9 @@ public class DependenciesConfiguration {
         return new ImplAuthService();
     }
 
-    
+    @Bean
+    @Scope("singleton")
+    protected KeyPairManager keyPairManager() {
+        return new KeyPairManager();
+    }
 }
