@@ -45,8 +45,10 @@ public class ImplAuthService implements AuthService {
             throw new NotFoundException();
         }
 
-        if (!cryptographyService.verifyPassword(password, user.getPassword())) {
-            throw new InvalidPasswordException();
+        try {
+            cryptographyService.verifyPassword(password, user.getPassword());
+        } catch (Exception ex) {
+            throw new NotFoundException();
         }
 
         String token = createToken(user.getId(), user.getRole());

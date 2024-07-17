@@ -44,8 +44,7 @@ public class DefaultUserService implements UserService {
         
             String password = (user.edv()).toString();
 
-            String salt = cryptographyService.generateSalt();
-            password = cryptographyService.hashPassword(password, salt);
+            password = cryptographyService.hashPassword(password);
             Date dateSql = Date.valueOf(user.birthDate());
             UserData newUser = new UserData(classData, user.edv(), user.name(), user.email(), password, user.role(), dateSql);
             
@@ -116,10 +115,9 @@ public class DefaultUserService implements UserService {
         }
 
         try {
-            String salt = cryptographyService.generateSalt();
-            password = cryptographyService.hashPassword(password, salt);
+            String newPassword = cryptographyService.hashPassword(password);
 
-            userData.setPassword(password);
+            userData.setPassword(newPassword);
             repoUser.save(userData);
             return userData;
         } catch (Exception e) {

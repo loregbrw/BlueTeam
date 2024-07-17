@@ -7,56 +7,26 @@ import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.services.CryptographyService;
 
 public class ImplCryptographyService implements CryptographyService {
 
-    @Override
-    public String generateSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-
-        try {
-            MessageDigest saltDigest = MessageDigest.getInstance("SHA-256");
-            saltDigest.update(salt);
-        } catch (Exception e) {
-            return null;
-        }
-
-        String StringSalt = Base64.getEncoder().encodeToString(salt);
-
-        return StringSalt;
-    }
+    private static final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(11);
 
     @Override
-    public String hashPassword(String password, String salt) {
-        String hashedPassword = password + salt;
-
-        try {
-            MessageDigest passDigest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = passDigest.digest(hashedPassword.getBytes(StandardCharsets.UTF_8));
-
-            hashedPassword = Base64.getEncoder().encodeToString(hash);
-        } catch (Exception e) {
-            return null;
-        }
-
-        return hashedPassword + "$" + salt;
+    public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
     @Override
     public Boolean verifyPassword(String password, String hashedPassword) {
-        String pass = hashedPassword.substring(0, hashedPassword.indexOf('$'));
-        String salt = hashedPassword.substring(hashedPassword.indexOf('$') + 1, hashedPassword.length());
-
-        String hashPassword = hashPassword(password, salt);
-
-        if (hashPassword.equals(pass)) {
-            return true;
+        if(!passwordEncoder.matches(password, hashedPassword)) {
+            throw new NotFoundException();
         }
-
-        return false;
+        return true;
     }
 
     @Override
