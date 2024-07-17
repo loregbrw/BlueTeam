@@ -14,12 +14,14 @@ export const StyledCard = styled.div`
 
     display: flex;
     justify-content: center;
+    text-align: center;
     align-items: center;
 
-    width: 15vw;
+    width: 350px;
     height: 200px;
     background-color: #d3d3d3;
     border-radius: 15px; 
+    padding: 25px;
 
     transition: 0.3s;
     &:hover {

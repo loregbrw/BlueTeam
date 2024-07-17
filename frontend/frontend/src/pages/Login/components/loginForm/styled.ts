@@ -18,8 +18,10 @@ export const StyledForm = styled.form`
 export const StyledInput = styled.input`
 
     border-radius: 15px;
-    padding: 5px;
-    border: none;
+    padding: 8px;
+    background-color: white;
+    border: none
+
 `
 
 export const MainContainer = styled.div`
@@ -27,6 +29,8 @@ export const MainContainer = styled.div`
 
     display: flex;
     justify-content: center;
+    background-color: #e9e9e9;
+
     align-items: center;
 `
 

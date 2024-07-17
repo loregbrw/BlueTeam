@@ -17,7 +17,7 @@ export const LoginForm = () => {
 
 
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <h2>Login</h2>
+                    <h2 style={{}}>Login</h2>
                     </div>
                     <p>EDV</p>
                     <StyledInput />
