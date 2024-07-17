@@ -9,15 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bosch.example.Enum.UserRoleEnum;
-import com.bosch.example.dto.dtoRequest.ClassRequest;
 import com.bosch.example.model.CourseData;
-import com.bosch.example.model.CourseData;
-import com.bosch.example.services.CourseService;
 import com.bosch.example.services.CourseService;
 import com.bosch.example.sessions.UserSession;
 
