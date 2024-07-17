@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import com.bosch.example.services.CryptographyService;
 
-public class DeafultCryptographyService implements CryptographyService {
+public class ImplCryptographyService implements CryptographyService {
 
     @Override
     public String generateSalt() {

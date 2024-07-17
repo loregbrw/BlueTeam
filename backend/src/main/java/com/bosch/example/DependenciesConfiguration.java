@@ -17,7 +17,7 @@ import com.bosch.example.impl.database.DefaultSubjectClassService;
 import com.bosch.example.impl.database.DefaultSubjectService;
 import com.bosch.example.impl.database.DefaultUserService;
 import com.bosch.example.impl.database.DefaultUserSkillsService;
-import com.bosch.example.impl.security.DeafultCryptographyService;
+import com.bosch.example.impl.security.ImplCryptographyService;
 import com.bosch.example.impl.security.ImplAuthService;
 import com.bosch.example.impl.security.KeyPairManager;
 import com.bosch.example.services.AbilityService;
@@ -123,6 +123,6 @@ public class DependenciesConfiguration {
     @Bean
     @Scope() 
     public CryptographyService cryptographyService() {
-        return new DeafultCryptographyService();
+        return new ImplCryptographyService();
     }
 }
