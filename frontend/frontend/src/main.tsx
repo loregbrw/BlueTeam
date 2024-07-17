@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       <Login/>
     </App>
     
-  }
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
