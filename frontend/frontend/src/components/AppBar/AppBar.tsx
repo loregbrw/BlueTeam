@@ -1,14 +1,13 @@
-import boschColors from "../../assets/boschColors.jpg"
+// Appbar.js
+import boschColors from "../../assets/boschColors.jpg";
+import { StyledImage } from "./style";
 
-const Appbar = () =>{
-
-    return(
+const Appbar = () => {
+    return (
         <>
-            <img src={boschColors} alt=""/>
+            <StyledImage src={boschColors} alt="Bosch Colors Logo"/>
         </>
-    )
-}
+    );
+};
 
-
-
-export default Appbar
+export default Appbar;

@@ -1,11 +1,9 @@
+// style.js
 import styled from "styled-components";
 
 export const StyledNav = styled.nav`
-
     display: flex;
     padding: 20px;
-    padding: 20px;
-    display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
@@ -15,4 +13,14 @@ export const StyledNav = styled.nav`
     z-index: 99;
     background-color: #e9e9e9;
     top: 0;
-`
+    padding:0;
+`;
+
+export const StyledImage = styled.img`
+    width: 100%;
+    height: 15px;
+    object-fit: cover;
+    padding: 0;
+
+`;
+

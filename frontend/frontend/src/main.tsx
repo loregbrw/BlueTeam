@@ -6,7 +6,7 @@ import{
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
-import { Login } from './pages/Login.tsx'
+import { Login } from './pages/Login/Login.tsx'
 import App from './App.tsx'
 
 
