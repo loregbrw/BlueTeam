@@ -24,8 +24,8 @@ import lombok.Setter;
 @Table(name = "AbilityData")
 public class AbilityData {
 
-    public AbilityData(UserData userData, String name, HabilityStrenghtEnum strength){
-        this.userData = userData;
+    public AbilityData(UserData userId, String name, HabilityStrenghtEnum strength){
+        this.userId = userId;
         this.name = name;
         this.strength = strength;
     }
@@ -36,7 +36,7 @@ public class AbilityData {
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
-    private UserData userData;
+    private UserData userId;
 
     @Column(name = "name")
     private String name;

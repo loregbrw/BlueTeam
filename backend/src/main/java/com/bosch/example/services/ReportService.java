@@ -2,6 +2,7 @@ package com.bosch.example.services;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 import com.bosch.example.dto.dtoRequest.ReportRequest;
@@ -12,5 +13,5 @@ public interface ReportService {
     public ReportData getReportById(Long id);
     public List<ReportData> getReportByUser(Long userId);
     public ReportData getReportByLesson(Long lessonId);
-    public HttpStatusCode deleteReport(Long id);
+    public HttpStatus deleteReport(Long id);
 } 
