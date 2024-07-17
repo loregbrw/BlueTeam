@@ -3,6 +3,6 @@ package com.bosch.example.exception;
 public class WeakPasswordException extends ResponseException {
 
     public WeakPasswordException() {
-        super("Weak password", 404);
+        super("Weak password", 400);
     }
 }

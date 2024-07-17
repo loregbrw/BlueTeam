@@ -8,16 +8,12 @@ import org.springframework.http.HttpStatus;
 
 import com.bosch.example.dto.dtoRequest.SubjectClassRequest;
 import com.bosch.example.exception.NotFoundException;
-import com.bosch.example.model.AbilityData;
 import com.bosch.example.model.ClassData;
 import com.bosch.example.model.SubjectClassData;
 import com.bosch.example.model.SubjectData;
-import com.bosch.example.model.UserData;
-import com.bosch.example.repositories.AbilityJpaRepository;
 import com.bosch.example.repositories.ClassJpaRepository;
 import com.bosch.example.repositories.SubjectClassJpaRepository;
 import com.bosch.example.repositories.SubjectJpaRepository;
-import com.bosch.example.repositories.UserJpaRepository;
 import com.bosch.example.services.SubjectClassService;
 
 public class DefaultSubjectClassService implements SubjectClassService {
