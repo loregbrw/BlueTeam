@@ -7,6 +7,7 @@ import{
   RouterProvider,
 } from "react-router-dom"
 import { Login } from './pages/Login/Login.tsx'
+import {Courses} from './pages/Courses/Courses.tsx'
 import App from './App.tsx'
 
 
@@ -20,6 +21,13 @@ const router = createBrowserRouter([
     </App>
     
   },
+  {
+    path: "/courses",
+    element:
+    <App>
+      <Courses/>
+    </App>
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
