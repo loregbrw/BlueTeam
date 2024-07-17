@@ -8,6 +8,7 @@ import{
 } from "react-router-dom"
 import { Login } from './pages/Login/Login.tsx'
 import App from './App.tsx'
+import { Home } from './pages/Home/index.tsx'
 
 
 
@@ -18,8 +19,14 @@ const router = createBrowserRouter([
     <App>
       <Login/>
     </App>
-    
   },
+  {
+    path: "/home",
+    element:
+    <App>
+      <Home/>
+    </App>
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
