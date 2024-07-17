@@ -9,5 +9,5 @@ public record UserRequest(
     String name,
     String email,
     UserRoleEnum role,
-    Date date
+    Date birthDate
 ) { }

@@ -9,12 +9,8 @@ import org.springframework.http.HttpStatus;
 
 import com.bosch.example.dto.dtoRequest.LessonRequest;
 import com.bosch.example.exception.NotFoundException;
-import com.bosch.example.model.AbilityData;
-import com.bosch.example.model.ClassData;
 import com.bosch.example.model.LessonData;
 import com.bosch.example.model.SubjectClassData;
-import com.bosch.example.model.SubjectData;
-import com.bosch.example.model.UserData;
 import com.bosch.example.repositories.ClassJpaRepository;
 import com.bosch.example.repositories.LessonJpaRepository;
 import com.bosch.example.repositories.SubjectClassJpaRepository;
@@ -46,10 +42,10 @@ public class DefaultLessonService implements LessonService {
     }
 
     @Override
-    public List<LessonData> getLessonByTitle(String title) {
+    public LessonData getLessonById(Long id) {
         try {
-            List<LessonData> lessons = repoLesson.findByTitleContaining(title);
-            return lessons;
+            LessonData lesson = repoLesson.findById(id).get();
+            return lesson;
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -58,8 +54,8 @@ public class DefaultLessonService implements LessonService {
     @Override
     public List<LessonData> getLessonByClass(Long classId) {
         try {
-            ClassData classData = repoClass.findById(classId).get();
-            List<LessonData> lessons = repoLesson.findByClassId(classData);
+            SubjectClassData classData = repoSubjectClass.findById(classId).get();
+            List<LessonData> lessons = repoLesson.findBySubjectClassId(classData);
 
             return lessons;
         } catch (Exception e){

@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name = "SkillsData")
 public class SkillsData {
 
-    public SkillsData(ClassData subjectClassId, String name, String description, Integer weight) {
+    public SkillsData(SubjectClassData subjectClassId, String name, String description, Integer weight) {
         this.subjectClassId = subjectClassId;
         this.name = name;
         this.description = description;
@@ -33,7 +33,7 @@ public class SkillsData {
 
     @ManyToOne
     @JoinColumn(name = "subjectClassId", referencedColumnName = "id")
-    private ClassData subjectClassId;
+    private SubjectClassData subjectClassId;
 
     @Column(name = "name")
     private String name;

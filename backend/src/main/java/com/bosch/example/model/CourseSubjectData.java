@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -27,11 +28,11 @@ public class CourseSubjectData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "courseId", referencedColumnName = "id")
     private CourseData courseId;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "subjectId", referencedColumnName = "id")
     private SubjectData subjectId;
     

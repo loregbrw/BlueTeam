@@ -9,4 +9,5 @@ import com.bosch.example.model.UserData;
 
 public interface UserJpaRepository extends JpaRepository<UserData, Long> {
     List<UserData> findByClassId(ClassData classId);
+    List<UserData> findByEdv(Long edv);
 } 
