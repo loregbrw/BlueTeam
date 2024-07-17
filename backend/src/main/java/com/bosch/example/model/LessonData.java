@@ -1,8 +1,6 @@
 package com.bosch.example.model;
 
 import java.sql.Date;
-
-import java.sql.Date;
 import com.bosch.example.Enum.LessonShiftEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bosch.example.Enum.UserRoleEnum;
-import com.bosch.example.exception.InvalidAuthAttempt;
+import com.bosch.example.exception.InvalidAuthAttemptException;
 import com.bosch.example.services.AuthService;
 import com.bosch.example.sessions.UserSession;
 
@@ -43,7 +43,7 @@ public class AuthFilter implements Filter {
             userSession.setRole(UserRoleEnum.valueOf(userRole));
 
         } catch (Exception e) {
-            throw new InvalidAuthAttempt();
+            throw new InvalidAuthAttemptException();
         } 
         chain.doFilter(req, res);
     }

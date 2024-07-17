@@ -1,11 +1,7 @@
 package com.bosch.example.services;
 
 import java.util.List;
-
-import javax.security.auth.Subject;
-
 import org.springframework.http.HttpStatusCode;
-
 import com.bosch.example.dto.dtoRequest.SubjectRequest;
 import com.bosch.example.model.SubjectData;
 
