@@ -83,6 +83,7 @@ export const StyledModalContainer = styled.div<ModalContainerProps>`
     background-color: rgba(0,0,0,0.4);
 `
 export const StyledModalContent = styled.div`
+    flex-direction: column;
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
