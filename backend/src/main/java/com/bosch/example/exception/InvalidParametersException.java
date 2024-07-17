@@ -2,7 +2,7 @@ package com.bosch.example.exception;
 
 public class InvalidParametersException extends ResponseException {
 
-    public InvalidParametersException(String message, int statusCode) {
+    public InvalidParametersException() {
         super("Invalid Parameters", 404);
     }
 }
