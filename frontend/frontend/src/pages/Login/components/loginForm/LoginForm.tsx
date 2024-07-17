@@ -15,6 +15,7 @@ export const LoginForm = () => {
 
                 <StyledForm>
 
+
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <h2>Login</h2>
                     </div>

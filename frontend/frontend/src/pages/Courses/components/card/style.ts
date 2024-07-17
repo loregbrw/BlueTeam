@@ -16,7 +16,7 @@ export const StyledCard = styled.div`
     justify-content: center;
     align-items: center;
 
-    width: 350px;
+    width: 15vw;
     height: 200px;
     background-color: #d3d3d3;
     border-radius: 15px; 
