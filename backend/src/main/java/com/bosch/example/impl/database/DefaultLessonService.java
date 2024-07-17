@@ -46,10 +46,10 @@ public class DefaultLessonService implements LessonService {
     }
 
     @Override
-    public List<LessonData> getLessonByTitle(String title) {
+    public LessonData getLessonById(Long id) {
         try {
-            List<LessonData> lessons = repoLesson.findByTitleContaining(title);
-            return lessons;
+            LessonData lesson = repoLesson.findById(id).get();
+            return lesson;
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -58,8 +58,8 @@ public class DefaultLessonService implements LessonService {
     @Override
     public List<LessonData> getLessonByClass(Long classId) {
         try {
-            ClassData classData = repoClass.findById(classId).get();
-            List<LessonData> lessons = repoLesson.findByClassId(classData);
+            SubjectClassData classData = repoSubjectClass.findById(classId).get();
+            List<LessonData> lessons = repoLesson.findBySubjectClassId(classData);
 
             return lessons;
         } catch (Exception e){

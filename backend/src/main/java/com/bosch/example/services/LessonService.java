@@ -9,7 +9,7 @@ import com.bosch.example.model.LessonData;
 
 public interface LessonService {
     LessonData createLesson(LessonRequest lesson);
-    List<LessonData> getLessonByTitle(String title);
+    LessonData getLessonById(Long id);
     List<LessonData> getLessonByClass(Long classId);
     LessonData updateLesson(Long lessonId, LessonRequest lesson);
     HttpStatus deleteLesson(Long id);

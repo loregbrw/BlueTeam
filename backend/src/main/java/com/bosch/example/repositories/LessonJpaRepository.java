@@ -12,5 +12,5 @@ import com.bosch.example.model.SubjectClassData;
 @Repository
 public interface LessonJpaRepository extends JpaRepository<LessonData, Long> {
     List<LessonData> findByTitleContaining(String title);
-    List<LessonData> findByClassId(ClassData classData);
+    List<LessonData> findBySubjectClassId(SubjectClassData classData);
 }
