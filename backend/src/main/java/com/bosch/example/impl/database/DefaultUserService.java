@@ -11,7 +11,7 @@ import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.exception.InternalServerErrorException;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.exception.WeakPasswordException;
-import com.bosch.example.impl.security.DeafultCryptographyService;
+import com.bosch.example.impl.security.ImplCryptographyService;
 import com.bosch.example.model.ClassData;
 import com.bosch.example.model.UserData;
 import com.bosch.example.repositories.ClassJpaRepository;
@@ -27,7 +27,7 @@ public class DefaultUserService implements UserService {
     ClassJpaRepository repoClass;
 
     @Autowired
-    DeafultCryptographyService cryptographyService;
+    ImplCryptographyService cryptographyService;
 
     @Override
     public UserData createUser(UserRequest user) {

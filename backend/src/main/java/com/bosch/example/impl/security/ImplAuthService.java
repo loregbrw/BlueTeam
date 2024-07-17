@@ -5,6 +5,7 @@ import java.security.interfaces.RSAPublicKey;
 
 import org.hibernate.query.sqm.sql.ConversionException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -13,7 +14,6 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bosch.example.Enum.UserRoleEnum;
-import com.bosch.example.dto.AuthTokenDto;
 import com.bosch.example.exception.InvalidPasswordException;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.model.UserData;
@@ -35,7 +35,7 @@ public class ImplAuthService implements AuthService {
     Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) keyPairManager.getPublicKey(), (RSAPrivateKey) keyPairManager.getPrivateKey());
 
     @Override
-    public AuthTokenDto login(Long edv, String password) {
+    public ResponseEntity<String> login(Long edv, String password) {
        
         UserData user = repoUser.findByEdv(edv).get(0);
         
@@ -49,7 +49,7 @@ public class ImplAuthService implements AuthService {
 
         String token = createToken(user.getId(), user.getRole());
 
-        return new AuthTokenDto("Logged in successfully", token);  
+        return ResponseEntity.ok().body(token); 
     }
 
     @Override
