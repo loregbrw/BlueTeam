@@ -51,13 +51,15 @@ public class DefaultAbilityService implements AbilityService {
 
     @Override
     public AbilityData updateAbility(Long id, AbilityRequest ability) {
+
+        AbilityData abilitySearch = repoAbility.findById(id).get();
+        
+        if (abilitySearch == null) {
+            throw new NotFoundException();
+        }
+
         try {
             UserData user = repoUser.findById(ability.userId()).get();
-            AbilityData abilitySearch = repoAbility.findById(id).get();
-
-            if (abilitySearch == null) {
-                throw new NotFoundException();
-            }
 
             abilitySearch.setName(ability.name());
             abilitySearch.setStrength(ability.strenght());
@@ -69,6 +71,7 @@ public class DefaultAbilityService implements AbilityService {
         } catch (Exception e) {
             throw new InvalidParameterException();
         }
+        
     }
 
     @Override
