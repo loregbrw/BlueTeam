@@ -25,11 +25,12 @@ import lombok.Setter;
 @Table(name = "UserData")
 public class UserData {
 
-    public UserData(ClassData classid, Long edv,String name, String email, UserRoleEnum role, Date birthDate){
+    public UserData(ClassData classid, Long edv,String name, String email, String password, UserRoleEnum role, Date birthDate){
         this.classId = classid;
         this.edv = edv;
         this.name = name;
         this.email = email;
+        this.password = password;
         this.role = role;
         this.birthDate = birthDate;
     }

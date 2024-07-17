@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.AuthTokenDto;
 import com.bosch.example.repositories.UserJpaRepository;
@@ -28,12 +27,6 @@ public class ImplAuthService implements AuthService{
        
        return null;
        
-    }
-
-    @Override
-    public DecodedJWT decode(String token) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'decode'");
     }
 
     public String createToken(PublicKey publicKey, PrivateKey privateKey, Long id, UserRoleEnum role){
