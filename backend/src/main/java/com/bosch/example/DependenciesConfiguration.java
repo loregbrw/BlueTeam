@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.bosch.example.controllers.CourseController;
 import com.bosch.example.filters.AuthFilter;
 import com.bosch.example.impl.database.DefaultAbilityService;
 import com.bosch.example.impl.database.DefaultClassService;
