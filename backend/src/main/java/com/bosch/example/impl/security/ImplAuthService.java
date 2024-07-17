@@ -29,7 +29,7 @@ public class ImplAuthService implements AuthService {
     DeafultCryptographyService cryptographyService;
 
     @Autowired
-    KeyPairManager keyPairManager;
+    KeyPairManager keyPairManager = new KeyPairManager();
 
     Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) keyPairManager.getPublicKey(), (RSAPrivateKey) keyPairManager.getPrivateKey());
 
@@ -76,6 +76,5 @@ public class ImplAuthService implements AuthService {
         } catch (JWTCreationException ex) {
             throw new ConversionException("Was not possible to create a jwt");
         }
-
     }
 }

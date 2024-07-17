@@ -14,7 +14,8 @@ public class FiltersConfiguration {
     @Autowired
     AuthFilter authFilter;
 
-    @Bean @Scope("singleton")
+    @Bean 
+    @Scope("singleton")
     protected FilterRegistrationBean<AuthFilter> registerAuthfilter() {
         var registrarionBean = new FilterRegistrationBean<AuthFilter>();
 

@@ -17,12 +17,14 @@ import com.bosch.example.impl.database.DefaultSubjectClassService;
 import com.bosch.example.impl.database.DefaultSubjectService;
 import com.bosch.example.impl.database.DefaultUserService;
 import com.bosch.example.impl.database.DefaultUserSkillsService;
+import com.bosch.example.impl.security.DeafultCryptographyService;
 import com.bosch.example.impl.security.ImplAuthService;
 import com.bosch.example.impl.security.KeyPairManager;
 import com.bosch.example.services.AbilityService;
 import com.bosch.example.services.AuthService;
 import com.bosch.example.services.ClassService;
 import com.bosch.example.services.CourseService;
+import com.bosch.example.services.CryptographyService;
 import com.bosch.example.services.LessonService;
 import com.bosch.example.services.ReportService;
 import com.bosch.example.services.SkillsService;
@@ -37,19 +39,19 @@ public class DependenciesConfiguration {
    
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-    protected UserSession userSession() {
+    public UserSession userSession() {
         return new UserSession();
     }
 
     @Bean
-    @Scope("singleton")
-    protected AuthFilter authFilter() {
+    @Scope()
+    public AuthFilter authFilter() {
         return new AuthFilter();
     }
 
     @Bean
-    @Scope("singleton")
-    protected AuthService authService() {
+    @Scope()
+    public AuthService authService() {
         return new ImplAuthService();
     }
 
@@ -118,4 +120,9 @@ public class DependenciesConfiguration {
         return new KeyPairManager();
     }
     
+    @Bean
+    @Scope() 
+    public CryptographyService cryptographyService() {
+        return new DeafultCryptographyService();
+    }
 }
