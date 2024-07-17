@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 
 import com.bosch.example.dto.dtoRequest.LessonRequest;
 import com.bosch.example.exception.NotFoundException;
-import com.bosch.example.model.ClassData;
 import com.bosch.example.model.LessonData;
 import com.bosch.example.model.SubjectClassData;
 import com.bosch.example.repositories.ClassJpaRepository;
