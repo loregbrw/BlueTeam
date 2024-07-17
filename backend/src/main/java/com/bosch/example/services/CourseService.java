@@ -10,8 +10,8 @@ import com.bosch.example.model.CourseData;
 public interface CourseService {
     CourseData createCourse(String name);
     CourseData getCourseById(Long id);
-    CourseData getCourseByName(String name);
+    List<CourseData> getCourseByName(String name);
     List<CourseData> getAllCourses();
-    CourseData updateCourse(String name);
+    CourseData updateCourse(Long id, String name);
     HttpStatus deleteCourse(Long id);
 }

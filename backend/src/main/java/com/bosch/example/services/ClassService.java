@@ -11,7 +11,7 @@ public interface ClassService {
     ClassData createClass(ClassRequest classDto);
     List<ClassData> getAllClasses();
     ClassData getClassById(Long id);
-    ClassData getClassByName(String name);
+    List<ClassData> getClassByName(String name);
     ClassData updateClass(Long classId, ClassRequest classDto);
     HttpStatus deleteClass(Long id);
 }
