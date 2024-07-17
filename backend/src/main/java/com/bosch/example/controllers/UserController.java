@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.model.UserData;
+import com.bosch.example.services.AuthService;
+import com.bosch.example.services.CryptographyService;
 import com.bosch.example.services.UserService;
 import com.bosch.example.sessions.UserSession;
 
@@ -25,6 +27,9 @@ public class UserController {
     
     @Autowired
     UserService userService;
+
+    @Autowired
+    CryptographyService cryptographyService;
 
     @PostMapping("")
     public ResponseEntity<UserData> createUser(@RequestBody UserRequest userRequest) {
@@ -46,8 +51,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserByClass(id));
     }
 
+    @PostMapping("/update/{id}")
+    public ResponseEntity<UserData> updatePassword(@PathVariable Long id, @RequestBody String password) {
+        return ResponseEntity.ok().body(userService.updateUserPassword(id, password));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<UserData> putSubjectClass(@PathVariable Long id, @RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserData> putUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
         if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
@@ -57,7 +67,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSubjectClass(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
 
         if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
