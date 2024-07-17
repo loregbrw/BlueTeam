@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface SkillsJpaRepository extends JpaRepository<SkillsData, Long> {
     List<SkillsData> findBySubjectClassId(SubjectClassData subjectClassId);
+    List<SkillsData> findByNameContaining(String name);
  }

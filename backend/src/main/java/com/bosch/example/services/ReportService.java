@@ -11,6 +11,6 @@ public interface ReportService {
     public ReportData createReport(ReportRequest report);
     public ReportData getReportById(Long id);
     public List<ReportData> getReportByUser(Long userId);
-    public ReportData getReportByLesson(Long lessonId);
+    public List<ReportData> getReportByLesson(Long lessonId);
     public HttpStatusCode deleteReport(Long id);
 } 
