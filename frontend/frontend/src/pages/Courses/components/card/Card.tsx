@@ -1,11 +1,24 @@
 import { StyledLink } from "./style";
 import { StyledCard } from "./style";
 
-export const Card = () => {
+
+interface CardProps {
+    title: string;
+    content: string;
+    classes: string;
+}
+
+export const Card: React.FC<CardProps> = ({ title, content, classes}) => {
     return(
         <>  
             <StyledLink>
-                <StyledCard><h1>Nome do curso ds dsdjhdihduhdsus</h1></StyledCard>
+                <StyledCard>
+                    <h3>{title}</h3>
+                    <hr  style={{width: "100%"}}/>
+                    <p>{content}</p>
+                    <p style={{color: "#005691"}}>{classes}</p>
+
+                </StyledCard>
             </StyledLink>
         </>
     );  

@@ -1,29 +1,30 @@
 import styled from 'styled-components';
 
 export const StyledBox = styled.div`
-    display: flex;
-    margin: 40px;
-    padding-left:40px;
-    padding-right:40px;
-    width: 100%;
+    display: inline-flex;
     flex-wrap: wrap;
-    
+    width: max-content;
+    padding: 50px;
+    justify-content: center;
 `
 
 export const StyledInputDiv = styled.div`
     display: flex; 
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
     padding-right: 30px;
+    padding-left: 30px;
     margin-top: 15px
 `
 
 export const StyledInputCourses = styled.input`
 
-    border-radius: 15px;
     padding: 8px;
     background-color: white;
-    width: 15%;
+    width: 80%;
+    border: none;
+    border-bottom: solid black 1px;
+    outline: none;
     
 `
