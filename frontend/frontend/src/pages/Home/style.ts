@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 export const StyledCalendar = styled.div`
     width: 100%;
+    height: fit-content;
     background: #f0f0f0;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -15,26 +16,29 @@ export const StyledCalendar = styled.div`
     }
 
     .react-calendar__navigation__label, .react-calendar__navigation__arrow{
-        
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
     .react-calendar {
-        border: none;
+        width: 100%;
+        height: 75vh;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         border-radius: 8px;
     }
 
     .react-calendar__month-view__days__day--neighboringMonth {
-        background: gray;
+        background: #d3d3d3;
         color: white;
     }
 
     .react-calendar__month-view__days__day{
-        width: 40px;
-        height: 40px;
+        width: calc(100% / 7);
+        height: calc((100% - 40px) / 6);
         display: flex;
         align-items: center;
         justify-content: center;
+        border: 1px solid #ddd;
+        box-sizing: border-box;
     }
 
     .react-calendar__tile {
@@ -43,6 +47,7 @@ export const StyledCalendar = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
     }
 
     .react-calendar__tile--active {
