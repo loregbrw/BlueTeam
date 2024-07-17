@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bosch.example.Enum.UserRoleEnum;
+import com.bosch.example.dto.dtoRequest.CourseRequest;
 import com.bosch.example.model.CourseData;
 import com.bosch.example.services.CourseService;
 import com.bosch.example.sessions.UserSession;
@@ -28,11 +30,11 @@ public class CourseController {
     CourseService courseService;
 
     @PostMapping("")
-    public ResponseEntity<CourseData> createClass(@PathVariable String name) {
+    public ResponseEntity<CourseData> createClass(@RequestBody CourseRequest course) {
         if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
-            CourseData classCreated = courseService.createCourse(name);
+            CourseData classCreated = courseService.createCourse(new CourseRequest(course.name(), course.description()));
             return ResponseEntity.status(201).body(classCreated);
         }
     }
@@ -53,11 +55,11 @@ public class CourseController {
     }
 
     @PatchMapping("/{id}/{name}")
-    public ResponseEntity<CourseData> patchCourse(@PathVariable Long id, @PathVariable String name) {
+    public ResponseEntity<CourseData> patchCourse(@PathVariable Long id, @RequestBody CourseRequest course) {
         if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
             return ResponseEntity.status(403).body(null);
         } else {
-            CourseData coursUpdated = courseService.updateCourse(id, name);
+            CourseData coursUpdated = courseService.updateCourse(id, new CourseRequest(course.name(), course.description()));
             return ResponseEntity.ok().body(coursUpdated);
         }
     }

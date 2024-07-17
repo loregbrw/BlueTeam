@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bosch.example.dto.AuthTokenDto;
 import com.bosch.example.dto.dtoRequest.LoginRequest;
 import com.bosch.example.services.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +19,8 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping("/")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        ResponseEntity<String> responseEntity = authService.login(loginRequest.edv(), loginRequest.password());
+    public ResponseEntity<AuthTokenDto> login(@RequestBody LoginRequest loginRequest) {
+        ResponseEntity<AuthTokenDto> responseEntity = authService.login(loginRequest.edv(), loginRequest.password());
         return responseEntity;
     }
 

@@ -1,6 +1,8 @@
 package com.bosch.example.dto;
 
+import com.bosch.example.Enum.UserRoleEnum;
+
 public record AuthTokenDto(
-    String message,
+    UserRoleEnum role,
     String token
 ) {}
