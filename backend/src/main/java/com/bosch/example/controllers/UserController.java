@@ -33,7 +33,7 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<UserData> createUser(@RequestBody UserRequest userRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             UserData userCreated = userService.createUser(userRequest);
@@ -58,7 +58,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserData> putUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Instructor) || !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             UserData userUpdated = userService.updateUser(id, userRequest);
@@ -69,7 +69,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             userService.deleteUser(id);

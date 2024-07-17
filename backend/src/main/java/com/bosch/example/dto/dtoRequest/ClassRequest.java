@@ -4,7 +4,6 @@ import java.util.Date;
 
 public record ClassRequest(
     Long courseId, 
-    Long instructorId, 
     String name, 
     Long duration, 
     Date initialDate

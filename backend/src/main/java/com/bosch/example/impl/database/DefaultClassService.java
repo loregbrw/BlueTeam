@@ -31,11 +31,10 @@ public class DefaultClassService implements ClassService {
     @Override
     public ClassData createClass(ClassRequest classDto) {
         try {
-            UserData user = repoUser.findById(classDto.instructorId()).get();
             CourseData course = repoCourse.findById(classDto.courseId()).get();
             Date dateSql = Date.valueOf((classDto.initialDate()).toString());
 
-            ClassData newClass = new ClassData(course, user, classDto.name(), classDto.duration(), dateSql);
+            ClassData newClass = new ClassData(course, classDto.name(), classDto.duration(), dateSql);
             repoClass.save(newClass);
 
             return newClass;
@@ -80,14 +79,12 @@ public class DefaultClassService implements ClassService {
         }
 
         try {
-            UserData user = repoUser.findById(classDto.instructorId()).get();
             CourseData course = repoCourse.findById(classDto.courseId()).get();
             Date dateSql = Date.valueOf((classDto.initialDate()).toString());
 
             classSearch.setDuration(classDto.duration());
             classSearch.setCourseId(course);
             classSearch.setInitialDate(dateSql);
-            classSearch.setInstructorId(user);
             classSearch.setName(classDto.name());
             
             repoClass.save(classSearch);
