@@ -52,7 +52,7 @@ public class ReportController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReportData> getReportByLesson(@PathVariable Long id) {
+    public ResponseEntity<List<ReportData>> getReportByLesson(@PathVariable Long id) {
         return ResponseEntity.ok().body(reportService.getReportByLesson(id));
     }
 

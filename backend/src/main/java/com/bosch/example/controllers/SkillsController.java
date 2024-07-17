@@ -42,7 +42,7 @@ public class SkillsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SkillsData> getSkillByName(@PathVariable String name) {
+    public ResponseEntity<List<SkillsData>> getSkillByName(@PathVariable String name) {
         return ResponseEntity.ok().body(skillsService.getSkillByName(name));
     }
 
