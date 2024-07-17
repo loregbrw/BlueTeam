@@ -29,7 +29,7 @@ public class AbilityController {
 
     @PostMapping("")
     public ResponseEntity<AbilityData> createAbility(@RequestBody AbilityRequest abilityRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             AbilityData abilityCreated = abilityService.createAbility(abilityRequest);
@@ -55,7 +55,7 @@ public class AbilityController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAbility(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             abilityService.deleteAbility(id);

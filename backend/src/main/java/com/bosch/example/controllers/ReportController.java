@@ -30,7 +30,7 @@ public class ReportController {
 
     @PostMapping("")
     public ResponseEntity<ReportData> createReport(@RequestBody ReportRequest reportRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             ReportData reportCreated = reportService.createReport(reportRequest);
@@ -38,12 +38,12 @@ public class ReportController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("id/{id}")
     public ResponseEntity<ReportData> getReport(@PathVariable Long id) {
         return ResponseEntity.ok().body(reportService.getReportById(id));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("user/{id}")
     public ResponseEntity<List<ReportData>> getReportByUser(@PathVariable Long id) {
         return ResponseEntity.ok().body(reportService.getReportByUser(id));
     }
@@ -56,7 +56,7 @@ public class ReportController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             reportService.deleteReport(id);

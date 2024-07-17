@@ -56,7 +56,7 @@ public class SubjectClassController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSubjectClass(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             subjectClassService.deleteSubjectClass(id);

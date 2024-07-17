@@ -31,7 +31,7 @@ public class ClassController {
 
     @PostMapping("")
     public ResponseEntity<ClassData> createClass(@RequestBody ClassRequest classRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             ClassData classCreated = classService.createClass(classRequest);
@@ -39,7 +39,7 @@ public class ClassController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("id/{id}")
     public ResponseEntity<ClassData> getClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(classService.getClassById(id));
     }
@@ -67,7 +67,7 @@ public class ClassController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClass(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             classService.deleteClass(id);

@@ -19,6 +19,7 @@ import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.model.UserData;
 import com.bosch.example.repositories.UserJpaRepository;
 import com.bosch.example.services.AuthService;
+import com.bosch.example.services.CryptographyService;
 
 public class ImplAuthService implements AuthService {
 
@@ -26,7 +27,7 @@ public class ImplAuthService implements AuthService {
     UserJpaRepository repoUser;
 
     @Autowired
-    DeafultCryptographyService cryptographyService;
+    CryptographyService cryptographyService;
 
     @Autowired
     KeyPairManager keyPairManager = new KeyPairManager();
