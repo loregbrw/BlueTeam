@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.dtoRequest.SubjectRequest;
-import com.bosch.example.model.LessonData;
 import com.bosch.example.model.SubjectData;
-import com.bosch.example.services.CourseService;
 import com.bosch.example.services.SubjectService;
 import com.bosch.example.sessions.UserSession;
 

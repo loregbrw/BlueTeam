@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bosch.example.Enum.UserRoleEnum;
-import com.bosch.example.dto.dtoRequest.LessonRequest;
 import com.bosch.example.dto.dtoRequest.SkillsRequest;
 import com.bosch.example.model.SkillsData;
-import com.bosch.example.model.SkillsData;
-import com.bosch.example.services.LessonService;
 import com.bosch.example.services.SkillsService;
 import com.bosch.example.sessions.UserSession;
 
@@ -42,7 +39,7 @@ public class SkillsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SkillsData> getSkillByName(@PathVariable String name) {
+    public ResponseEntity<List<SkillsData>> getSkillByName(@PathVariable String name) {
         return ResponseEntity.ok().body(skillsService.getSkillByName(name));
     }
 
