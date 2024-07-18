@@ -4,6 +4,7 @@ import { AdmBar } from "../../components/AdmBar/AdmBar";
 import { StyledInputCourses } from "./style";
 import { StyledInputDiv } from "./style";
 import lupa from "../../assets/lupa.png"
+import { useState } from "react";
 
 interface CardData {
     id: number;
@@ -21,6 +22,23 @@ const cardData: CardData[] = [
 ];
 
 export const Courses = () => {
+
+    interface classData {
+        id: number,
+        courseId: courseData,
+        name: string,
+        duration: number,
+        initialDate: string
+    }
+
+    interface courseData {
+        id: number,
+        name: string,
+        description: string | null
+    }
+    
+    const [classes, setClasses] = useState
+
     return (
         <>
             <StyledInputDiv >
