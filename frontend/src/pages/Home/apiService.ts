@@ -23,6 +23,7 @@ export interface LessonRequest {
 }
 
 const API_URL = 'http://localhost:8080'
+const token = localStorage.getItem("token");
 
 export async function fetchAllClasses() : Promise<ClassData[]> {
     const response = await fetch(`${API_URL}/class`);
@@ -53,7 +54,7 @@ export async function createLesson(lessonRequest: LessonRequest) : Promise<Lesso
     const response = await fetch (`${API_URL}/lesson/auth`, { 
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            auth: `Bearer ${token}`
         },
         body: JSON.stringify(lessonRequest)
     });
@@ -69,7 +70,7 @@ export async function updateLesson(id: number, lessonRequest: LessonRequest): Pr
     const response = await fetch(`${API_URL}/lesson/auth/${id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            auth: `Bearer ${token}`
         },
         body: JSON.stringify(lessonRequest)
     });
