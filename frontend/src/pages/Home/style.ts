@@ -64,14 +64,21 @@ export const StyledCalendar = styled.div`
         cursor: pointer;
     }
 
-    .react-calendar__tile--active {
+    /* .react-calendar__tile--active {
         background: brown;
         color: white;
         text-align: center;
-    } 
+    }  */
+
+    .react-calendar__tile:hover{
+        background: brown;
+        color: white;
+        text-align: center;
+    }
     
     .highlight{
-        background-color: rgba(2, 2, 2, 0.1);
+        background-color: #f46d75;
+        color: white;
         width: 5px;
     }
 `
