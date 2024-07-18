@@ -28,9 +28,9 @@ public class SubjectClassController {
     @Autowired
     SubjectClassService subjectClassService;
 
-    @PostMapping("")
+    @PostMapping("/auth")
     public ResponseEntity<SubjectClassData> createSubjectClass(@RequestBody SubjectClassRequest subjectClassRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SubjectClassData subjectClassCreated = subjectClassService.createSubjectClass(subjectClassRequest);
@@ -43,9 +43,9 @@ public class SubjectClassController {
         return ResponseEntity.ok().body(subjectClassService.getSubjectClassByClass(id));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("auth/{id}/{duration}")
     public ResponseEntity<SubjectClassData> putSubjectClass(@PathVariable Long id, @PathVariable Long duration) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SubjectClassData subjectClassUpdated = subjectClassService.updateSubjectClass(id, duration);
@@ -53,14 +53,14 @@ public class SubjectClassController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteSubjectClass(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor) && userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             subjectClassService.deleteSubjectClass(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

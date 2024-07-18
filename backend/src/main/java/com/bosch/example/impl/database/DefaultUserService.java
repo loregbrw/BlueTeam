@@ -2,13 +2,9 @@ package com.bosch.example.impl.database;
 
 import java.security.InvalidParameterException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
-
 import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.exception.InternalServerErrorException;
 import com.bosch.example.exception.NotFoundException;

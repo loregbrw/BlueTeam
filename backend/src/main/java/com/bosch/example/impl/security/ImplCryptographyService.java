@@ -1,14 +1,7 @@
 package com.bosch.example.impl.security;
-
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.services.CryptographyService;
 
