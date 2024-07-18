@@ -51,16 +51,23 @@ export const StyledMain = () => {
         getClass()
     },[])
 
-    const [user, setUserData] = useState<userData[]>([])
+    const [user, setUserData] = useState<userData>()
 
     useEffect(() => {
         const getUser = async () =>{
             try{
-                const response = await api.get('user/id/1')
+                const response = await api.get('user/id/2')
                 setUserData(response.data)
+                setUsername(response.data.username)
+                setClass(response.data.classId)
+                setEdv(response.data.edv)
+                setEmail(response.data.email)
+                setRole(response.data.role)
+                setUserType(response.data.role)
+                setBirthDate(response.data.birthDate)
+                console.log(response.data)
             } catch(error){
                 console.error(error);
-                setUserData([])
             }
         }
         getUser()
@@ -108,7 +115,7 @@ export const StyledMain = () => {
         };
 
         try {
-            const response = await api.put("user/auth/1", updateUser, {
+            const response = await api.put("user/auth/2", updateUser, {
                 headers: {
                     auth: 'Bearer ${token}'
                 }});
@@ -120,10 +127,6 @@ export const StyledMain = () => {
             console.error("Erro ao atualizar os dados:", error);
         }
       };
-
-    {user.map((userItem) => (
-        setUserType(userItem.role)
-    ))}
 
     return (
         <> 
@@ -149,12 +152,12 @@ export const StyledMain = () => {
                                     <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
                                         <h2>Editar dados</h2>
                                         <StyledForm onSubmit={handleSubmit}>
-                                        {user.map((userItem, index) => (
-                                <div key={index}>
+                                        
+                                <div>
                                     <StyledInput
                                         type="text"
                                         placeholder="Nome do aluno"
-                                        value={userItem.username}
+                                        value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
                                     />
@@ -165,27 +168,27 @@ export const StyledMain = () => {
                                     >
                                     {classes.map((classItem, index) => (
                                         <option key={index} value={classItem.id}>{classItem.name}</option>
-                                        ))
+                                    ))
                                     }
                                     </StyledSelect>
                                     <StyledInput
                                         type="text"
                                         placeholder="EDV"
-                                        value={userItem.edv}
+                                        value={edv}
                                         onChange={(e) => setEdv(e.target.value)}
                                         required
                                     />
                                     <StyledInput
                                         type="text"
                                         placeholder="Email"
-                                        value={userItem.email}
+                                        value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
 
                                     {userType === "Adm" && (
                                         <StyledSelect
-                                            value={userItem.role}
+                                            value={role}
                                             onChange={(e) => setRole(e.target.value)}
                                             required
                                         >
@@ -199,7 +202,7 @@ export const StyledMain = () => {
 
                                     {userType === "Instructor" && (
                                         <StyledSelect
-                                            value={userItem.role}
+                                            value={role}
                                             onChange={(e) => setRole(e.target.value)}
                                             required
                                         >
@@ -210,14 +213,14 @@ export const StyledMain = () => {
                                     )}
                                     <StyledInput
                                         type="date"
-                                        value={userItem.birthDate}
+                                        value={birthDate}
                                         onChange={(e) => setBirthDate(e.target.value)}
                                         required
                                     />
 
                                     <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
                                 </div>
-                            ))}
+                    
                         </StyledForm>
                     </StyledModalContent>
                 </StyledModalOverlay>
@@ -227,21 +230,21 @@ export const StyledMain = () => {
             <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
                 <StyledBox>
                     <h2>Dados do Usuário</h2>
-                    {user.map((user, index) => (
-            <div key={index}>
-                <p>Nome: {user.username}</p>
-                <p>Turma: {user.classId}</p>
-                <p>EDV: {user.edv}</p>
-                <p>Email: {user.email}</p>
-                <p>Data de Nascimento: {user.birthDate}</p>
+                   
+            <div>
+                <p>Nome: {username}</p>
+                <p>Turma: {classSelected}</p>
+                <p>EDV: {edv}</p>
+                <p>Email: {email}</p>
+                <p>Data de Nascimento: {birthDate}</p>
                 {userType === "Adm" && (
-                    <p>Cargo: {user.role}</p>
+                    <p>Cargo: {role}</p>
                 )}
                 {userType === "Instructor" && (
-                    <p>Cargo: {user.role}</p>
+                    <p>Cargo: {role}</p>
                 )}
             </div>
-        ))}
+        
                 </StyledBox>
 
             </div>
