@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 import Appbar from './components/AppBar/AppBar'
 
+
 interface IAppProps {
   children:ReactNode
 }
