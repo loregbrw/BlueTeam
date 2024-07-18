@@ -23,6 +23,13 @@ export const FormSignUp = () => {
         description: string | null
     }
 
+    const roleData: string[] = [
+        "Server",
+        "Adm",
+        "Instructor",
+        "Apprentice"
+    ]
+       
     const [classes, setClasses] = useState<classData[]>([])
 
     useEffect(() => {
@@ -37,6 +44,9 @@ export const FormSignUp = () => {
         }
         getClasses()
     },[])
+
+
+
 
     console.log(classes);
     
@@ -69,16 +79,17 @@ export const FormSignUp = () => {
                     </StyledMiniBox>
 
                     <StyledMiniBox>
-                        <p>Emai</p>
+                        <p>E-mail</p>
                         <StyledInput />
                     </StyledMiniBox>
 
                     <StyledMiniBox>
-                        <p>Role</p>
+                        <p>Tipo</p>
                         <StyledDropdown name="">
-                            <option value="opcao1">Opção 1</option>
-                            <option value="opcao2">Opção 2</option>
-                            <option value="opcao3">Opção 3</option>
+                            {
+                                roleData.map((i) =>
+                                    <option value={i}>{i}</option>  
+                            )}
                         </StyledDropdown>
                     </StyledMiniBox>
 
