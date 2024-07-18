@@ -44,7 +44,7 @@ export const StyledButton = styled.button`
 
     background-color:  #005691;
     color: white;
-    
+    cursor: pointer;
     border-radius: 15px;
     font-weight: 600;
     border: 1px #023E7D solid;
