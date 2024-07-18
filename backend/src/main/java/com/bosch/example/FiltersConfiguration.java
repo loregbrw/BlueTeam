@@ -24,13 +24,14 @@ public class FiltersConfiguration {
             "/ability/auth/*",
             "/class/auth/*",
             "/course/auth/*",
-            "/lesson/auth/*", // nao fiz
-            "/report/*", // nao fiz
-            "/skills/*", // nao fiz
-            "/subjectclass/*", // nao fiz
-            "/subject/*", // nao fiz
-            "/userskills/*", // nao fiz
-            "/user/auth/*"
+            "/lesson/auth/*",
+            "/report/auth/*",
+            "/skills/auth/*", 
+            "/subjectclass/auth/*",
+            "/subject/auth/*",
+            "/userskills/auth/*", 
+            "/user/auth/*",
+            "/coursesubject/auth/*" 
         );
         registrarionBean.setOrder(1);
         return registrarionBean;

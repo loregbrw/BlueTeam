@@ -1,7 +1,6 @@
 package com.bosch.example.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.dtoRequest.SubjectRequest;
 import com.bosch.example.model.SubjectData;
@@ -29,9 +27,9 @@ public class SubjectController {
     @Autowired
     SubjectService subjectService;
 
-    @PostMapping("")
+    @PostMapping("/auth")
     public ResponseEntity<SubjectData> createSubject(@RequestBody SubjectRequest subjectRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SubjectData subjectCreated = subjectService.createSubject(subjectRequest);
@@ -54,9 +52,9 @@ public class SubjectController {
         return ResponseEntity.ok().body(subjectService.getSubjectByCourseSubject(id));
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<SubjectData> patchSubject(@PathVariable Long id, SubjectRequest subjectRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+    @PatchMapping("auth/{id}")
+    public ResponseEntity<SubjectData> patchSubject(@PathVariable Long id, @RequestBody SubjectRequest subjectRequest) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SubjectData subjectUpdated = subjectService.updateSubject(id, subjectRequest);
@@ -64,13 +62,13 @@ public class SubjectController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             subjectService.deleteSubject(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

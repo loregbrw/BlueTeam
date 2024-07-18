@@ -63,7 +63,7 @@ public class LessonController {
             return ResponseEntity.status(403).body(null);
         } else {
             lessonService.deleteLesson(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

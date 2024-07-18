@@ -15,7 +15,6 @@ import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.dtoRequest.PasswordRequest;
 import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.model.UserData;
-import com.bosch.example.services.AuthService;
 import com.bosch.example.services.CryptographyService;
 import com.bosch.example.services.UserService;
 import com.bosch.example.sessions.UserSession;
