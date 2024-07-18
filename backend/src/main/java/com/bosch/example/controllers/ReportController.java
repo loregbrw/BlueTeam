@@ -28,9 +28,9 @@ public class ReportController {
     @Autowired
     ReportService reportService;
 
-    @PostMapping("")
+    @PostMapping("/auth")
     public ResponseEntity<ReportData> createReport(@RequestBody ReportRequest reportRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             ReportData reportCreated = reportService.createReport(reportRequest);
@@ -53,14 +53,14 @@ public class ReportController {
         return ResponseEntity.ok().body(reportService.getReportByLesson(id));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             reportService.deleteReport(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

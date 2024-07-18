@@ -32,7 +32,7 @@ public class DefaultSubjectService implements SubjectService {
     public SubjectData createSubject(SubjectRequest subject) {
         try {
 
-            SubjectData newSubject = new SubjectData(subject.name(), subject.plannedDuration());
+            SubjectData newSubject = new SubjectData(subject.name(), subject.expectedDuration());
             repoSubject.save(newSubject);
 
             return newSubject;
@@ -69,7 +69,7 @@ public class DefaultSubjectService implements SubjectService {
 
         try {
             subjectSearch.setName(subject.name());
-            subjectSearch.setExpectedDuration(subject.plannedDuration());
+            subjectSearch.setExpectedDuration(subject.expectedDuration());
             
             repoSubject.save(subjectSearch);
 
@@ -83,6 +83,12 @@ public class DefaultSubjectService implements SubjectService {
     public HttpStatus deleteSubject(Long id) {
         try {
             SubjectData subjectSearch = repoSubject.findById(id).get();
+
+            List<CourseSubjectData> courseSub =  repoSubjectCourse.findBySubjectId(subjectSearch);
+
+            for (CourseSubjectData courseSubject : courseSub) {
+                repoSubjectCourse.delete(courseSubject);
+            }
 
             repoSubject.delete(subjectSearch);
 

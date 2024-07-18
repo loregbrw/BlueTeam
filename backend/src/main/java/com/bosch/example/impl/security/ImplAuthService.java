@@ -2,11 +2,9 @@ package com.bosch.example.impl.security;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-
 import org.hibernate.query.sqm.sql.ConversionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,7 +14,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.AuthTokenDto;
 import com.bosch.example.exception.InternalServerErrorException;
-import com.bosch.example.exception.InvalidPasswordException;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.model.UserData;
 import com.bosch.example.repositories.UserJpaRepository;

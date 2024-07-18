@@ -28,9 +28,9 @@ public class SkillsController {
     @Autowired
     SkillsService skillsService;
 
-    @PostMapping("")
+    @PostMapping("/auth")
     public ResponseEntity<SkillsData> createSkill(@RequestBody SkillsRequest skillsRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SkillsData skillsCreated = skillsService.createSkill(skillsRequest);
@@ -38,7 +38,7 @@ public class SkillsController {
         }
     }
 
-    @GetMapping("name/{id}")
+    @GetMapping("name/{name}")
     public ResponseEntity<List<SkillsData>> getSkillByName(@PathVariable String name) {
         return ResponseEntity.ok().body(skillsService.getSkillByName(name));
     }
@@ -48,9 +48,9 @@ public class SkillsController {
         return ResponseEntity.ok().body(skillsService.getSkillsBySubjectClass(id));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("auth/{id}")
     public ResponseEntity<SkillsData> patchSkills(@PathVariable Long id, @RequestBody SkillsRequest skillsRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SkillsData skillsUpdated = skillsService.updateSkill(id, skillsRequest);
@@ -58,14 +58,14 @@ public class SkillsController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteSkill(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             skillsService.deleteSkill(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

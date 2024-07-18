@@ -10,6 +10,7 @@ import com.bosch.example.filters.AuthFilter;
 import com.bosch.example.impl.database.DefaultAbilityService;
 import com.bosch.example.impl.database.DefaultClassService;
 import com.bosch.example.impl.database.DefaultCourseService;
+import com.bosch.example.impl.database.DefaultCourseSubject;
 import com.bosch.example.impl.database.DefaultLessonService;
 import com.bosch.example.impl.database.DefaultReportService;
 import com.bosch.example.impl.database.DefaultSkillsService;
@@ -24,6 +25,7 @@ import com.bosch.example.services.AbilityService;
 import com.bosch.example.services.AuthService;
 import com.bosch.example.services.ClassService;
 import com.bosch.example.services.CourseService;
+import com.bosch.example.services.CourseSubjectService;
 import com.bosch.example.services.CryptographyService;
 import com.bosch.example.services.LessonService;
 import com.bosch.example.services.ReportService;
@@ -124,5 +126,11 @@ public class DependenciesConfiguration {
     @Scope() 
     public CryptographyService cryptographyService() {
         return new ImplCryptographyService();
+    }
+
+    @Bean
+    @Scope()
+    public CourseSubjectService courseSubjectService() {
+        return new DefaultCourseSubject();
     }
 }

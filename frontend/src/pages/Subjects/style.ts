@@ -13,18 +13,23 @@ export const StyledInputDiv = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 25px;
-    padding-right: 30px;
-    padding-left: 30px;
-    padding-top: 90px
+    width: 100%;
 `
 
 export const StyledInputCourses = styled.input`
 
     padding: 8px;
     background-color: white;
-    width: 200px;
+    width: 80%;
     border: none;
     border-bottom: solid black 1px;
     outline: none;
     
+`
+
+export const StyledMain = styled.main`
+    width: 100%;
+    min-height: 100vh;
+    padding: 90px 3% 3% 3%;
+    height: fit-content;
 `

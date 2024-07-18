@@ -7,8 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.bosch.example.model.CourseData;
 import com.bosch.example.model.CourseSubjectData;
+import com.bosch.example.model.SubjectData;
 
 @Repository
 public interface CourseSubjectJpaRepository extends JpaRepository<CourseSubjectData, Long> {
     List<CourseSubjectData> findByCourseId(CourseData course);
+    List<CourseSubjectData> findBySubjectId(SubjectData subject);
  }
