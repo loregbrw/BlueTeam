@@ -3,6 +3,8 @@ package com.bosch.example.services;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+
+import com.bosch.example.dto.dtoRequest.PasswordRequest;
 import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.model.UserData;
 

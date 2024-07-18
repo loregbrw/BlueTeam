@@ -3,15 +3,17 @@ package com.bosch.example.impl.database;
 import java.security.InvalidParameterException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 
 import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.exception.InternalServerErrorException;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.exception.WeakPasswordException;
-import com.bosch.example.impl.security.DeafultCryptographyService;
+import com.bosch.example.impl.security.ImplCryptographyService;
 import com.bosch.example.model.ClassData;
 import com.bosch.example.model.UserData;
 import com.bosch.example.repositories.ClassJpaRepository;
@@ -27,7 +29,7 @@ public class DefaultUserService implements UserService {
     ClassJpaRepository repoClass;
 
     @Autowired
-    DeafultCryptographyService cryptographyService;
+    ImplCryptographyService cryptographyService;
 
     @Override
     public UserData createUser(UserRequest user) {
@@ -39,14 +41,11 @@ public class DefaultUserService implements UserService {
         }
 
         try {
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyyyy");
+        
+            String password = (user.edv()).toString();
 
-            String password = dateFormatter.format(user.birthDate());
-
-            String salt = cryptographyService.generateSalt();
-            password = cryptographyService.hashPassword(password, salt);
-
-            Date dateSql = Date.valueOf((user.birthDate()).toString());
+            password = cryptographyService.hashPassword(password);
+            Date dateSql = Date.valueOf(user.birthDate());
             UserData newUser = new UserData(classData, user.edv(), user.name(), user.email(), password, user.role(), dateSql);
             
             repoUser.save(newUser);
@@ -116,10 +115,9 @@ public class DefaultUserService implements UserService {
         }
 
         try {
-            String salt = cryptographyService.generateSalt();
-            password = cryptographyService.hashPassword(password, salt);
+            String newPassword = cryptographyService.hashPassword(password);
 
-            userData.setPassword(password);
+            userData.setPassword(newPassword);
             repoUser.save(userData);
             return userData;
         } catch (Exception e) {

@@ -30,7 +30,7 @@ public class SkillsController {
 
     @PostMapping("")
     public ResponseEntity<SkillsData> createSkill(@RequestBody SkillsRequest skillsRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SkillsData skillsCreated = skillsService.createSkill(skillsRequest);
@@ -38,7 +38,7 @@ public class SkillsController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("name/{id}")
     public ResponseEntity<List<SkillsData>> getSkillByName(@PathVariable String name) {
         return ResponseEntity.ok().body(skillsService.getSkillByName(name));
     }
@@ -50,7 +50,7 @@ public class SkillsController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<SkillsData> patchSkills(@PathVariable Long id, @RequestBody SkillsRequest skillsRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SkillsData skillsUpdated = skillsService.updateSkill(id, skillsRequest);
@@ -61,7 +61,7 @@ public class SkillsController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSkill(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             skillsService.deleteSkill(id);

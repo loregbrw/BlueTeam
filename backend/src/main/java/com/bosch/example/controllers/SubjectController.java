@@ -31,7 +31,7 @@ public class SubjectController {
 
     @PostMapping("")
     public ResponseEntity<SubjectData> createSubject(@RequestBody SubjectRequest subjectRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SubjectData subjectCreated = subjectService.createSubject(subjectRequest);
@@ -39,7 +39,7 @@ public class SubjectController {
         }
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("name/{name}")
     public ResponseEntity<List<SubjectData>> getSubjectByName(@PathVariable String name) {
         return ResponseEntity.ok().body(subjectService.getSubjectByName(name));
     }
@@ -56,7 +56,7 @@ public class SubjectController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<SubjectData> patchSubject(@PathVariable Long id, SubjectRequest subjectRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             SubjectData subjectUpdated = subjectService.updateSubject(id, subjectRequest);
@@ -66,7 +66,7 @@ public class SubjectController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             subjectService.deleteSubject(id);

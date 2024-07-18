@@ -17,8 +17,9 @@ import lombok.Setter;
 @Table(name = "CourseData")
 public class CourseData {
 
-    public CourseData(String name) {
+    public CourseData(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     @Id
@@ -27,5 +28,8 @@ public class CourseData {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
 
 }

@@ -27,9 +27,9 @@ public class AbilityController {
     @Autowired
     AbilityService abilityService;
 
-    @PostMapping("")
+    @PostMapping("/auth")
     public ResponseEntity<AbilityData> createAbility(@RequestBody AbilityRequest abilityRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             AbilityData abilityCreated = abilityService.createAbility(abilityRequest);
@@ -42,9 +42,9 @@ public class AbilityController {
         return ResponseEntity.ok().body(abilityService.getUserAbilities(id));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("auth/{id}")
     public ResponseEntity<AbilityData> patchAbility(@PathVariable Long id, @RequestBody AbilityRequest abilityRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)) {
             return ResponseEntity.status(403).body(null);
         } else {
             AbilityData abilityUpdated = abilityService.updateAbility(id, abilityRequest);
@@ -52,14 +52,14 @@ public class AbilityController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteAbility(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             abilityService.deleteAbility(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

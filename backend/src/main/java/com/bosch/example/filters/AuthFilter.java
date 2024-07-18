@@ -36,11 +36,11 @@ public class AuthFilter implements Filter {
 
         try{
             var decodedJwt = authService.decode(auth);
-            var userId = decodedJwt.getClaim("id").asString();
-            var userRole = decodedJwt.getClaim("role").asString();
+            var userId = decodedJwt.getClaim("id");
+            var userRole = decodedJwt.getClaim("role");
 
-            userSession.setId(Long.valueOf(userId));
-            userSession.setRole(UserRoleEnum.valueOf(userRole));
+            userSession.setId(userId.asLong());
+            userSession.setRole(UserRoleEnum.valueOf(userRole.asString()));
 
         } catch (Exception e) {
             throw new InvalidAuthAttemptException();
