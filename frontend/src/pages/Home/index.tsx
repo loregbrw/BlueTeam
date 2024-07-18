@@ -1,15 +1,16 @@
 import { AdmBar } from "../../components/AdmBar/AdmBar"
 import { Instructorbar } from "../../components/InstructorBar/Instructorbar"
-import Calendar from "react-calendar"
+import { ApprendiceBar } from "../../components/ApprendiceBar/ApprendiceBar"
+import { EmptyNav } from "../../components/EmptyNav/EmptyNav"
 import {
     StyledCalendar,
     StyledModalContent,
     StyledModalContainer,
-    StyledCloseButton
+    StyledCloseButton,
+    StyledForm
 } from "./style"
+import Calendar from "react-calendar"
 import { useEffect, useState } from "react"
-import { ApprendiceBar } from "../../components/ApprendiceBar/ApprendiceBar"
-import { EmptyNav } from "../../components/EmptyNav/EmptyNav"
 
 interface Lesson {
     id: number;
@@ -21,12 +22,19 @@ interface Lesson {
 
 export const Home = () => {
 
-    const [userType, setUserType] = useState("0");
+    const [userType, setUserType] = useState("1");
     const [lessons, setLessons] = useState<Lesson[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [modalMode, setModalMode] = useState<'view' | 'add' | 'edit'>('view');
     const [modalLessonData, setModalLessonData] = useState<Lesson | null>(null);
+    const [formData, setFormData] = useState<Lesson>({
+        id: 0,
+        name: "",
+        date: new Date(),
+        shift: "Manhã",
+        description: ""
+    });
 
     useEffect(() => {
         fetchLessons();
@@ -65,14 +73,17 @@ export const Home = () => {
         );
         setModalLessonData(lesson || null);
         setModalMode(lesson ? "view" : "add");
+        if (!lesson) {
+            setFormData({ id: 0, name: "", date: value, shift: "Manhã", description: "" });
+        }
     };
 
-    const handleSaveLesson = (lessonData: Lesson) => {
+    const handleSaveLesson = () => {
         const updatedLessons = modalLessonData
             ? lessons.map((lesson) =>
-                lesson.id === modalLessonData.id ? lessonData : lesson
+                lesson.id === modalLessonData.id ? { ...formData, id: modalLessonData.id } : lesson
             )
-            : [...lessons, { ...lessonData, id: lessons.length + 1 }];
+            : [...lessons, { ...formData, id: lessons.length + 1 }];
         setLessons(updatedLessons);
         setShowModal(false);
     };
@@ -91,6 +102,14 @@ export const Home = () => {
         setShowModal(false);
     }
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: name === "date" ? new Date(value) : value,
+        }));
+    };
+
     return (
         <>
             {navBarComponent}
@@ -103,68 +122,47 @@ export const Home = () => {
                 <StyledModalContainer show={showModal}>
                     <StyledModalContent>
                         <StyledCloseButton onClick={handleCloseModal}>&times;</StyledCloseButton>
-
-
-
-                        {/* <h2>{modalLessonData?.name}</h2>
-                        {selectedDate && (
-                            <p>Data: {selectedDate.toLocaleDateString()}</p>
-                        )}
-                        <p>Turno: {modalLessonData?.shift}</p>
-                        <p>Descrição: {modalLessonData?.description}</p>
-                        {(userType === "0" || userType === "1") && (
-                            <>
-                                <button
-                                    onClick={() =>
-                                        setModalMode("edit")
-                                    }
-                                >
-                                    Editar
-                                </button>
-                                <button onClick={handleDeleteLesson}>
-                                    Excluir
-                                </button>
-                            </>
-                        )} */}
                         
-                        {modalLessonData && (
+                        {modalLessonData && modalMode === "view" && (
                             <>
-                                <p>Nome: {modalLessonData.name}</p>
-                                <p>
-                                    Data:{" "}
-                                    {modalLessonData.date.toLocaleDateString()}
-                                </p>
-                                <p>Turno: {modalLessonData.shift}</p>
-                                <p>Descrição: {modalLessonData.description}</p>
-                                {(userType === "0" || userType === "1") && (
-                                    <>
-                                        <button
-                                            onClick={() =>
-                                                setModalMode("edit")
-                                            }
-                                        >
-                                            Editar
-                                        </button>
-                                        <button onClick={handleDeleteLesson}>
-                                            Excluir
-                                        </button>
-                                    </>
-                                )}
+                                <StyledForm>
+                                    <p>Nome: {modalLessonData.name}</p>
+                                    <p>Data: {modalLessonData.date.toLocaleDateString()}</p>
+                                    <p>Turno: {modalLessonData.shift}</p>
+                                    <p>Descrição: {modalLessonData.description}</p>
+                                    {(userType === "0" || userType === "1") && (
+                                        <>
+                                            <button onClick={() => setModalMode("edit")}>Editar</button>
+                                            <button onClick={handleDeleteLesson}>Excluir</button>
+                                        </>
+                                    )}
+                                </StyledForm>
                             </>
                         )}
-                        {modalMode === "add" && (
+                        {modalMode !== "view" && (
                             <>
                                 <label>
                                     Nome:
-                                    <input type="text" />
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        required
+                                    />
                                 </label>
                                 <label>
                                     Data:
-                                    <input type="date" />
+                                    <input
+                                        type="date"
+                                        name="date"
+                                        value={formData.date.toISOString().split('T')[0]}
+                                        onChange={handleChange}
+                                    />
                                 </label>
                                 <label>
                                     Turno:
-                                    <select>
+                                    <select name="shift" value={formData.shift} onChange={handleChange}>
                                         <option value="Manhã">Manhã</option>
                                         <option value="Tarde">Tarde</option>
                                         <option value="Noite">Noite</option>
@@ -172,22 +170,21 @@ export const Home = () => {
                                 </label>
                                 <label>
                                     Descrição:
-                                    <textarea />
+                                    <textarea
+                                        name="description"
+                                        value={formData.description}
+                                        onChange={handleChange}
+                                        required
+                                    />
                                 </label>
                                 {(userType === "0" || userType === "1") && (
-                                    <button onClick={handleSaveLesson}>
-                                        Salvar
-                                    </button>
+                                    <button onClick={handleSaveLesson}>Salvar</button>
                                 )}
                             </>
                         )}
-
-
                     </StyledModalContent>
                 </StyledModalContainer>
-
             </main>
-
         </>
     )
 }
