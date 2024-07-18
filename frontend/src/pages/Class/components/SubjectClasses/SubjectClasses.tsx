@@ -1,9 +1,7 @@
-import { Card } from "./components/card/Card";
-import { StyledBox } from "./style";
-import { AdmBar } from "../../components/AdmBar/AdmBar";
-import { StyledInputCourses } from "./style";
-import { StyledInputDiv } from "./style";
-import lupa from "../../assets/lupa.png"
+import { ReactNode } from 'react'
+import { StyledBox } from '../../style';
+import { Subject } from '../Subject';
+
 
 interface CardData {
     id: number;
@@ -20,27 +18,17 @@ const cardData: CardData[] = [
     // adicione mais cartões conforme necessário
 ];
 
-export const Courses = () => {
+export const SubjectClasses = () => {
     return (
         <>
-            <StyledInputDiv >
-                <h1>Turmas</h1>
-                <div>
-                    <StyledInputCourses />
-                    <img src={lupa} alt="" style={{ width: "30px", height: "30px" }} />
-                </div>
-                
-            </StyledInputDiv>
-
-            <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
+            <div style={{ display: "flex", justifyContent: "center", overflow: "auto",  padding: "20px 0"}}>
                 <StyledBox>
                     {cardData.map(card => (
-                        <Card key={card.id} title={card.title} content={card.content} classes={card.classes} />
+                        <Subject key={card.id} title={card.title} content={card.content} classes={card.classes} />
                     ))}
                 </StyledBox>
 
             </div>
         </>
-    );
-
+    )
 }

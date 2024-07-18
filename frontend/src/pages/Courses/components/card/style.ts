@@ -6,7 +6,6 @@ export const StyledLink = styled(Link)`
     text-decoration: none;
     color: #2b2b2b;
     padding: 15px;
-
 `
 
 export const StyledCard = styled.div`
