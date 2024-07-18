@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
-interface ModalContainerProps {
-    show: boolean;
+interface StyledModalContainerProps {
+    show?: boolean;
 }
 
 export const StyledCalendar = styled.div`
@@ -83,7 +83,7 @@ export const StyledCalendar = styled.div`
     }
 `
 
-export const StyledModalContainer = styled.div<ModalContainerProps>`
+export const StyledModalContainer = styled.div<StyledModalContainerProps>`
     display: ${props => props.show ? 'block' : 'none'};
     position: fixed;
     z-index: 1;

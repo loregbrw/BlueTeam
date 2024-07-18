@@ -35,7 +35,7 @@ export const Home = () => {
         id: 0,
         name: "",
         date: new Date(),
-        shift: "Manhã",
+        shift: "Selecione",
         description: ""
     });
 
@@ -86,7 +86,7 @@ export const Home = () => {
         setModalLessonData(lesson || null);
         setModalMode(lesson ? "view" : "add");
         if (!lesson) {
-            setFormData({ id: 0, name: "", date: value, shift: "Manhã", description: "" });
+            setFormData({ id: 0, name: "", date: value, shift: "Selecione", description: "" });
         }
     };
 
@@ -96,6 +96,7 @@ export const Home = () => {
             return;
         }
         try {
+            console.log('Dados da nova aula: ', formData);
             if (modalLessonData) {
                 const updatedLesson = await updateLesson(modalLessonData.id, formData);
                 setLessons(lessons.map(lesson => (lesson.id === modalLessonData.id ? updatedLesson : lesson)));
@@ -103,7 +104,6 @@ export const Home = () => {
                 const newLesson = await createLesson(formData);
                 setLessons([...lessons, newLesson]);
             }
-            setShowModal(false);
         } catch (error) {
             console.error('Erro ao salvar aula:', error);
         }
