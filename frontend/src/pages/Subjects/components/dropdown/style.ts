@@ -38,7 +38,7 @@ export const DropdownContent = styled.div<{ isOpen: boolean }>`
   border-radius: 4px;
   right: 0; 
   
-  & a {
+  & option {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
