@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { MainContainer, StyledForm, StyledInput, StyledButton } from "./styled";
 import { Navigate, redirect, useNavigate } from "react-router-dom";
-import { api } from "../../service/api";
+import { api } from "../../../../service/api";
 
 export const LoginForm = () => {
   const [edv, setEdv] = useState("");
