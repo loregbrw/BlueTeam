@@ -6,22 +6,22 @@ export const StyledForm = styled.form`
     flex-direction: column;
     justify-content: center;
 
-    background-color: #d3d3d3;
+    background-color: #d7dae0;
     width: 30%;
     min-width: 350px;
-    padding: 20px;
+    padding: 30px;
     gap: 30px;
-    border-radius: 5px;
+    border-radius: 10px;
 
     
 `
 export const StyledInput = styled.input`
 
-    border-radius: 15px;
-    padding: 8px;
-    background-color: white;
-    border: none
-
+    padding:5px;
+    border: none;
+    background-color: #d7dae0;
+    border-bottom: solid 1px;
+    outline: none;
 `
 
 export const MainContainer = styled.div`
@@ -29,7 +29,7 @@ export const MainContainer = styled.div`
 
     display: flex;
     justify-content: center;
-    background-color: #e9e9e9;
+    background-color: #ffffff;
 
     align-items: center;
 `

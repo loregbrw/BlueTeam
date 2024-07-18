@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     </App>
   },
   {
-    path: "/courses",
+    path: "/classes",
     element:
     <App>
       <Courses/>
