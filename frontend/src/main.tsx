@@ -12,6 +12,7 @@ import App from './App.tsx'
 import { Home } from './pages/Home/index.tsx'
 import { Course } from './pages/Course/index.tsx'
 import { SignUp } from './pages/SignUp/SignUp.tsx'
+import { Subjects } from './pages/Subjects/Subjects.tsx'
 
 
 
@@ -49,6 +50,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <SignUp/>
+    </App>
+  },
+  {
+    path: "/subjects",
+    element:
+    <App>
+      <Subjects/>
     </App>
   }
 ])
