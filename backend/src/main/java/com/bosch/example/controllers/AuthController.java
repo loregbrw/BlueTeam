@@ -18,7 +18,7 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<AuthTokenDto> login(@RequestBody LoginRequest loginRequest) {
         ResponseEntity<AuthTokenDto> responseEntity = authService.login(loginRequest.edv(), loginRequest.password());
         return responseEntity;

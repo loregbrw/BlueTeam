@@ -29,9 +29,9 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
-    @PostMapping("")
-    public ResponseEntity<CourseData> createClass(@RequestBody CourseRequest course) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+    @PostMapping("/auth")
+    public ResponseEntity<CourseData> createCourse(@RequestBody CourseRequest course) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor) && userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             CourseData classCreated = courseService.createCourse(new CourseRequest(course.name(), course.description()));
@@ -54,9 +54,9 @@ public class CourseController {
         return ResponseEntity.ok().body(courseService.getAllCourses());
     }
 
-    @PatchMapping("/{id}/{name}")
+    @PatchMapping("auth/{id}")
     public ResponseEntity<CourseData> patchCourse(@PathVariable Long id, @RequestBody CourseRequest course) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor)) {
             return ResponseEntity.status(403).body(null);
         } else {
             CourseData coursUpdated = courseService.updateCourse(id, new CourseRequest(course.name(), course.description()));
@@ -64,14 +64,14 @@ public class CourseController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || userSession.getRole().equals(UserRoleEnum.Instructor) || userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor) && userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             courseService.deleteCourse(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }

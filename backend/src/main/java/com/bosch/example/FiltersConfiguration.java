@@ -21,17 +21,16 @@ public class FiltersConfiguration {
 
         registrarionBean.setFilter(authFilter);
         registrarionBean.addUrlPatterns(
-            "/auth/*",
-            "/ability/*",
-            "/class/*",
-            "/course/*",
-            "/lesson/*",
-            "/report/*",
-            "/skills/*",
-            "/subjectclass/*",
-            "/subject/*",
-            "/userskills/*",
-            "/user/*"
+            "/ability/auth/*",
+            "/class/auth/*",
+            "/course/auth/*",
+            "/lesson/auth/*", // nao fiz
+            "/report/*", // nao fiz
+            "/skills/*", // nao fiz
+            "/subjectclass/*", // nao fiz
+            "/subject/*", // nao fiz
+            "/userskills/*", // nao fiz
+            "/user/auth/*"
         );
         registrarionBean.setOrder(1);
         return registrarionBean;

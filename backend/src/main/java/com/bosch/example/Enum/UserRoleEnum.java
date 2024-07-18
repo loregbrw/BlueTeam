@@ -4,5 +4,5 @@ public enum UserRoleEnum {
     Server,
     Adm,
     Instructor,
-    Aprendice
+    Apprentice
 }

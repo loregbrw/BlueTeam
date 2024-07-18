@@ -112,7 +112,7 @@ export const Home = () => {
 
     return (
         <>
-            <main style={{ minHeight: "100vh", padding: "90px 3% 3% 3%", fontFamily: "" }}>
+            <main style={{ height: "100vh", padding: "90px 3% 3% 3%", fontFamily: "" }}>
                 <h1 style={{ margin: "10px" }}>Calendário</h1>
                 <StyledCalendar>
                     <Calendar locale="pt-BR" onClickDay={handleDateClick} />

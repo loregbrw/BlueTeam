@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.bosch.example.Enum.UserRoleEnum;
+import com.bosch.example.dto.dtoRequest.PasswordRequest;
 import com.bosch.example.dto.dtoRequest.UserRequest;
 import com.bosch.example.model.UserData;
 import com.bosch.example.services.AuthService;
@@ -31,9 +32,9 @@ public class UserController {
     @Autowired
     CryptographyService cryptographyService;
 
-    @PostMapping("")
+    @PostMapping("/auth")
     public ResponseEntity<UserData> createUser(@RequestBody UserRequest userRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             UserData userCreated = userService.createUser(userRequest);
@@ -46,19 +47,19 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("class/{id}")
     public ResponseEntity<List<UserData>> getUserByClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(userService.getUserByClass(id));
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserData> updatePassword(@PathVariable Long id, @RequestBody String password) {
-        return ResponseEntity.ok().body(userService.updateUserPassword(id, password));
+    public ResponseEntity<UserData> updatePassword(@PathVariable Long id, @RequestBody PasswordRequest password) {
+        return ResponseEntity.ok().body(userService.updateUserPassword(id, password.password()));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/auth/{id}")
     public ResponseEntity<UserData> putUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Instructor) || !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             UserData userUpdated = userService.updateUser(id, userRequest);
@@ -66,14 +67,14 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/auth/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             userService.deleteUser(id);
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body("Deleted with sucessfully");
         }
     }
 }
