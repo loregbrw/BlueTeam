@@ -8,19 +8,38 @@ import { StyledMiniBox } from "../../../../components/loginForm/styled"
 import { api } from "../../../../service/api"
 
 export const FormSignUp = () => {
-    const [classes, setClasses] = useState<string[]>([])
+
+    interface classData {
+        id: number,
+        courseId: courseData,
+        name: string,
+        duration: number,
+        initialDate: string
+    }
+
+    interface courseData {
+        id: number,
+        name: string,
+        description: string | null
+    }
+
+    const [classes, setClasses] = useState<classData[]>([])
 
     useEffect(() => {
         const getClasses = async () =>{
             try{
-                const response = await api.get(`classes`)
+                const response = await api.get(`class`)
                 setClasses(response.data)
             } catch(error){
+                console.error(error);
                 setClasses([])
             }
         }
         getClasses()
-    },[classes])
+    },[])
+
+    console.log(classes);
+    
 
     return (
         <>
@@ -42,11 +61,9 @@ export const FormSignUp = () => {
                         <p>Turma</p>
                         <StyledDropdown name="class" id="class">
                         {
-                            classes.length > 0 
-                            ? classes.map((classItem, index) => (
+                            classes.map((classItem, index) => (
                                 <option key={index} value={classItem.id}>{classItem.name}</option>
                             ))
-                            : <option value="">Problema Interno</option>
                         } 
                         </StyledDropdown>
                     </StyledMiniBox>
