@@ -10,7 +10,7 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ title, plannedDuration}) => {
     return(
         <>  
-            <StyledLink>
+            <StyledLink to ="">
                 <StyledCard>
                     <h3>{title}</h3>
                     <hr  style={{width: "100%"}}/>
