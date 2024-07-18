@@ -1,7 +1,8 @@
 export const Class = () => {
     return(
         <>
-            lkasdjkasfdjfdsdfaf
+            lkasdjkasfdjfdsdfaf <br></br>
+            lkasdjkasfdjfdsdfaf <br></br>
         </>
     )
 }

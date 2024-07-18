@@ -174,11 +174,11 @@ export const Home = () => {
                                     Descrição:
                                     <textarea />
                                 </label>
-                                {(userType === "0" || userType === "1") && (
+                                {/* {(userType === "0" || userType === "1") && (
                                     <button onClick={handleSaveLesson}>
                                         Salvar
                                     </button>
-                                )}
+                                )} */}
                             </>
                         )}
 

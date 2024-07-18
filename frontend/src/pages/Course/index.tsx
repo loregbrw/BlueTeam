@@ -5,8 +5,7 @@ import { Classes } from "./components/Classes/Classes"
 export const Course = () => {
     return (
         <>
-            <Instructorbar />
-            <Classes>
+                <Classes>
                 <Class />
                 <Class />
                 <Class />

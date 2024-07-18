@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const StyledNavBar = styled.div`
-    width: 100vw;
-    position: fixed;
-    height: 6vh;
+    width: 100%;
+    height: 60px;
     background-color: white;
     display: flex;
     justify-content: space-between;
