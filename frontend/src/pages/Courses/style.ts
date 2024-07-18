@@ -15,14 +15,14 @@ export const StyledInputDiv = styled.div`
     gap: 25px;
     padding-right: 30px;
     padding-left: 30px;
-    margin-top: 15px
+    padding-top: 90px
 `
 
 export const StyledInputCourses = styled.input`
 
     padding: 8px;
     background-color: white;
-    width: 80%;
+    width: 200px;
     border: none;
     border-bottom: solid black 1px;
     outline: none;
