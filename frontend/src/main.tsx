@@ -7,8 +7,11 @@ import{
   RouterProvider,
 } from "react-router-dom"
 import { Login } from './pages/Login/Login.tsx'
+import {Courses} from './pages/Courses/Courses.tsx'
 import App from './App.tsx'
 import { Home } from './pages/Home/index.tsx'
+import { Course } from './pages/Course/index.tsx'
+import { SignUp } from './pages/SignUp/SignUp.tsx'
 
 
 
@@ -25,6 +28,27 @@ const router = createBrowserRouter([
     element:
     <App>
       <Home/>
+    </App>
+  },
+  {
+    path: "/course",
+    element:
+    <App>
+      <Course />
+    </App>
+  },
+  {
+    path: "/classes",
+    element:
+    <App>
+      <Courses/>
+    </App>
+  },
+  {
+    path: "/signup",
+    element:
+    <App>
+      <SignUp/>
     </App>
   }
 ])

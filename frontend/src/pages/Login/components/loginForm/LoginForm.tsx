@@ -2,22 +2,18 @@ import { StyledForm } from "./styled"
 import { StyledInput } from "./styled"
 import { MainContainer } from "./styled";
 import { StyledButton } from "./styled";
-import BoschLogo from "../../../../assets/BoschLogo.png"
 
 export const LoginForm = () => {
 
     return (
         <>
-            <div style={{position:"fixed", padding: "15px" }}>
-                <img src={BoschLogo} alt="" style={{ width: "150px" }} />
-            </div>
-            <MainContainer>
+                       <MainContainer>
 
                 <StyledForm>
 
 
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <h2>Login</h2>
+                    <h2 style={{}}>Login</h2>
                     </div>
                     <p>EDV</p>
                     <StyledInput />

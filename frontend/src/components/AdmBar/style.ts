@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 export const StyledNavBar = styled.div`
-    height: 6vh;
+    width: 100vw;
+    position: fixed;
     background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 30px;
+    height: 75px;
 `;
 
 export const StyledLogoutButton = styled.button`
