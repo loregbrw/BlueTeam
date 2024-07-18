@@ -14,6 +14,7 @@ import { SignUp } from './pages/SignUp/SignUp.tsx'
 import { Class } from './pages/Class/index.tsx'
 import { Subjects } from './pages/Subjects/Subjects.tsx'
 import { Lessons } from './pages/Lessons/Lessons.tsx'
+import { Profile } from './pages/Profile/Profile.tsx'
 
 
 
@@ -65,6 +66,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <Lessons/>
+    </App>
+  },
+  {
+    path: "/profile",
+    element:
+    <App>
+      <Profile/>
     </App>
   }
 ])
