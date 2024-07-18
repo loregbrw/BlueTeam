@@ -114,36 +114,36 @@ export const Subjects = () => {
             <StyledMain>
               <StyledInputDiv>
                 <h1>Matérias</h1>
-                <Container>
-                  <AddButton onClick={openModal}>+ Matéria</AddButton>
+                <StyledContainer>
+                  <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
       
                   {isModalOpen && (
-                    <ModalOverlay>
-                      <ModalContent>
-                        <CloseButton onClick={closeModal}>X</CloseButton>
+                    <StyledModalOverlay>
+                      <StyledModalContent>
+                        <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
                         <h2>Adicionar Nova Matéria</h2>
-                        <Form onSubmit={handleSubmit}>
-                          <Input
+                        <StyledForm onSubmit={handleSubmit}>
+                          <StyledInput
                             type="text"
                             placeholder="Nome da Matéria"
                             value={subjectName}
                             onChange={(e) => setSubjectName(e.target.value)}
                             required
                           />
-                          <Input
+                          <StyledInput
                             placeholder="Duração Planejada"
                             value={duration}
                             onChange={(e) => setDuration(e.target.value)}
                             required
                           />
-                          <SubmitButton type="submit">Salvar</SubmitButton>
-                        </Form>
-                      </ModalContent>
-                    </ModalOverlay>
+                          <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                        </StyledForm>
+                      </StyledModalContent>
+                    </StyledModalOverlay>
                   )}
       
                   <Dropdown></Dropdown>
-                </Container>
+                </StyledContainer>
               </StyledInputDiv>
 
             <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
