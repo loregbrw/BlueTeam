@@ -135,12 +135,12 @@ export const Home = () => {
 
     const tileClassName = ({ date, view }: { date: Date, view: string }) => {
         if (view === "month") {
-            const lesson = lessons.find((lesson) => new Date(lesson.date).toDateString() === date.toDateString());
+            const lesson = lessons.find((lesson) => lesson.date.toDateString() === date.toDateString());
             if (lesson) {
                 return "highlight";
             }
         }
-        return null;
+        return "";
     };
 
     return (
