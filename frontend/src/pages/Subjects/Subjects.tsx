@@ -92,11 +92,14 @@ export const Subjects = () => {
             name: subjectName,
             expectedDuration: parseFloat(duration), 
           };
+
+          console.log(token)
+          console.log(newSubject)
       
           try {
             const response = await api.post("subject/auth", newSubject, {
               headers: {
-              auth: `Bearer ${token}`
+              auth: token
             }});
             alert("Matéria criada!")
             console.log(response)

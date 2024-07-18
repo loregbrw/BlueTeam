@@ -14,7 +14,7 @@ export const Card: React.FC<CardProps> = ({ title, plannedDuration}) => {
                 <StyledCard>
                     <h3>{title}</h3>
                     <hr  style={{width: "100%"}}/>
-                    <p><b>Duração planejada:</b> {plannedDuration} semanas</p>
+                    <p><b>Duração planejada:</b> {plannedDuration} horas</p>
 
                 </StyledCard>
             </StyledLink>

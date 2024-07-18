@@ -23,7 +23,7 @@ export const LoginForm = () => {
       if (response.data && response.data.token) {
         localStorage.setItem("token", response.data.token);
         console.log("Login bem-sucedido. Token salvo no localStorage.");
-        navigate('/home')
+        navigate('/subjects')
       } else {
         console.error("Token não encontrado na resposta.");
       }
