@@ -22,6 +22,7 @@ export const StyledInput = styled.input`
     background-color: #d7dae0;
     border-bottom: solid 1px;
     outline: none;
+
 `
 
 export const MainContainer = styled.div`
@@ -45,4 +46,14 @@ export const StyledButton = styled.button`
     border: 1px #023E7D solid;
     width: 30%
     
+`
+
+export const StyledDropdown = styled.select`
+
+    padding:5px;
+    border: none;
+    background-color: #d7dae0;
+    border-bottom: solid 1px;
+    outline: none;
+
 `
