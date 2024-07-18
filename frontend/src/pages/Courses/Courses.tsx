@@ -23,7 +23,6 @@ const cardData: CardData[] = [
 export const Courses = () => {
     return (
         <>
-            <AdmBar />
             <StyledInputDiv >
                 <h1>Turmas</h1>
                 <div>
