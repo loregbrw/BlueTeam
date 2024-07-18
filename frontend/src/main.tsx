@@ -7,7 +7,7 @@ import{
   RouterProvider,
 } from "react-router-dom"
 import { Login } from './pages/Login/Login.tsx'
-import {Courses} from './pages/Courses/Courses.tsx'
+import { Classes } from './pages/Classes/Classes.tsx' 
 import App from './App.tsx'
 import { Home } from './pages/Home/index.tsx'
 import { SignUp } from './pages/SignUp/SignUp.tsx'
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     path: "/classes",
     element:
     <App>
-      <Courses/>
+      <Classes/>
     </App>
   },
   {
