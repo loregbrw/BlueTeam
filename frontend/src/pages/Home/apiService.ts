@@ -66,7 +66,7 @@ export async function createLesson(lessonRequest: LessonRequest) : Promise<Lesso
 } 
 
 export async function updateLesson(id: number, lessonRequest: LessonRequest): Promise<LessonData> {
-    const response = await fetch(`${API_URL}lesson/auth/${id}`, {
+    const response = await fetch(`${API_URL}/lesson/auth/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ export async function updateLesson(id: number, lessonRequest: LessonRequest): Pr
 }
 
 export async function deleteLesson(id: number): Promise<void> {
-    const response = await fetch(`${API_URL}lesson/auth/${id}`, {
+    const response = await fetch(`${API_URL}/lesson/auth/${id}`, {
         method: 'DELETE'
     });
     if (!response.ok) {
