@@ -4,30 +4,37 @@ import { AdmBar } from "../../components/AdmBar/AdmBar";
 import { StyledInputDiv } from "./style";
 import { Dropdown } from "./components/dropdown/Dropdown";
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./components/dropdown/style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "../../service/api";
 
-interface CardData {
+interface Subject {
     id: number;
-    title: string;
-    plannedDuration: number;
-    classes: string;
+    name: string;
+    expectedDuration: number;
 }
 
-const cardData: CardData[] = [
-    { id: 1, title: 'IoT', plannedDuration: 4, classes: "Desenvolvimento de sistemas" },
-    { id: 2, title: 'Card 2', plannedDuration: 2, classes: "Desenvolvimento de sistemas" },
-    { id: 3, title: 'Card 3', plannedDuration: 3, classes: "Desenvolvimento de sistemas" },
-    { id: 3, title: 'Card 3', plannedDuration: 1, classes: "Desenvolvimento de sistemas" },
-    // adicione mais cartões conforme necessário
-];
+interface classData {
+    id: number,
+    courseId: courseData,
+    name: string,
+    duration: number,
+    initialDate: string
+  }
+  
+interface courseData {
+    id: number,
+    name: string,
+    description: string | null
+}
 
 export const Subjects = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [subjectName, setSubjectName] = useState('');
-    const [course, setCourse] = useState('');
-    const [classGroup, setClassGroup] = useState('');
     const [duration, setDuration] = useState('');
+    const [subjects, setSubjects] = useState<Subject[]>([])
+    const [classes, setClasses] = useState<classData[]>([])
+    const [courses, setCourses] = useState<courseData[]>([])
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -37,79 +44,112 @@ export const Subjects = () => {
         setIsModalOpen(false);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Lógica de envio do formulário
-        console.log('Matéria:', subjectName);
-        console.log('Curso:', course);
-        console.log('Turma:', classGroup);
-        console.log('Duração:', duration);
-        closeModal();
-      };
+    useEffect(() => {
+      const getSubjects = async () =>{
+        try{
+          const response = await api.get(`subject`)
+          setSubjects(response.data)
+        } catch(error){
+          console.error(error);
+          setSubjects([])
+        }
+      }
+      getSubjects()
+    },[])
 
-    return (
-        <>
-        <StyledMain>
-            <StyledInputDiv >
+    useEffect(() => {
+              const getClasses = async () =>{
+                  try{
+                      const response = await api.get(`class`)
+                      setClasses(response.data)
+                  } catch(error){
+                      console.error(error);
+                      setClasses([])
+                  }
+              }
+              getClasses()
+          },[])
+
+      useEffect(() => {
+                const getCourses = async () =>{
+                    try{
+                        const response = await api.get(`course`)
+                        setCourses(response.data)
+                    } catch(error){
+                        console.error(error);
+                        setCourses([])
+                    }
+                }
+                getCourses()
+            },[])
+
+        const handleSubmit = async (e: React.FormEvent) => {
+          e.preventDefault();
+
+          const token = localStorage.getItem("token");
+      
+          const newSubject = {
+            name: subjectName,
+            expectedDuration: parseFloat(duration), 
+          };
+
+          console.log(token)
+          console.log(newSubject)
+      
+          try {
+            const response = await api.post("subject/auth", newSubject, {
+              headers: {
+              auth: token
+            }});
+            alert("Matéria criada!")
+            console.log(response)
+            closeModal();
+          } catch (error) {
+            console.error("Erro ao criar matéria:", error);
+          }
+        };
+
+        return (
+          <>
+            <StyledMain>
+              <StyledInputDiv>
                 <h1>Matérias</h1>
                 <StyledContainer>
-                    <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
-
-                    {isModalOpen && (
-                        <StyledModalOverlay>
-                            <StyledModalContent>
-                                <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
-                                    <h2>Adicionar Nova Turma</h2>
-                                    <StyledForm onSubmit={handleSubmit}>
-                                        <StyledInput
-                                          type="text"
-                                          placeholder="Nome da Matéria"
-                                          value={subjectName}
-                                          onChange={(e) => setSubjectName(e.target.value)}
-                                          required
-                                        />
-                                        <StyledSelect
-                                          value={course}
-                                          onChange={(e) => setCourse(e.target.value)}
-                                          required
-                                        >
-                                          <option value="">Selecione o Curso</option>
-                                          <option value="curso1">Curso 1</option>
-                                          <option value="curso2">Curso 2</option>
-                                          <option value="curso3">Curso 3</option>
-                                        </StyledSelect>
-                                        <StyledSelect
-                                          value={classGroup}
-                                          onChange={(e) => setClassGroup(e.target.value)}
-                                          required
-                                        >
-                                          <option value="">Selecione a Turma</option>
-                                          <option value="turma1">Turma 1</option>
-                                          <option value="turma2">Turma 2</option>
-                                          <option value="turma3">Turma 3</option>
-                                        </StyledSelect>
-                                        <StyledInput
-                                          type="text"
-                                          placeholder="Duração Planejada"
-                                          value={duration}
-                                          onChange={(e) => setDuration(e.target.value)}
-                                          required
-                                        />
-                                        <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
-                                    </StyledForm>
-                            </StyledModalContent>
-                        </StyledModalOverlay>
-                    )}
-
-                    <Dropdown></Dropdown>
+                  <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
+      
+                  {isModalOpen && (
+                    <StyledModalOverlay>
+                      <StyledModalContent>
+                        <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
+                        <h2>Adicionar Nova Matéria</h2>
+                        <StyledForm onSubmit={handleSubmit}>
+                          <StyledInput
+                            type="text"
+                            placeholder="Nome da Matéria"
+                            value={subjectName}
+                            onChange={(e) => setSubjectName(e.target.value)}
+                            required
+                          />
+                          <StyledInput
+                            placeholder="Duração Planejada"
+                            value={duration}
+                            onChange={(e) => setDuration(e.target.value)}
+                            required
+                          />
+                          <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                        </StyledForm>
+                      </StyledModalContent>
+                    </StyledModalOverlay>
+                  )}
+      
+                  <Dropdown></Dropdown>
                 </StyledContainer>
-                
-            </StyledInputDiv>
+              </StyledInputDiv>
 
             <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
                 <StyledBox>
-                    {cardData.map(card => (
-                        <Card key={card.id} title={card.title} plannedDuration={card.plannedDuration} classes={card.classes} />
+                    {subjects.map(subject => (
+                        <Card key={subject.id} title={subject.name} plannedDuration={subject.expectedDuration} />
                     ))}
                 </StyledBox>
 
@@ -118,4 +158,4 @@ export const Subjects = () => {
         </>
     );
 
-}
+  }
