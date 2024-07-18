@@ -68,7 +68,12 @@ export const StyledCalendar = styled.div`
         background: brown;
         color: white;
         text-align: center;
-    }   
+    } 
+    
+    .highlight{
+        background-color: rgba(2, 2, 2, 0.1);
+        width: 5px;
+    }
 `
 
 export const StyledModalContainer = styled.div<ModalContainerProps>`
@@ -85,7 +90,6 @@ export const StyledModalContent = styled.div`
     flex-direction: column;
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 40px;
     border: 1px solid #888;
     width: 40%;
     border-radius: 8px;
@@ -107,5 +111,24 @@ export const StyledCloseButton = styled.button`
 `
 
 export const StyledForm = styled.form`
+    padding: 80px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+`
 
+export const StyledButton = styled.button`
+    margin-top: 20px;
+    width: 5vw;
+    height: 3vh;
+    border-radius: 5px;
+    border: none;
+    background-color: wheat;
+    color: brown;
+    cursor: pointer;
+
+    &:hover{
+        color: white;
+        background-color: brown;
+    }
 `

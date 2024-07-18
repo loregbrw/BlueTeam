@@ -7,7 +7,8 @@ import {
     StyledModalContent,
     StyledModalContainer,
     StyledCloseButton,
-    StyledForm
+    StyledForm,
+    StyledButton
 } from "./style"
 import Calendar from "react-calendar"
 import { useEffect, useState } from "react"
@@ -79,11 +80,19 @@ export const Home = () => {
     };
 
     const handleSaveLesson = () => {
-        const updatedLessons = modalLessonData
-            ? lessons.map((lesson) =>
+        if (formData.name.trim() === "" || formData.description.trim() === "") {
+            alert("Nome e descrição não podem estar vazios.");
+            return;
+        }
+        let updatedLessons: Lesson[] = [];
+        if (modalLessonData) {
+            updatedLessons = lessons.map((lesson) =>
                 lesson.id === modalLessonData.id ? { ...formData, id: modalLessonData.id } : lesson
-            )
-            : [...lessons, { ...formData, id: lessons.length + 1 }];
+            );
+        } else {
+            updatedLessons = [...lessons, { ...formData, id: lessons.length + 1 }];
+        }
+
         setLessons(updatedLessons);
         setShowModal(false);
     };
@@ -110,22 +119,32 @@ export const Home = () => {
         }));
     };
 
+    const tileClassName = ({ date, view }: { date: Date, view: string }) => {
+        if (view === "month") {
+            const lesson = lessons.find((lesson) => lesson.date.toDateString() === date.toDateString());
+            if (lesson) {
+                return "highlight";
+            }
+        }
+        return null;
+    };
+
     return (
         <>
             <main style={{ height: "100vh", padding: "90px 3% 3% 3%", fontFamily: "" }}>
                 <h1 style={{ margin: "10px" }}>Calendário</h1>
                 <StyledCalendar>
-                    <Calendar locale="pt-BR" onClickDay={handleDateClick} />
+                    <Calendar locale="pt-BR" onClickDay={handleDateClick} tileClassName={tileClassName}/>
                 </StyledCalendar>
 
                 <StyledModalContainer show={showModal}>
                     <StyledModalContent>
                         <StyledCloseButton onClick={handleCloseModal}>&times;</StyledCloseButton>
-                        
+
                         {modalLessonData && modalMode === "view" && (
                             <>
                                 <StyledForm>
-                                    <p>Nome: {modalLessonData.name}</p>
+                                    <h1>{modalLessonData.name}</h1>
                                     <p>Data: {modalLessonData.date.toLocaleDateString()}</p>
                                     <p>Turno: {modalLessonData.shift}</p>
                                     <p>Descrição: {modalLessonData.description}</p>
@@ -140,45 +159,27 @@ export const Home = () => {
                         )}
                         {modalMode !== "view" && (
                             <>
-                                <label>
-                                    Nome:
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </label>
-                                <label>
-                                    Data:
-                                    <input
-                                        type="date"
-                                        name="date"
-                                        value={formData.date.toISOString().split('T')[0]}
-                                        onChange={handleChange}
-                                    />
-                                </label>
-                                <label>
-                                    Turno:
+                                <StyledForm>
+                                    <h1>Aula</h1>
+                                    <label>Nome</label>
+                                    <input type="text" name="name" value={formData.name} onChange={handleChange}/>
+
+                                    {/* <label>Data</label>
+                                    <input type="date" name="date" value={formData.date.toISOString().split('T')[0]} onChange={handleChange}/> */}
+
+                                    <label> Turno:</label>
                                     <select name="shift" value={formData.shift} onChange={handleChange}>
-                                        <option value="Manhã">Manhã</option>
-                                        <option value="Tarde">Tarde</option>
-                                        <option value="Noite">Noite</option>
+                                            <option value="Manhã">Manhã</option>
+                                            <option value="Tarde">Tarde</option>
+                                            <option value="Noite">Noite</option>
                                     </select>
-                                </label>
-                                <label>
-                                    Descrição:
-                                    <textarea
-                                        name="description"
-                                        value={formData.description}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </label>
-                                {(userType === "0" || userType === "1") && (
-                                    <button onClick={handleSaveLesson}>Salvar</button>
-                                )}
+
+                                    <label>Descrição</label>
+                                    <textarea name="description" value={formData.description} onChange={handleChange}/>
+
+                                    {(userType === "0" || userType === "1") && (
+                                        <StyledButton onClick={handleSaveLesson}>Salvar</StyledButton>)}
+                                </StyledForm>
                             </>
                         )}
                     </StyledModalContent>
