@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const StyledLink = styled(Link)`
+    color: blue;
     text-decoration: none;
     color: #2b2b2b;
     padding: 15px;
+
 `
 
 export const StyledCard = styled.div`
