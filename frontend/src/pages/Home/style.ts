@@ -8,25 +8,38 @@ export const StyledCalendar = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
 
-    .react-calendar__navigation{
+    .react-calendar__navigation, .react-calendar__month-view__weekdays{
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .react-calendar__navigation__label, .react-calendar__navigation__arrow{
         
     }
 
     .react-calendar {
         border: none;
-        font-family: 'Arial', sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         border-radius: 8px;
     }
 
     .react-calendar__month-view__days__day--neighboringMonth {
-        color: #aaa;
+        background: gray;
+        color: white;
+    }
+
+    .react-calendar__month-view__days__day{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .react-calendar__tile {
-        background: #fff;
         border-radius: 5px;
         height: 40px;
-        width: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -36,10 +49,6 @@ export const StyledCalendar = styled.div`
         background: #007bff;
         color: white;
         text-align: center;
-    }
-
-    .react-calendar__tile--hasActive {
-        background: #e0e0e0;
     }
     
 `
