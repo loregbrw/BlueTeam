@@ -1,18 +1,18 @@
 
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   align-items: end;
   gap: 10px; 
 `;
 
- export const DropdownContainer = styled.div`
+ export const StyledDropdownContainer = styled.div`
   position: relative;
   display: inline-block;
 `;
 
-export const DropdownButton = styled.button`
+export const StyledDropdownButton = styled.button`
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -27,7 +27,7 @@ export const DropdownButton = styled.button`
 
 `;
 
-export const DropdownContent = styled.div<{ isOpen: boolean }>`
+export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
   background-color: white;
@@ -53,7 +53,7 @@ export const DropdownContent = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-export const AddButton = styled.button`
+export const StyledAddButton = styled.button`
   background-color: #007BFF;
   color: white;
   padding: 10px 20px;
@@ -68,7 +68,7 @@ export const AddButton = styled.button`
   }
 `;
 
-export const ModalOverlay = styled.div`
+export const StyledModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -81,7 +81,7 @@ export const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-export const ModalContent = styled.div`
+export const StyledModalContent = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 8px;
@@ -90,7 +90,7 @@ export const ModalContent = styled.div`
   width: 100%;
 `;
 
-export const CloseButton = styled.button`
+export const StyledCloseButton = styled.button`
   background-color: #ff4d4d;
   color: white;
   width: 30px;  
@@ -108,14 +108,14 @@ export const CloseButton = styled.button`
     background-color: #e60000;
   }
 `;
-export const Form = styled.form`
+export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
 `;
 
-export const Input = styled.input`
+export const StyledInput = styled.input`
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
@@ -123,7 +123,7 @@ export const Input = styled.input`
   outline: none;
 `;
 
-export const Select = styled.select`
+export const StyledSelect = styled.select`
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
@@ -131,7 +131,7 @@ export const Select = styled.select`
   outline: none;
 `;
 
-export const SubmitButton = styled.button`
+export const StyledSubmitButton = styled.button`
   background-color: #28a745;
   color: white;
   padding: 10px;

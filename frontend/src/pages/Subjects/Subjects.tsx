@@ -3,7 +3,7 @@ import { StyledBox, StyledMain } from "./style";
 import { AdmBar } from "../../components/AdmBar/AdmBar";
 import { StyledInputDiv } from "./style";
 import { Dropdown } from "./components/dropdown/Dropdown";
-import { AddButton, CloseButton, Container, Form, Input, ModalContent, ModalOverlay, Select, SubmitButton } from "./components/dropdown/style";
+import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./components/dropdown/style";
 import { useState } from "react";
 
 interface CardData {
@@ -52,23 +52,23 @@ export const Subjects = () => {
         <StyledMain>
             <StyledInputDiv >
                 <h1>Matérias</h1>
-                <Container>
-                    <AddButton onClick={openModal}>+ Matéria</AddButton>
+                <StyledContainer>
+                    <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
 
                     {isModalOpen && (
-                        <ModalOverlay>
-                            <ModalContent>
-                                <CloseButton onClick={closeModal}>X</CloseButton>
+                        <StyledModalOverlay>
+                            <StyledModalContent>
+                                <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
                                     <h2>Adicionar Nova Turma</h2>
-                                    <Form onSubmit={handleSubmit}>
-                                        <Input
+                                    <StyledForm onSubmit={handleSubmit}>
+                                        <StyledInput
                                           type="text"
                                           placeholder="Nome da Matéria"
                                           value={subjectName}
                                           onChange={(e) => setSubjectName(e.target.value)}
                                           required
                                         />
-                                        <Select
+                                        <StyledSelect
                                           value={course}
                                           onChange={(e) => setCourse(e.target.value)}
                                           required
@@ -77,8 +77,8 @@ export const Subjects = () => {
                                           <option value="curso1">Curso 1</option>
                                           <option value="curso2">Curso 2</option>
                                           <option value="curso3">Curso 3</option>
-                                        </Select>
-                                        <Select
+                                        </StyledSelect>
+                                        <StyledSelect
                                           value={classGroup}
                                           onChange={(e) => setClassGroup(e.target.value)}
                                           required
@@ -87,22 +87,22 @@ export const Subjects = () => {
                                           <option value="turma1">Turma 1</option>
                                           <option value="turma2">Turma 2</option>
                                           <option value="turma3">Turma 3</option>
-                                        </Select>
-                                        <Input
+                                        </StyledSelect>
+                                        <StyledInput
                                           type="text"
                                           placeholder="Duração Planejada"
                                           value={duration}
                                           onChange={(e) => setDuration(e.target.value)}
                                           required
                                         />
-                                        <SubmitButton type="submit">Salvar</SubmitButton>
-                                    </Form>
-                            </ModalContent>
-                        </ModalOverlay>
+                                        <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                                    </StyledForm>
+                            </StyledModalContent>
+                        </StyledModalOverlay>
                     )}
 
                     <Dropdown></Dropdown>
-                </Container>
+                </StyledContainer>
                 
             </StyledInputDiv>
 

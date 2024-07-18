@@ -1,7 +1,7 @@
-import { DropdownContainer } from "./style"
-import { DropdownButton } from "./style"
-import { DropdownContent } from "./style"
-import { ModalContent, ModalOverlay } from "./style"
+import { StyledDropdownContainer } from "./style"
+import { StyledDropdownButton } from "./style"
+import { StyledDropdownContent } from "./style"
+import { StyledModalContent, StyledModalOverlay } from "./style"
 import React, { useState } from 'react';
 
 export const Dropdown: React.FC = () => {
@@ -21,15 +21,15 @@ export const Dropdown: React.FC = () => {
       };
   
     return (
-      <DropdownContainer>
-        <DropdownButton onClick={toggleDropdown}>
+      <StyledDropdownContainer>
+        <StyledDropdownButton onClick={toggleDropdown}>
           Cursos 
-        </DropdownButton>
-        <DropdownContent isOpen={isOpen}>
+        </StyledDropdownButton>
+        <StyledDropdownContent isOpen={isOpen}>
           <a href="#option1">Option 1</a>
           <a href="#option2">Option 2</a>
           <a href="#option3">Option 3</a>
-        </DropdownContent>
-      </DropdownContainer>
+        </StyledDropdownContent>
+      </StyledDropdownContainer>
     );
   };
