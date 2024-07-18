@@ -61,27 +61,26 @@ public class ImplCryptographyService implements CryptographyService {
 
     @Override
     public Boolean isStrongPassword(String password) {
-        Matcher regexLength = Pattern.compile(".{8,}").matcher(password);
 
-        if (!regexLength.matches()) {
+        if (password.length() < 8) {
             return false;
         }
 
         Matcher regexLowerCase = Pattern.compile("[a-z]").matcher(password);
 
-        if (!regexLowerCase.matches()) {
+        if (!regexLowerCase.find()) {
             return false;
         }
 
         Matcher regexUpperCase = Pattern.compile("[A-Z]").matcher(password);
         
-        if (!regexUpperCase.matches()) {
+        if (!regexUpperCase.find()) {
             return false;
         }
 
         Matcher regexNumber = Pattern.compile("\\d").matcher(password);
         
-        if (!regexNumber.matches()) {
+        if (!regexNumber.find()) {
             return false;
         }
 

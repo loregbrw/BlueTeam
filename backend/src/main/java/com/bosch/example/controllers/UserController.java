@@ -33,12 +33,12 @@ public class UserController {
 
     @PostMapping("")
     public ResponseEntity<UserData> createUser(@RequestBody UserRequest userRequest) {
-        // if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Server)) {
-        //     return ResponseEntity.status(403).body(null);
-        // } else {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) || !userSession.getRole().equals(UserRoleEnum.Server)) {
+            return ResponseEntity.status(403).body(null);
+        } else {
             UserData userCreated = userService.createUser(userRequest);
             return ResponseEntity.status(201).body(userCreated);
-        //}
+        }
     }
 
     @GetMapping("id/{id}")
@@ -51,7 +51,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getUserByClass(id));
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<UserData> updatePassword(@PathVariable Long id, @RequestBody String password) {
         return ResponseEntity.ok().body(userService.updateUserPassword(id, password));
     }

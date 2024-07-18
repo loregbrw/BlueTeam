@@ -30,8 +30,8 @@ public class FiltersConfiguration {
             "/skills/*",
             "/subjectclass/*",
             "/subject/*",
-            "/userskills/*"
-            // "/user/*"
+            "/userskills/*",
+            "/user/*"
         );
         registrarionBean.setOrder(1);
         return registrarionBean;
