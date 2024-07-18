@@ -6,7 +6,20 @@ import lupa from "../../assets/lupa.png"
 import { useEffect, useState } from "react";
 import { api } from "../../service/api";
 
+interface CardData {
+    id: number;
+    title: string;
+    content: string;
+    classes: string;
+}
 
+const cardData: CardData[] = [
+    { id: 1, title: 'Técnico em desenvolvimento de sistemas', content: 'Um técnico em desenvolvimento de sistemas é um profissional que desenvolve programas de computador, seguindo as especificações da lógica e das linguagens de programação.',classes: "Desenvolvimento de sistemas"},
+    { id: 2, title: 'Card 2', content: 'Content 2', classes: "Desenvolvimento de sistemas" },
+    { id: 3, title: 'Card 3', content: 'Content 3', classes: "Desenvolvimento de sistemas" },
+    { id: 3, title: 'Card 3', content: 'Content 3', classes: "Desenvolvimento de sistemas" },
+    // adicione mais cartões conforme necessário
+];
 
 export const Classes = () => {
 
@@ -59,7 +72,7 @@ export const Classes = () => {
                 <StyledBox>
                     {
                         classes.map((classItem) => (
-                            <Card key={classItem.id} title={classItem.name} duration={classItem.duration} classes={classItem.courseId.name}
+                            <Card key={classItem.id} id={classItem.id} title={classItem.name} duration={classItem.duration} classes={classItem.courseId.name}
                                 initialDate={
                                     convertToBrazilianDate(classItem.initialDate)} />
                         ))

@@ -96,3 +96,17 @@ export const StyledApprenticeText = styled.p`
     text-overflow: ellipsis;
     white-space: nowrap;
 `
+
+export const StyledDiv = styled.div`
+    flex: 0 0 auto;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: start;
+    align-items: start;
+
+    max-width: 100%;
+    width: 350px;
+
+`
