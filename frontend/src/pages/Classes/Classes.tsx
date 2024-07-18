@@ -21,7 +21,7 @@ const cardData: CardData[] = [
     // adicione mais cartões conforme necessário
 ];
 
-export const Courses = () => {
+export const Classes = () => {
 
     interface classData {
         id: number,
@@ -37,7 +37,6 @@ export const Courses = () => {
         description: string | null
     }
     
-    const [classes, setClasses] = useState
 
     return (
         <>
@@ -53,7 +52,7 @@ export const Courses = () => {
             <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
                 <StyledBox>
                     {cardData.map(card => (
-                        <Card key={card.id} title={card.title} content={card.content} classes={card.classes} />
+                        <Card key={card.id} id={card.id} title={card.title} content={card.content} classes={card.classes} />
                     ))}
                 </StyledBox>
 
