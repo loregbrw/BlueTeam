@@ -45,7 +45,21 @@ export const Home = () => {
 
     useEffect(() => {
         if(selectedClassId != null){
-            fetchLessonsForClass(selectedClassId)
+            const fetchLessonsForClass = async () => {
+                try {
+                    const subjectClasses = await fetchAllSubjectClasses(selectedClassId);
+                    const lessonsDataPromises = subjectClasses.map(subjectClass => fetchAllLessons(subjectClass.id));
+                    const lessonsDataArrays = await Promise.all(lessonsDataPromises);
+                    const allLessons = lessonsDataArrays.flat().map(lesson => ({
+                        ...lesson,
+                        date: new Date(lesson.date)
+                    }));
+                    setLessons(allLessons);
+                } catch (error) {
+                    console.error('Erro ao carregar aulas:', error);
+                }
+            };
+            fetchLessonsForClass();
         }
     }, [selectedClassId])
 
@@ -55,18 +69,6 @@ export const Home = () => {
             setClasses(classesData);
         } catch (error) {
             console.error('Erro ao carregar turmas:', error);
-        }
-    };
-
-    const fetchLessonsForClass = async (classId: number) => {
-        try {
-            const subjectClasses = await fetchAllSubjectClasses(classId);
-            const lessonsDataPromises = subjectClasses.map(subjectClass => fetchAllLessons(subjectClass.id));
-            const lessonsDataArrays = await Promise.all(lessonsDataPromises);
-            const allLessons = lessonsDataArrays.flat();
-            setLessons(allLessons);
-        } catch (error) {
-            console.error('Erro ao carregar aulas:', error);
         }
     };
 
@@ -133,7 +135,7 @@ export const Home = () => {
 
     const tileClassName = ({ date, view }: { date: Date, view: string }) => {
         if (view === "month") {
-            const lesson = lessons.find((lesson) => lesson.date.toDateString() === date.toDateString());
+            const lesson = lessons.find((lesson) => new Date(lesson.date).toDateString() === date.toDateString());
             if (lesson) {
                 return "highlight";
             }
