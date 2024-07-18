@@ -38,7 +38,7 @@ export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
   border-radius: 4px;
   right: 0; 
   
-  & option {
+  & a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -108,7 +108,6 @@ export const StyledCloseButton = styled.button`
     background-color: #e60000;
   }
 `;
-
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
