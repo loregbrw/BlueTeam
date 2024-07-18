@@ -10,9 +10,10 @@ import { Login } from './pages/Login/Login.tsx'
 import {Courses} from './pages/Courses/Courses.tsx'
 import App from './App.tsx'
 import { Home } from './pages/Home/index.tsx'
-import { Course } from './pages/Course/index.tsx'
 import { SignUp } from './pages/SignUp/SignUp.tsx'
+import { Class } from './pages/Class/index.tsx'
 import { Subjects } from './pages/Subjects/Subjects.tsx'
+import { Lessons } from './pages/Lessons/Lessons.tsx'
 import { Profile } from './pages/Profile/Profile.tsx'
 
 
@@ -33,10 +34,10 @@ const router = createBrowserRouter([
     </App>
   },
   {
-    path: "/course",
+    path: "/class",
     element:
     <App>
-      <Course />
+      <Class />
     </App>
   },
   {
@@ -58,6 +59,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <Subjects/>
+    </App>
+  },
+  {
+    path: "/lessons",
+    element:
+    <App>
+      <Lessons/>
     </App>
   },
   {

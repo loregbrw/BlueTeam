@@ -1,6 +1,5 @@
-import { StyledLink } from "./style";
-import { StyledCard } from "./style";
-
+import { StyledLink } from "../style";
+import { StyledCard } from "../style";
 
 interface CardProps {
     title: string;
@@ -8,7 +7,7 @@ interface CardProps {
     classes: string;
 }
 
-export const Card: React.FC<CardProps> = ({ title, content, classes}) => {
+export const Subject: React.FC<CardProps> = ({ title, content, classes}) => {
     return(
         <>  
             <StyledLink to="">

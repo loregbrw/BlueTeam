@@ -30,7 +30,7 @@ public class FiltersConfiguration {
             "/subjectclass/auth/*",
             "/subject/auth/*",
             "/userskills/auth/*", 
-            "/user/auth/*",
+            // "/user/auth/*",
             "/coursesubject/auth/*" 
         );
         registrarionBean.setOrder(1);
