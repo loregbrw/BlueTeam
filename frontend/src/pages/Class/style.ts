@@ -6,6 +6,9 @@ export const StyledLink = styled(Link)`
     text-decoration: none;
     color: #2b2b2b;
     padding: 7.5px;
+
+    max-width: 100%;
+    width: 350px;
 `
 export const StyledApprentices = styled.div`
     display: flex;
@@ -25,8 +28,8 @@ export const StyledApprentice = styled.div`
     justify-content: start;
     align-items: center;
 
-    max-width: 400px;
     width: 100%;
+
     gap: 15px;
 
     background-color: #d7dae0;
@@ -36,6 +39,7 @@ export const StyledApprentice = styled.div`
     transition: 0.1s;
     &:hover {
         transform: scale(1.05);
+        filter: brightness(90%);
     }
 `
 export const StyledMain = styled.main`
@@ -50,6 +54,8 @@ export const StyledMain = styled.main`
 export const StyledImg = styled.img`
     border-radius: 90px;
     height: 35px;
+    width: 35px;
+    object-fit: cover;
 `
 
 export const StyledCard = styled.div`
@@ -62,8 +68,9 @@ export const StyledCard = styled.div`
     flex-direction: column;
     gap: 20px;
 
-    width: 380px;
-    height: 300px;
+    width: 100%;
+
+    height: 200px;
     background-color: #d7dae0;
     border-radius: 15px; 
     padding: 25px;
@@ -71,6 +78,7 @@ export const StyledCard = styled.div`
     transition: 0.1s;
     &:hover {
         transform: scale(1.05);
+        filter: brightness(90%);
     }
 `
 
@@ -79,4 +87,12 @@ export const StyledBox = styled.div`
     flex-wrap: wrap;
     width: max-content;
     justify-content: center;
+`
+
+export const StyledApprenticeText = styled.p`
+    flex: 1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `

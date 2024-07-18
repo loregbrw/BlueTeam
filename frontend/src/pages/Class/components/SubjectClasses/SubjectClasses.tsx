@@ -1,30 +1,60 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { StyledBox } from '../../style';
 import { Subject } from '../Subject';
+import { api } from '../../../../service/api';
 
-
-interface CardData {
+interface SubjectClassData {
     id: number;
-    title: string;
-    content: string;
-    classes: string;
+    classId: ClassData;
+    subjectId: SubjectData;
+    duration: number;
 }
 
-const cardData: CardData[] = [
-    { id: 1, title: 'Técnico em desenvolvimento de sistemas', content: 'Um técnico em desenvolvimento de sistemas é um profissional que desenvolve programas de computador, seguindo as especificações da lógica e das linguagens de programação.',classes: "Desenvolvimento de sistemas"},
-    { id: 2, title: 'Card 2', content: 'Content 2', classes: "Desenvolvimento de sistemas" },
-    { id: 3, title: 'Card 3', content: 'Content 3', classes: "Desenvolvimento de sistemas" },
-    { id: 3, title: 'Card 3', content: 'Content 3', classes: "Desenvolvimento de sistemas" },
-    // adicione mais cartões conforme necessário
-];
+interface SubjectData {
+    id: number;
+    name: string;
+    expectedDuration: number;
+}
+
+interface ClassData {
+    id: number;
+    courseId: CourseData;
+    duration: number;
+    initialDate: string;
+}
+
+interface CourseData {
+    id: number;
+    name: string;
+    description: string;
+}
 
 export const SubjectClasses = () => {
+
+    const [subjectClasses, setSubjectClasses] = useState<SubjectClassData[]>([])
+
+    useEffect(() => {
+
+        const getSubjectClasses = async () => {
+            try {
+                const response = await api.get(`subjectclass/1`)
+                setSubjectClasses(response.data)
+            } catch (error) {
+                console.error(error)
+                setSubjectClasses([])
+            }
+        }
+
+        getSubjectClasses()
+    }, [])
+
+
     return (
         <>
             <div style={{ display: "flex", justifyContent: "center", overflow: "auto",  padding: "20px 0"}}>
                 <StyledBox>
-                    {cardData.map(card => (
-                        <Subject key={card.id} title={card.title} content={card.content} classes={card.classes} />
+                    {subjectClasses.map(subject => (
+                        <Subject key={subject.id} title={subject.subjectId.name} plannedDuration={subject.duration} />
                     ))}
                 </StyledBox>
 

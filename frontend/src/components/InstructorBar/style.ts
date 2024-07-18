@@ -16,7 +16,7 @@ export const StyledLogoutButton = styled.button`
     border: none;
 
     &:hover{
-        background-color: gray;
+        scale: 1.05;
     }
 
     img{

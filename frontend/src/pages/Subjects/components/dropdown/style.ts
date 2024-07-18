@@ -108,6 +108,7 @@ export const StyledCloseButton = styled.button`
     background-color: #e60000;
   }
 `;
+
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;

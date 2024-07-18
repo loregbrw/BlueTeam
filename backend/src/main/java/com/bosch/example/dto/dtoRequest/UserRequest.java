@@ -11,3 +11,4 @@ public record UserRequest(
     UserRoleEnum role,
     LocalDate birthDate
 ) { }
+
