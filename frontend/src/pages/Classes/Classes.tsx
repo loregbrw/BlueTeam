@@ -4,7 +4,7 @@ import { StyledInputDiv } from "./style";
 import { useEffect, useState } from "react";
 import { api } from "../../service/api";
 import { StyledAddButton, StyledCloseButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "../Subjects/components/dropdown/style";
-import { StyledDropdown } from "../Login/components/loginForm/styled";
+import { StyledDropdown } from "../../components/loginForm/styled";
 import { toast } from "react-toastify";
 
 export const Classes = () => {
