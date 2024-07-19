@@ -6,8 +6,6 @@ import lupa from "../../assets/lupa.png"
 import { useEffect, useState } from "react";
 import { api } from "../../service/api";
 
-
-
 export const Classes = () => {
 
     interface classData {
@@ -59,7 +57,7 @@ export const Classes = () => {
                 <StyledBox>
                     {
                         classes.map((classItem) => (
-                            <Card key={classItem.id} title={classItem.name} duration={classItem.duration} classes={classItem.courseId.name}
+                            <Card key={classItem.id} id={classItem.id} title={classItem.name} duration={classItem.duration} classes={classItem.courseId.name}
                                 initialDate={
                                     convertToBrazilianDate(classItem.initialDate)} />
                         ))

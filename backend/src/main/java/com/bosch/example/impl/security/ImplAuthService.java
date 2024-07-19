@@ -51,7 +51,7 @@ public class ImplAuthService implements AuthService {
         String token = createToken(user.getId(), user.getRole());
 
         try {
-            AuthTokenDto auth = new AuthTokenDto(user.getRole(), token);
+            AuthTokenDto auth = new AuthTokenDto(user.getRole(), token, user.getId());
             return ResponseEntity.ok().body(auth); 
         } catch (Exception e) {
             throw new InternalServerErrorException();
