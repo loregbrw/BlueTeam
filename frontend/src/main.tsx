@@ -15,7 +15,7 @@ import { Subjects } from './pages/Subjects/Subjects.tsx'
 import { Lessons } from './pages/Lessons/Lessons.tsx'
 import { Profile } from './pages/Profile/Profile.tsx'
 import { Classes } from './pages/Classes/Classes.tsx'
-
+import { ChangePassword } from './pages/ChangePassword/index.tsx'
 
 
 const router = createBrowserRouter([
@@ -24,6 +24,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <Login/>
+    </App>
+  },
+  {
+    path: "/password",
+    element:
+    <App>
+      <ChangePassword />
     </App>
   },
   {

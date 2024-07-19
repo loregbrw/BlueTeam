@@ -8,7 +8,7 @@ export const Instructorbar = () => {
 
     const navigate = useNavigate();
     const handleLogout = () => {
-        /*falta a lógica do logout*/
+        localStorage.clear()
         navigate('/')
     }
 
