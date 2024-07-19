@@ -7,6 +7,7 @@ import { api } from "../../service/api"
 import { useEffect, useState } from "react"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
 import { Card } from "../Subjects/components/card/Card"
+import { toast } from "react-toastify"
 
 interface ClassData {
     id: number;
@@ -122,11 +123,11 @@ export const Class = () => {
                 auth: token
               }
           });
-          alert("Matéria criada!")
+          toast.success("Matéria criada!")
             console.log(response)
           closeModal(); 
         } catch (error) {
-          console.error('Error adding subject:', error);
+          toast.error('Erro em adicionar matéria');
           alert("Erro ao criar matéria")
         }
       };  
