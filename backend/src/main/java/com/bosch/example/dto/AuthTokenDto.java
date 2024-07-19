@@ -4,5 +4,6 @@ import com.bosch.example.Enum.UserRoleEnum;
 
 public record AuthTokenDto(
     UserRoleEnum role,
-    String token
+    String token,
+    Long id
 ) {}

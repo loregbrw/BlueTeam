@@ -31,7 +31,7 @@ public class CourseController {
 
     @PostMapping("/auth")
     public ResponseEntity<CourseData> createCourse(@RequestBody CourseRequest course) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor) && userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             CourseData classCreated = courseService.createCourse(new CourseRequest(course.name(), course.description()));

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
-interface ModalContainerProps {
-    show: boolean;
+interface StyledModalContainerProps {
+    show?: boolean;
 }
 
 export const StyledCalendar = styled.div`
@@ -57,21 +57,33 @@ export const StyledCalendar = styled.div`
 
     .react-calendar__tile {
         border-radius: 5px;
-        height: calc(65vh / 5);
+        height: calc(67vh / 6);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
     }
 
-    .react-calendar__tile--active {
+    /* .react-calendar__tile--active {
         background: brown;
         color: white;
         text-align: center;
-    }   
+    }  */
+
+    .react-calendar__tile:hover{
+        background: brown;
+        color: white;
+        text-align: center;
+    }
+    
+    .highlight{
+        background-color: #f46d75;
+        color: white;
+        width: 5px;
+    }
 `
 
-export const StyledModalContainer = styled.div<ModalContainerProps>`
+export const StyledModalContainer = styled.div<StyledModalContainerProps>`
     display: ${props => props.show ? 'block' : 'none'};
     position: fixed;
     z-index: 1;
@@ -79,30 +91,51 @@ export const StyledModalContainer = styled.div<ModalContainerProps>`
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: rgba(0,0,0,0.4);
 `
 export const StyledModalContent = styled.div`
     flex-direction: column;
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
     border: 1px solid #888;
     width: 40%;
     border-radius: 8px;
     position: relative;
 `;
 
-export const StyledCloseButton = styled.span`
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
+export const StyledCloseButton = styled.button`
     position: absolute;
     top: 10px;
-    right: 20px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 40px;
     cursor: pointer;
 
     &:hover {
         color: black;
+    }
+`
+
+export const StyledForm = styled.form`
+    padding: 80px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+`
+
+export const StyledButton = styled.button`
+    margin-top: 20px;
+    width: 5vw;
+    height: 3vh;
+    border-radius: 5px;
+    border: none;
+    background-color: wheat;
+    color: brown;
+    cursor: pointer;
+
+    &:hover{
+        color: white;
+        background-color: brown;
     }
 `
