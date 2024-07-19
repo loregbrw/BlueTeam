@@ -53,16 +53,6 @@ export const MainContainer = styled.div`
     align-items: center;
 `
 
-export const PasswordWarning = styled.span`
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  text-align: center;
-  color: #c93d50;
-  width: 90%;
-`;
-
 export const ProgressBar = styled.div<{ fillValue: number; backgroundClass: string }>`
   height: 10px;
   border-radius: 50px;  

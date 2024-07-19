@@ -110,6 +110,14 @@ export const FormPassword: React.FC = () => {
           onChange={handleChangePassword}
           required
         />
+        <p>Confirmação da senha</p>
+        <StyledInput
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+          style={{padding:'0px'}}
+        />
         <div className="progress" style={{ height: "20px", width: "100%", marginBottom: "10px" }}>
           <ProgressBar
             id="password-strength"
@@ -122,18 +130,6 @@ export const FormPassword: React.FC = () => {
             backgroundClass={backgroundClass}
           />
         </div>
-        {strength < 5 && (
-          <PasswordWarning>
-            Sua senha é muito fraca!
-          </PasswordWarning>
-        )}
-        <p>Confirmação da senha</p>
-        <StyledInput
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
         <div
           style={{
             display: "flex",
