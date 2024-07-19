@@ -17,7 +17,8 @@ import { Lessons } from './pages/Lessons/Lessons.tsx'
 import { Profile } from './pages/Profile/Profile.tsx'
 import { ToastContainer } from 'react-toastify'
 import { Classes } from './pages/Classes/Classes.tsx'
-import { ChangePassword } from './pages/ChangePassword/index.tsx'import { Reports } from './pages/Reports/Reports.tsx';
+import { ChangePassword } from './pages/ChangePassword/index.tsx'
+import { Reports } from './pages/Reports/Reports.tsx';
 
 
 
