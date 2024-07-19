@@ -3,9 +3,12 @@ export interface ClassData{
     name: string;
 }
 
-export interface SubjectClassData{
+export interface SubjectClassData {
     id: number;
-}
+    subjectId: number,
+    classId: number,
+    duration: number,
+  };
 
 export interface LessonData{
     id: number;

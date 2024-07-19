@@ -24,7 +24,7 @@ import { toast } from "react-toastify"
 
 export const Home = () => {
 
-    const [userType, setUserType] = useState("1");
+    const [userType, setUserType] = useState(localStorage.getItem("role"))
     const [lessons, setLessons] = useState<LessonData[]>([]);
     const [classes, setClasses] = useState<ClassData[]>([]);
     const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
@@ -152,7 +152,7 @@ export const Home = () => {
         <>
             <main style={{ height: "100vh", padding: "90px 3% 3% 3%", fontFamily: "" }}>
                 <h1 style={{ margin: "10px" }}>Calendário</h1>
-                {userType === "0" || userType === "1" ? (
+                {userType === "Adm" || userType === "Instructor" ? (
                     <div style={{justifyContent: "end"}}>
                         <label htmlFor="classDropdown">Selecione a Turma:</label>
                         <select id="classDropdown" onChange={handleClassChange}>
@@ -180,7 +180,7 @@ export const Home = () => {
                                     <p>Data: {modalLessonData.date.toLocaleDateString()}</p>
                                     <p>Turno: {modalLessonData.shift}</p>
                                     <p>Descrição: {modalLessonData.description}</p>
-                                    {(userType === "0" || userType === "1") && (
+                                    {(userType === "Adm" || userType === "Instructor") && (
                                         <>
                                             <StyledButton onClick={() => setModalMode("edit")}>Editar</StyledButton>
                                             <StyledButton onClick={handleDeleteLesson}>Excluir</StyledButton>
@@ -209,7 +209,7 @@ export const Home = () => {
                                     <label>Descrição</label>
                                     <textarea name="description" value={formData.description} onChange={handleChange} />
 
-                                    {(userType === "0" || userType === "1") && (
+                                    {(userType === "Adm" || userType === "Instructor") && (
                                         <StyledButton onClick={handleSaveLesson}>Salvar</StyledButton>)}
                                 </StyledForm>
                             </>
