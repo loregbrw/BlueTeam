@@ -91,7 +91,7 @@ const router = createBrowserRouter([
     </App>
   },
   {
-    path: "/reports",
+    path: "/reports/:userId",
     element:
     <App>
       <Reports/>
