@@ -37,6 +37,11 @@ public class UserSkillsController {
         }
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<UserSkillsData>> getUserSkills() {
+        return ResponseEntity.ok().body(userSkillsService.getAll());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<List<UserSkillsData>> getUserSkillsByUser(@PathVariable Long id) {
         return ResponseEntity.ok().body(userSkillsService.getUserSkillsByUser(id));
