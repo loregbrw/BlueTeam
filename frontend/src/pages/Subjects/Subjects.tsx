@@ -2,7 +2,7 @@
 import { StyledBox, StyledMain } from "./style";
 import { StyledInputDiv } from "./style";
 import { Dropdown } from "./components/dropdown/Dropdown";
-import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./components/dropdown/style";
+import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style";
 import { useEffect, useState } from "react";
 import { api } from "../../service/api";
 import { Card } from "./components/card/Card";
@@ -153,6 +153,7 @@ export const Subjects = () => {
             {subjects.map(subject => (
               <Card key={subject.id} title={subject.name} plannedDuration={subject.expectedDuration} />
             ))}
+            
           </StyledBox>
 
         </div>

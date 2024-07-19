@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { StyledAddButton, StyledCloseButton, StyledContainer, StyledDropdownButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
+import { StyledAddButton, StyledBoxCard, StyledCloseButton, StyledContainer, StyledDropdownButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
 import { StyledBox } from './style';
 import { api } from '../../../service/api';
 import { useParams } from 'react-router-dom';
+import { Card } from './card/Card';
 
 export const StyledMain = () => {
     
-        const [isModalOpen, setIsModalOpen] = useState(false);
-        const [username, setUsername] = useState('');
-        const [classSelected, setClass] = useState('');
-        const [edv, setEdv] = useState('');
-        const [email, setEmail] = useState('');
-        const [role, setRole] = useState('');
-        const [birthDate, setBirthDate] = useState('');
+    const [username, setUsername] = useState('');
+    const [classSelected, setClass] = useState('');
+    const [edv, setEdv] = useState('');
+    const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
+    const [birthDate, setBirthDate] = useState('');
     
-        const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
+    const [abilityName, setAbilityName] = useState('');
+    const [strenght, setStrenght] = useState('');
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
+    const [isAbilityModalOpen, setAbilityModalOpen] = useState(false);
     
     interface userData {
         id: number;
@@ -49,6 +54,21 @@ export const StyledMain = () => {
         "Apprentice"
     ]
 
+
+    interface abilityUserData {
+        userId: userData;
+        name: string;
+        strength: string;
+    }
+    
+    const abilityData : string[] = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+    ]
+    
     const [classes, setClassData] = useState<classData[]>([])
     const { userId } = useParams<{ userId: string }>();
 
@@ -66,6 +86,7 @@ export const StyledMain = () => {
     },[])
     
     const [user, setUserData] = useState<userData>()
+    const [ability, setAbilityData] = useState<abilityUserData[]>([])
 
     const userType = localStorage.getItem("role")
 
@@ -74,6 +95,12 @@ export const StyledMain = () => {
             try{
                 const response = await api.get(`user/id/${userId}`)
                 setUserData(response.data)
+                setUsername(response.data.name)
+                setBirthDate(response.data.birthDate)
+                setClass(response.data.classId.id)
+                setEdv(response.data.edv)
+                setEmail(response.data.email)
+                setRole(response.data.role)
                 console.log(response.data)
             } catch(error){
                 console.error(error);
@@ -81,6 +108,19 @@ export const StyledMain = () => {
         }
         getUser()
     },[])
+
+    useEffect(() => {
+        const getAbilities = async () => {
+            try{
+                const response = await api.get(`ability/${userId}`)
+                setAbilityData(response.data)
+                console.log(response.data)
+            } catch(error) {
+                console.error(error);
+            }
+        }
+        getAbilities()
+    }, [])
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -98,6 +138,13 @@ export const StyledMain = () => {
         setAverageGraphOpen(false);
     }
 
+    const openAbility = () => {
+        setAbilityModalOpen(true);
+    }
+
+    const closeAbility = () => {
+        setAbilityModalOpen(false);
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -127,6 +174,31 @@ export const StyledMain = () => {
         }
       };
 
+      const handleAbility = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        const setAbility = {
+            userId: userId,
+            name: abilityName,
+            strenght: strenght,
+        };
+
+        try {
+            const response = await api.post(`ability/auth`, setAbility,{
+                headers: {
+                    auth: `${token}`
+                }});
+            setAbilityData(response.data)
+            alert("Dados atualizados!")
+            console.log(response)
+            closeAbility()
+        } catch (error) {
+            console.error("Erro ao atualizar os dados:", error);
+        }
+      };
+
     return (
         <> 
 
@@ -145,7 +217,10 @@ export const StyledMain = () => {
                 <StyledContainer>
                 {userType !== "Apprentice" && (
 
-                    <StyledAddButton onClick={openModal}>Editar dados</StyledAddButton>
+                    <>
+                        <StyledDropdownButton onClick={openAbility}>+ Habilidade</StyledDropdownButton>
+                        <StyledAddButton onClick={openModal}>Editar dados</StyledAddButton>
+                    </>
                 )}
                     {isModalOpen && (
                             <StyledModalOverlay>
@@ -158,51 +233,52 @@ export const StyledMain = () => {
                                     <StyledInput
                                         type="text"
                                         placeholder="Nome do aluno"
-                                        value={user?.name}
+                                        value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
                                     />
                                     <StyledSelect
-                                        value={user?.classId.name}
+                                        value={classSelected}
                                         onChange={(e) => setClass(e.target.value)}
                                         required
                                     >
-                                    {classes.map((classItem, index) => (
-                                        <option key={index} value={classItem.id}>{classItem.name}</option>
+                                    {classes.map((classItem) => (
+                                        <option key={classItem.id} value={classItem.id}>{classItem.name}</option>
+                                        
                                     ))
                                     }
                                     </StyledSelect>
                                     <StyledInput
                                         type="text"
                                         placeholder="EDV"
-                                        value={user?.edv}
+                                        value={edv}
                                         onChange={(e) => setEdv(e.target.value)}
                                         required
                                     />
                                     <StyledInput
                                         type="text"
                                         placeholder="Email"
-                                        value={user?.email}
+                                        value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
 
-                                    {userType !== "Apprentice" && (
-                                        <StyledSelect
-                                            value={user?.role}
-                                            onChange={(e) => setRole(e.target.value)}
-                                            required
-                                        >
-                                            <option value="">Selecione o Cargo</option>
-                                            {
-                                              roleData.map((i) =>
-                                                <option value={i}>{i}</option>  
-                                            )}
-                                        </StyledSelect>
-                                    )}
+                         
+                                    <StyledSelect
+                                        value={role}
+                                        onChange={(e) => setRole(e.target.value)}
+                                        required
+                                    >
+                                        <option value="">Selecione o Cargo</option>
+                                        {
+                                            roleData.map((i) =>
+                                            <option value={i}>{i}</option>  
+                                        )}
+                                    </StyledSelect>
+                                    
                                     <StyledInput
                                         type="date"
-                                        value={user?.birthDate}
+                                        value={birthDate}
                                         onChange={(e) => setBirthDate(e.target.value)}
                                         required
                                     />
@@ -210,6 +286,43 @@ export const StyledMain = () => {
                                     <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
                                 </div>
                     
+                        </StyledForm>
+                    </StyledModalContent>
+                </StyledModalOverlay>
+            )}
+
+        {isAbilityModalOpen && (
+            <StyledModalOverlay>
+                <StyledModalContent>
+                    <StyledCloseButton onClick={closeAbility}>X</StyledCloseButton>
+                        <h2>Adicionar habilidade</h2>
+                        <StyledForm onSubmit={handleAbility}>
+                        
+                            <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+                                <StyledInput
+                                    type="text"
+                                    placeholder="Nome da habilidade"
+                                    value={abilityName}
+                                    onChange={(e) => setAbilityName(e.target.value)}
+                                    required
+                                />
+                              
+                                    <StyledSelect
+                                        value={strenght}
+                                        onChange={(e) => setStrenght(e.target.value)}
+                                        required
+                                    >   
+                                            <><option value="">Selecione um nível</option>
+                                                {abilityData.map((i) =>(
+                                                <option value={i}>{i}</option>  
+                                                ))}
+                                            
+                                            </>
+                                    </StyledSelect>
+
+                                <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                            </div>
+    
                         </StyledForm>
                     </StyledModalContent>
                 </StyledModalOverlay>
@@ -235,6 +348,23 @@ export const StyledMain = () => {
                 </StyledBox>
 
             </div>
+
+            <hr style={{ margin: "25px 0" }} />
+            {userType !== "Apprentice"  &&(
+                <>
+                <h1>Habilidades</h1>
+                <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
+                
+                    <StyledBoxCard>
+                        {ability.map(index => (
+                            <Card name={index.name} strenght={index.strength} />
+                        ))}
+                    </StyledBoxCard>
+
+                </div>
+                </>
+            )}
+
         </>
     )
 }

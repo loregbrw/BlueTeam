@@ -39,6 +39,14 @@ export const StyledBox = styled.div`
     align-self: center;
 `
 
+export const StyledBoxCard = styled.div`
+    display: inline-flex;
+    flex-wrap: wrap;
+    width: max-content;
+    padding: 50px;
+    justify-content: center;
+`
+
 export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
