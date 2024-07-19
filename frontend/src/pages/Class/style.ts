@@ -110,3 +110,17 @@ export const StyledDiv = styled.div`
     width: 350px;
 
 `
+
+export const StyledDropdown = styled.select`
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+`;

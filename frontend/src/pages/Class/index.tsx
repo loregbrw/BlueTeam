@@ -1,10 +1,12 @@
 import { Apprentices } from "./components/Apprentices/Apprentices"
 import { SubjectClasses } from "./components/SubjectClasses/SubjectClasses"
-import { StyledDiv, StyledMain } from "./style"
+import { StyledBox, StyledDiv, StyledDropdown, StyledMain } from "./style"
 import { StyledButton } from "./components/SubjectClasses/style"
 import { useParams } from "react-router-dom"
 import { api } from "../../service/api"
 import { useEffect, useState } from "react"
+import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
+import { Card } from "../Subjects/components/card/Card"
 
 interface ClassData {
     id: number;
@@ -20,10 +22,42 @@ interface CourseData {
     description: string;
 }
 
+interface Subject {
+    id: number;
+    name: string;
+    expectedDuration: number;
+  }
+
+  interface SubjectClass {
+    subjectId: number,
+    classId: number,
+    duration: number,
+  };
+
+  interface SubjectClassName {
+    subjectId: Subject,
+    classId: number,
+    duration: number,
+  };
+
 export const Class = () => {
 
     const { classId } = useParams<{ classId: string }>();
     const [classData, setClassData] = useState<ClassData | null>(null);
+    const [subjects, setSubjects] = useState<Subject[]>([])
+    const [subjectsClass, setSubjectsClass] = useState<SubjectClass[]>([])
+    const [subjectsClassName, setSubjectsClassName] = useState<SubjectClassName[]>([])
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedSubject, setSelectedSubject] = useState<string>("");
+    const [duration, setDuration] = useState('');
+
+    const openModal = () => {
+        setIsModalOpen(true);
+      };
+    
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
 
     useEffect(() => {
         const getClassData = async () => {
@@ -40,6 +74,62 @@ export const Class = () => {
 
         getClassData();
     }, [classId]);
+
+    useEffect(() => {
+        const getSubjects = async () => {
+          try {
+            const response = await api.get(`subject`)
+            setSubjects(response.data)
+          } catch (error) {
+            console.error(error);
+            setSubjects([])
+          }
+        }
+        getSubjects()
+      }, [])
+
+      useEffect(() => {
+        const getSubjectsClass = async () => {
+          try {
+            const response = await api.get(`subjectclass/${classId}`)
+            setSubjectsClass(response.data)
+          } catch (error) {
+            console.error(error);
+            setSubjectsClass([])
+          }
+        }
+        getSubjectsClass()
+      }, [])
+
+      const handleSubjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedSubject(e.target.value);
+      };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        const newSubject = {
+            subjectId: selectedSubject,
+            classId: classId,
+            duration: parseFloat(duration),
+          };
+
+        try {
+          const response = await api.post('/subjectclass/auth', newSubject, {
+            headers: {
+                auth: token
+              }
+          });
+          alert("Matéria criada!")
+            console.log(response)
+          closeModal(); 
+        } catch (error) {
+          console.error('Error adding subject:', error);
+          alert("Erro ao criar matéria")
+        }
+      };  
 
     return (
         <>
@@ -58,9 +148,52 @@ export const Class = () => {
                 <hr style={{ margin: "25px 0" }} />
                 <div style={{display: "flex", justifyContent: "space-between"}}>
                     <h1>Matérias</h1>
-                    <StyledButton>+ Matéria</StyledButton>
+                    <StyledContainer>
+            <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
+
+            {isModalOpen && (
+              <StyledModalOverlay>
+                <StyledModalContent>
+                  <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
+                  <h2>Adicionar Nova Matéria</h2>
+                  <StyledForm onSubmit={handleSubmit}>
+                        <StyledDropdown
+                            value={selectedSubject}
+                            onChange={handleSubjectChange}
+                        >
+                            <option value="" disabled>Select a Subject</option>
+                            {subjects.map((subject) => (
+                                <option key={subject.id} value={subject.id}>
+                                    {subject.name}
+                                </option>
+                            ))}
+                        </StyledDropdown>
+                        <StyledInput
+                            placeholder="Duração Planejada"
+                            value={duration}
+                            onChange={(e) => setDuration(e.target.value)}
+                            required
+                        />
+                        <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                    </StyledForm>
+                </StyledModalContent>
+              </StyledModalOverlay>
+            )}
+
+
+          </StyledContainer>
                 </div>
-                <SubjectClasses />
+                <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
+  <StyledBox>
+    {subjectsClass.map((subject) => (
+      <Card
+        key={subject.subjectId.id}
+        title={subject.subjectId.name}
+        plannedDuration={subject.subjectId.expectedDuration}
+      />
+    ))}
+  </StyledBox>
+</div>
             </StyledMain>
         </>
     )
