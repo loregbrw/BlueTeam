@@ -31,8 +31,7 @@ const Appbar = () => {
         <>
             <StyledAppbar>
                 <StyledImage src={boschColors} alt="Bosch Colors Logo" />
-                {/* {navBarComponent} */}
-                <AdmBar/>
+                {navBarComponent}
             </StyledAppbar>
         </>
     );
