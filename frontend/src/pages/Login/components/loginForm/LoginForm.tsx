@@ -1,8 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { MainContainer, StyledForm, StyledInput, StyledButton } from "./styled";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
 import { api } from "../../../../service/api";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
   const [edv, setEdv] = useState("");
@@ -13,8 +12,8 @@ export const LoginForm = () => {
     e.preventDefault();
 
     const formValue = {
-        edv: parseFloat(edv),
-        password: password
+      edv: parseFloat(edv),
+      password: password
     }
 
     try {
@@ -22,6 +21,8 @@ export const LoginForm = () => {
 
       if (response.data && response.data.token) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("id", response.data.id);
         console.log("Login bem-sucedido. Token salvo no localStorage.");
         navigate('/subjects')
       } else {
@@ -39,14 +40,14 @@ export const LoginForm = () => {
           <h2>Login</h2>
         </div>
         <p>EDV</p>
-        <StyledInput 
+        <StyledInput
           type="text"
           value={edv}
           onChange={(e) => setEdv(e.target.value)}
           required
         />
         <p>Senha</p>
-        <StyledInput 
+        <StyledInput
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
