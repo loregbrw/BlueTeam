@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MainContainer, StyledForm, StyledInput, StyledButton } from "./styled";
-import { api } from "../../../../service/api";
+import { api } from "../../service/api";
 import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {

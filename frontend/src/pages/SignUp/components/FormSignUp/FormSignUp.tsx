@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { api } from "../../../../service/api"
-import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../Login/components/loginForm/styled"
+import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../../components/loginForm/styled"
 
 export const FormSignUp = () => {
 

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const StyledNavBar = styled.div`
@@ -25,7 +26,7 @@ export const StyledLogoutButton = styled.button`
     }
 `
 
-export const StyledLink = styled.a`
+export const StyledLink = styled(Link)`
     text-decoration: none;
     color: black;
     cursor: pointer;

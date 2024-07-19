@@ -50,6 +50,10 @@ const router = createBrowserRouter([
     </App>
   },
   {
+    path: "/subjectclass/:subjectclassId"
+
+  },
+  {
     path: "/classes",
     element:
     <App>
