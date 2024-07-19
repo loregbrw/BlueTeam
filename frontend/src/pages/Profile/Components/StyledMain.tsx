@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyledAddButton, StyledCloseButton, StyledContainer, StyledDropdownButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
+import { RedButton, StyledAddButton, StyledCloseButton, StyledContainer, StyledDropdownButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
 import { StyledBox } from './style';
 import { api } from '../../../service/api';
 import { useParams } from 'react-router-dom';
@@ -132,7 +132,8 @@ export const StyledMain = () => {
 
             <div style={{display: 'flex', justifyContent: 'end', padding: '10px'}}>
                 <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
-                
+
+            
                 {isAverageGraphOpen && (
                     <StyledModalOverlay>
                         <StyledModalContent>
@@ -145,6 +146,10 @@ export const StyledMain = () => {
                 {userType !== "Apprentice" && (
 
                     <StyledAddButton onClick={openModal}>Editar dados</StyledAddButton>
+                )}
+
+                {userType !== "Apprentice" &&(
+                    <RedButton onClick={openModal}>Relatorios</RedButton>
                 )}
                     {isModalOpen && (
                             <StyledModalOverlay>
