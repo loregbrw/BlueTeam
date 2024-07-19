@@ -17,7 +17,7 @@ import { Lessons } from './pages/Lessons/Lessons.tsx'
 import { Profile } from './pages/Profile/Profile.tsx'
 import { ToastContainer } from 'react-toastify'
 import { Classes } from './pages/Classes/Classes.tsx'
-import { Reports } from './pages/Reports/Reports.tsx';
+import { ChangePassword } from './pages/ChangePassword/index.tsx'import { Reports } from './pages/Reports/Reports.tsx';
 
 
 
@@ -27,6 +27,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <Login/>
+    </App>
+  },
+  {
+    path: "/password",
+    element:
+    <App>
+      <ChangePassword />
     </App>
   },
   {
@@ -42,6 +49,10 @@ const router = createBrowserRouter([
     <App>
       <Class />
     </App>
+  },
+  {
+    path: "/subjectclass/:subjectclassId"
+
   },
   {
     path: "/classes",
@@ -72,7 +83,7 @@ const router = createBrowserRouter([
     </App>
   },
   {
-    path: "/profile",
+    path: "/profile/:userId",
     element:
     <App>
       <Profile/>

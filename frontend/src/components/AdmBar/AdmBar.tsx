@@ -22,10 +22,10 @@ export const AdmBar = () => {
                         gap: "30px"
                     }
                 }>
-                    <StyledLink href="#">Perfil</StyledLink>
-                    <StyledLink href="#">Adicionar Usuário</StyledLink>
-                    <StyledLink href="#">Turmas</StyledLink>
-                    <StyledLink href="#">Matérias</StyledLink>
+                    <StyledLink to={`/profile/${localStorage.getItem("id")}`}>Perfil</StyledLink>
+                    <StyledLink to={"/signup"}>Adicionar Usuário</StyledLink>
+                    <StyledLink to={"/classes"}>Turmas</StyledLink>
+                    <StyledLink to={"/subjects"}>Matérias</StyledLink>
                     <StyledLogoutButton onClick={handleLogout}>
                         <img src={LogoutIcon} alt="logout"/>
                     </StyledLogoutButton>

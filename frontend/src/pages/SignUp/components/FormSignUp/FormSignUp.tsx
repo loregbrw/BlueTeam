@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { StyledDropdown, StyledForm } from "../../../Login/components/loginForm/styled"
-import { StyledInput } from "../../../Login/components/loginForm/styled"
-import { MainContainer } from "../../../Login/components/loginForm/styled"
-import { StyledDateInput } from "../../../Login/components/loginForm/styled"
-import { StyledButton } from "../../../Login/components/loginForm/styled"
-import { StyledMiniBox } from "../../../Login/components/loginForm/styled"
 import { api } from "../../../../service/api"
+import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../../components/loginForm/styled"
 
 export const FormSignUp = () => {
 

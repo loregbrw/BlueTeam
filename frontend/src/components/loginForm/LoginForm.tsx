@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MainContainer, StyledForm, StyledInput, StyledButton } from "./styled";
-import { api } from "../../../../service/api";
+import { api } from "../../service/api";
 import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
@@ -24,7 +24,16 @@ export const LoginForm = () => {
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("id", response.data.id);
         console.log("Login bem-sucedido. Token salvo no localStorage.");
-        navigate('/class/2')
+
+        console.log(edv)
+        console.log(password)
+
+        if (edv == password) {
+          navigate('/password')
+          return;
+        }
+
+        navigate('/home')
       } else {
         console.error("Token não encontrado na resposta.");
       }

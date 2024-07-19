@@ -1,11 +1,11 @@
-import { ProfileMain } from "./Components/StyledMain" 
-
+import { StyledMain } from "./Components/StyledMain"
+import { RightMain } from "./style"
 export const Profile = () => {
     return (
         <>
-            <ProfileMain>
-                
-            </ProfileMain>  
+            <RightMain>
+                <StyledMain/>
+            </RightMain>
         </>
     )
 }
