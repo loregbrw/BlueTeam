@@ -5,7 +5,7 @@ import { StyledButton } from "./components/SubjectClasses/style"
 import { useParams } from "react-router-dom"
 import { api } from "../../service/api"
 import { useEffect, useState } from "react"
-import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
+import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledGraphContent, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
 import { Card } from "../Subjects/components/card/Card"
 import { toast } from "react-toastify"
 import AppBar from "../../components/AppBar/AppBar"
@@ -50,6 +50,7 @@ export const Class = () => {
     const [subjectsClass, setSubjectsClass] = useState<SubjectClass[]>([])
     const [subjectsClassName, setSubjectsClassName] = useState<SubjectClassName[]>([])
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
     const [selectedSubject, setSelectedSubject] = useState<string>("");
     const [duration, setDuration] = useState('');
 
@@ -60,6 +61,15 @@ export const Class = () => {
       const closeModal = () => {
         setIsModalOpen(false);
       };
+
+      const openAverageGraph = () => {
+        setAverageGraphOpen(true);
+    }
+
+    const closeAverageGraph = () => {
+        setAverageGraphOpen(false);
+    }
+
 
     useEffect(() => {
         const getClassData = async () => {
@@ -137,7 +147,11 @@ export const Class = () => {
         <>
         <AppBar></AppBar>
             <StyledMain>
-                <h1>{classData?.name} - Aprendizes</h1>
+                <div style={{width: '100%', display: 'flex', alignItems: 'justify-between'}}>
+                <h1 style={{width: '100%'}}>{classData?.name} - Aprendizes</h1>
+                    <StyledAddButton onClick={openAverageGraph}>Média</StyledAddButton>
+
+                </div>
                 <div style={{width: "100%", display: "flex", justifyContent: "space-between", flexWrap: "wrap", marginTop: "25px"}}>
                     <StyledDiv>
                         <span>Curso: {classData?.courseId.name}</span>
@@ -181,6 +195,15 @@ export const Class = () => {
                     </StyledForm>
                 </StyledModalContent>
               </StyledModalOverlay>
+            )}
+
+            {isAverageGraphOpen && (
+                <StyledModalOverlay>
+                    <StyledGraphContent>
+                        <StyledCloseButton onClick={closeAverageGraph}>x</StyledCloseButton>
+                        <img width={'100%'} src={`http://127.0.0.1:4040/class/${classId}`}></img>
+                    </StyledGraphContent>
+                </StyledModalOverlay>
             )}
 
 
