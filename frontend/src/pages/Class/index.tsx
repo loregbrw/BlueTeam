@@ -29,14 +29,14 @@ interface Subject {
   }
 
   interface SubjectClass {
-    subjectId: number,
+    subjectId: Subject,
     classId: number,
     duration: number,
   };
 
   interface SubjectClassName {
     subjectId: Subject,
-    classId: number,
+    classId: ClassData,
     duration: number,
   };
 

@@ -21,8 +21,8 @@ export const ApprendiceBar = () => {
                         gap: "30px"
                     }
                 }>
-                    <StyledLink href="/profile">Perfil</StyledLink>
-                    <StyledLink href="/subjects">Matérias</StyledLink>
+                    <StyledLink to={`/profile/${localStorage.getItem("id")}`}>Perfil</StyledLink>
+                    <StyledLink to={"/subjects"}>Matérias</StyledLink>
                     <StyledLogoutButton onClick={handleLogout}>
                         <img src={LogoutIcon} alt="logout"/>
                     </StyledLogoutButton>
