@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
+import { StyledAddButton, StyledCloseButton, StyledContainer, StyledDropdownButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
 import { StyledBox } from './style';
 import { api } from '../../../service/api';
+import { useParams } from 'react-router-dom';
 
 export const StyledMain = () => {
     
@@ -18,10 +19,12 @@ export const StyledMain = () => {
     
     interface userData {
         id: number;
-        classId: string;
-        username: string;
+        classId: classData;
         edv: number;
+        foto: string;
+        name: string;
         email: string;
+        password: string;
         role: string;
         birthDate: string;
     }
@@ -48,6 +51,7 @@ export const StyledMain = () => {
     ]
 
     const [classes, setClassData] = useState<classData[]>([])
+    const { userId } = useParams<{ userId: string }>();
 
     useEffect(() => {
         const getClass = async () =>{
@@ -68,15 +72,8 @@ export const StyledMain = () => {
     useEffect(() => {
         const getUser = async () =>{
             try{
-                const response = await api.get(`user/id/${id}`)
+                const response = await api.get(`user/id/${userId}`)
                 setUserData(response.data)
-                setUsername(response.data.username)
-                setClass(response.data.classId)
-                setEdv(response.data.edv)
-                setEmail(response.data.email)
-                setRole(response.data.role)
-                setUserType(response.data.role)
-                setBirthDate(response.data.birthDate)
                 console.log(response.data)
             } catch(error){
                 console.error(error);
@@ -119,7 +116,7 @@ export const StyledMain = () => {
         try {
             const response = await api.put("user/auth/1", updateUser, {
                 headers: {
-                    auth: 'Bearer ${token}'
+                    auth: `${token}`
                 }});
             
             alert("Dados atualizados!")
@@ -132,14 +129,15 @@ export const StyledMain = () => {
 
     return (
         <> 
+
             <div style={{display: 'flex', justifyContent: 'end', padding: '10px'}}>
-                <StyledAddButton onClick={openAverageGraph}>Médias</StyledAddButton>
+                <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
                 
                 {isAverageGraphOpen && (
                     <StyledModalOverlay>
                         <StyledModalContent>
                             <StyledCloseButton onClick={closeAverageGraph}>x</StyledCloseButton>
-                            <img src={'http://127.0.0.1:8080/student/${userId}'}></img>
+                            <img width={'100%'} src={`http://127.0.0.1:4040/student/${userId}`}></img>
                         </StyledModalContent>
                     </StyledModalOverlay>
                 )}
@@ -230,18 +228,18 @@ export const StyledMain = () => {
             </StyledContainer>
         </div>
 
-            <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', overflow: "auto", width: '100%', top: '40px'}}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', overflow: "auto", width: '100%', height: '100%'}}>
                 <StyledBox>
                     <h2>Dados do Usuário</h2>
                    
             <div style={{display: "flex", flexDirection: 'column', gap: '20px'}}>
-                <p>Nome: {username}</p>
-                <p>Turma: {classSelected}</p>
-                <p>EDV: {edv}</p>
-                <p>Email: {email}</p>
-                <p>Data de Nascimento: {birthDate}</p>
-                {userType !== "Adm" && (
-                    <p>Cargo: {role}</p>
+                <p>Nome: {user?.name}</p>
+                <p>Turma: {user?.classId.name}</p>
+                <p>EDV: {user?.edv}</p>
+                <p>Email: {user?.email}</p>
+                <p>Data de Nascimento: {user?.birthDate}</p>
+                {userType !== "Apprentice" && (
+                    <p>Cargo: {user?.role}</p>
                 )}
             </div>
         

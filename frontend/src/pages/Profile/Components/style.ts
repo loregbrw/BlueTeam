@@ -6,7 +6,7 @@ export const StyledContainer = styled.div`
   gap: 10px; 
 `;
 
- export const StyledDropdownContainer = styled.div`
+export const StyledDropdownContainer = styled.div`
   position: relative;
   display: inline-block;
 `;
@@ -29,15 +29,14 @@ export const StyledDropdownButton = styled.button`
 export const StyledBox = styled.div`
     display: inline-flex;
     flex-wrap: wrap;
-    width: max-content;
-    padding: 50px;
+    max-width: 500px;
+    width: 100%;
+    padding: 25px;
     justify-content: center;
     flex-direction: column;
-    border: 1px solid #000000;
     border-radius: 20px;
     background-color: #d7dae0;
     align-self: center;
-    top: 40px;
 `
 
 export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
@@ -100,7 +99,7 @@ export const StyledModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
+  max-width: 700px;
   width: 100%;
 `;
 
