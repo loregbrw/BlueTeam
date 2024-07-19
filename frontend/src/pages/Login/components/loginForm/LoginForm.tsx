@@ -24,7 +24,7 @@ export const LoginForm = () => {
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("id", response.data.id);
         console.log("Login bem-sucedido. Token salvo no localStorage.");
-        navigate('/class/2')
+        navigate('/home')
       } else {
         console.error("Token não encontrado na resposta.");
       }

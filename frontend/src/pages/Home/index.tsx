@@ -16,10 +16,11 @@ import {
     updateLesson,
     deleteLesson,
     ClassData, 
-    SubjectClassData, 
-    LessonData,
-    LessonRequest
+    SubjectClassData,
+    LessonRequest,
+    LessonData
 } from "./apiService"
+import { toast } from "react-toastify"
 
 export const Home = () => {
 
@@ -92,7 +93,7 @@ export const Home = () => {
 
     const handleSaveLesson = async () => {
         if (formData.name.trim() === "" || formData.description.trim() === "") {
-            alert("Nome e descrição não podem estar vazios.");
+            toast.error("Nome e descrição não podem estar vazios.");
             return;
         }
         try {
@@ -104,8 +105,10 @@ export const Home = () => {
                 const newLesson = await createLesson(formData);
                 setLessons([...lessons, newLesson]);
             }
+            setShowModal(false);
         } catch (error) {
             console.error('Erro ao salvar aula:', error);
+            toast.error("Falha ao salvar a aula.");
         }
     };
 
@@ -114,8 +117,10 @@ export const Home = () => {
             try {
                 await deleteLesson(modalLessonData.id);
                 setLessons(lessons.filter(lesson => lesson.id !== modalLessonData.id));
+                toast.success("Aula deletada com sucesso!");
                 setShowModal(false);
             } catch (error) {
+                toast.error("Falha ao tentar deletar a aula.");
                 console.error('Erro ao deletar aula:', error);
             }
         }
@@ -196,9 +201,9 @@ export const Home = () => {
 
                                     <label> Turno:</label>
                                     <select name="shift" value={formData.shift} onChange={handleChange}>
-                                        <option value="Manhã">Manhã</option>
-                                        <option value="Tarde">Tarde</option>
-                                        <option value="Noite">Noite</option>
+                                        <option value="Manhã">Morning</option>
+                                        <option value="Tarde">Afternoon</option>
+                                        <option value="Noite">All day</option>
                                     </select>
 
                                     <label>Descrição</label>
