@@ -98,7 +98,7 @@ export const Classes = () => {
             
             closeModal();
         } catch (error) {
-            console.error("Erro ao criar matéria:", error);
+            toast.error("Erro ao criar matéria");
         }
 
 

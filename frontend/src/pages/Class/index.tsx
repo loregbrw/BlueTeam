@@ -7,6 +7,8 @@ import { api } from "../../service/api"
 import { useEffect, useState } from "react"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
 import { Card } from "../Subjects/components/card/Card"
+import { toast } from "react-toastify"
+import AppBar from "../../components/AppBar/AppBar"
 
 interface ClassData {
   id: number;
@@ -111,39 +113,40 @@ export const Class = () => {
       duration: parseFloat(duration),
     };
 
-    try {
-      const response = await api.post('/subjectclass/auth', newSubject, {
-        headers: {
-          auth: token
+        try {
+          const response = await api.post('/subjectclass/auth', newSubject, {
+            headers: {
+                auth: token
+              }
+          });
+          toast.success("Matéria criada!")
+            console.log(response)
+          closeModal(); 
+        } catch (error) {
+          toast.error('Erro em adicionar matéria');
+          alert("Erro ao criar matéria")
         }
-      });
-      alert("Matéria criada!")
-      console.log(response)
-      closeModal();
-    } catch (error) {
-      console.error('Error adding subject:', error);
-      alert("Erro ao criar matéria")
-    }
-  };
+      };  
 
-  return (
-    <>
-      <StyledMain>
-        <h1>{classData?.name} - Aprendizes</h1>
-        <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexWrap: "wrap", marginTop: "25px" }}>
-          <StyledDiv>
-            <span>Curso: {classData?.courseId.name}</span>
-            <span>Duração: {classData?.duration} horas</span>
-          </StyledDiv>
-          <StyledDiv>
-            <span>Data de início: {classData?.initialDate}</span>
-          </StyledDiv>
-        </div>
-        <Apprentices />
-        <hr style={{ margin: "25px 0" }} />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1>Matérias</h1>
-          <StyledContainer>
+    return (
+        <>
+        <AppBar></AppBar>
+            <StyledMain>
+                <h1>{classData?.name} - Aprendizes</h1>
+                <div style={{width: "100%", display: "flex", justifyContent: "space-between", flexWrap: "wrap", marginTop: "25px"}}>
+                    <StyledDiv>
+                        <span>Curso: {classData?.courseId.name}</span>
+                        <span>Duração: {classData?.duration} horas</span>
+                    </StyledDiv>
+                    <StyledDiv>
+                        <span>Data de início: {classData?.initialDate}</span>
+                    </StyledDiv>
+                </div>
+                <Apprentices />
+                <hr style={{ margin: "25px 0" }} />
+                <div style={{display: "flex", justifyContent: "space-between"}}>
+                    <h1>Matérias</h1>
+                    <StyledContainer>
             <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
 
             {isModalOpen && (
