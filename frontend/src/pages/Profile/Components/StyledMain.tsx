@@ -8,7 +8,6 @@ export const StyledMain = () => {
     
         const [isModalOpen, setIsModalOpen] = useState(false);
         const [username, setUsername] = useState('');
-        const [userType, setUserType] = useState('');
         const [classSelected, setClass] = useState('');
         const [edv, setEdv] = useState('');
         const [email, setEmail] = useState('');
@@ -66,8 +65,9 @@ export const StyledMain = () => {
         getClass()
     },[])
     
-    const id = localStorage.getItem("id");
     const [user, setUserData] = useState<userData>()
+
+    const userType = localStorage.getItem("role")
 
     useEffect(() => {
         const getUser = async () =>{
@@ -114,7 +114,7 @@ export const StyledMain = () => {
         };
 
         try {
-            const response = await api.put("user/auth/1", updateUser, {
+            const response = await api.put(`user/auth/${userId}`, updateUser, {
                 headers: {
                     auth: `${token}`
                 }});
@@ -131,9 +131,10 @@ export const StyledMain = () => {
         <> 
 
             <div style={{display: 'flex', justifyContent: 'end', padding: '10px'}}>
-                <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
+                {user?.role === "Apprentice" && (userType !== "Apprentice" || userType === user.role)&&(
+                    <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
 
-            
+            )}
                 {isAverageGraphOpen && (
                     <StyledModalOverlay>
                         <StyledModalContent>
@@ -162,12 +163,12 @@ export const StyledMain = () => {
                                     <StyledInput
                                         type="text"
                                         placeholder="Nome do aluno"
-                                        value={username}
+                                        value={user?.name}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
                                     />
                                     <StyledSelect
-                                        value={classSelected}
+                                        value={user?.classId.name}
                                         onChange={(e) => setClass(e.target.value)}
                                         required
                                     >
@@ -179,21 +180,21 @@ export const StyledMain = () => {
                                     <StyledInput
                                         type="text"
                                         placeholder="EDV"
-                                        value={edv}
+                                        value={user?.edv}
                                         onChange={(e) => setEdv(e.target.value)}
                                         required
                                     />
                                     <StyledInput
                                         type="text"
                                         placeholder="Email"
-                                        value={email}
+                                        value={user?.email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
 
-                                    {userType === "Adm" && (
+                                    {userType !== "Apprentice" && (
                                         <StyledSelect
-                                            value={role}
+                                            value={user?.role}
                                             onChange={(e) => setRole(e.target.value)}
                                             required
                                         >
@@ -204,21 +205,9 @@ export const StyledMain = () => {
                                             )}
                                         </StyledSelect>
                                     )}
-
-                                    {userType === "Instructor" && (
-                                        <StyledSelect
-                                            value={role}
-                                            onChange={(e) => setRole(e.target.value)}
-                                            required
-                                        >
-                                            <option value="">Selecione o Cargo</option>
-                                            <option value="Apprentice">Aprendiz</option>
-                                            <option value="Instructor">Instrutor</option>
-                                        </StyledSelect>
-                                    )}
                                     <StyledInput
                                         type="date"
-                                        value={birthDate}
+                                        value={user?.birthDate}
                                         onChange={(e) => setBirthDate(e.target.value)}
                                         required
                                     />
