@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 import{
   createBrowserRouter,
@@ -15,6 +16,7 @@ import { Class } from './pages/Class/index.tsx'
 import { Subjects } from './pages/Subjects/Subjects.tsx'
 import { Lessons } from './pages/Lessons/Lessons.tsx'
 import { Profile } from './pages/Profile/Profile.tsx'
+import { ToastContainer } from 'react-toastify'
 
 
 
@@ -80,6 +82,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <ToastContainer/>
   </React.StrictMode>,
 )
 
