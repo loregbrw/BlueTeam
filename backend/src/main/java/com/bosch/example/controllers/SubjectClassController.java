@@ -43,7 +43,7 @@ public class SubjectClassController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<SubjectClassData>> getSSubjectClassByClass(@PathVariable Long id) {
+    public ResponseEntity<List<SubjectClassData>> getSubjectClassByClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(subjectClassService.getSubjectClassByClass(id));
     }
 

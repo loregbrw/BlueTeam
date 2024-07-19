@@ -22,10 +22,10 @@ export const AdmBar = () => {
                         gap: "30px"
                     }
                 }>
-                    <StyledLink href="#">Perfil</StyledLink>
-                    <StyledLink href="#">Adicionar Usuário</StyledLink>
-                    <StyledLink href="#">Turmas</StyledLink>
-                    <StyledLink href="#">Matérias</StyledLink>
+                    <StyledLink href="/profile">Perfil</StyledLink>
+                    <StyledLink href="/signup">Adicionar Usuário</StyledLink>
+                    <StyledLink href="/classes">Turmas</StyledLink>
+                    <StyledLink href="/subjects">Matérias</StyledLink>
                     <StyledLogoutButton onClick={handleLogout}>
                         <img src={LogoutIcon} alt="logout"/>
                     </StyledLogoutButton>
