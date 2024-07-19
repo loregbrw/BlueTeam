@@ -8,7 +8,8 @@ export const AdmBar = () => {
 
     const navigate = useNavigate();
     const handleLogout = () => {
-        /*falta a lógica do logout*/
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('id');
         navigate('/')
     }
 
@@ -22,7 +23,7 @@ export const AdmBar = () => {
                         gap: "30px"
                     }
                 }>
-                    <StyledLink href="/profile">Perfil</StyledLink>
+                    <StyledLink href={`/profile/${localStorage.getItem("id")}`}>Perfil</StyledLink>
                     <StyledLink href="/signup">Adicionar Usuário</StyledLink>
                     <StyledLink href="/classes">Turmas</StyledLink>
                     <StyledLink href="/subjects">Matérias</StyledLink>
