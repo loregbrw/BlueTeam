@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.dtoRequest.SubjectClassRequest;
 import com.bosch.example.model.SubjectClassData;
+import com.bosch.example.repositories.SubjectClassJpaRepository;
 import com.bosch.example.services.SubjectClassService;
 import com.bosch.example.sessions.UserSession;
 
@@ -27,6 +28,9 @@ public class SubjectClassController {
     
     @Autowired
     SubjectClassService subjectClassService;
+
+    @Autowired 
+    SubjectClassJpaRepository repoSubjectClass;
 
     @PostMapping("/auth")
     public ResponseEntity<SubjectClassData> createSubjectClass(@RequestBody SubjectClassRequest subjectClassRequest) {
@@ -41,6 +45,11 @@ public class SubjectClassController {
     @GetMapping("/{id}")
     public ResponseEntity<List<SubjectClassData>> getSSubjectClassByClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(subjectClassService.getSubjectClassByClass(id));
+    }
+
+    @GetMapping("id/{id}")
+    public ResponseEntity<SubjectClassData> getSSubjectClassById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(repoSubjectClass.findById(id).get());
     }
 
     @PutMapping("auth/{id}/{duration}")
