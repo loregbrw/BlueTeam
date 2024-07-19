@@ -22,9 +22,9 @@ export const Instructorbar = () => {
                         gap: "30px"
                     }
                 }>
-                    <StyledLink href="#">Perfil</StyledLink>
-                    <StyledLink href="#">Turmas</StyledLink>
-                    <StyledLink href="#">Matérias</StyledLink>
+                    <StyledLink href="/profile">Perfil</StyledLink>
+                    <StyledLink href="/classes">Turmas</StyledLink>
+                    <StyledLink href="/subjects">Matérias</StyledLink>
                     <StyledLogoutButton onClick={handleLogout}>
                         <img src={LogoutIcon} alt="logout"/>
                     </StyledLogoutButton>

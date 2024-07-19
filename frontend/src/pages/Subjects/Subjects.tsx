@@ -1,10 +1,11 @@
-import { Card } from "./components/card/Card";
+
 import { StyledBox, StyledMain } from "./style";
 import { StyledInputDiv } from "./style";
 import { Dropdown } from "./components/dropdown/Dropdown";
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./components/dropdown/style";
 import { useEffect, useState } from "react";
 import { api } from "../../service/api";
+import { Card } from "./components/card/Card";
 
 interface Subject {
   id: number;
@@ -105,7 +106,8 @@ export const Subjects = () => {
       console.log(response)
       closeModal();
     } catch (error) {
-      console.error("Erro ao criar matéria:", error);
+        alert("Erro ao criar matéria")
+        console.error("Erro ao criar matéria:", error);
     }
   };
 

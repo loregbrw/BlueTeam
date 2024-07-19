@@ -33,7 +33,7 @@ export const LoginForm = () => {
           return;
         }
 
-        navigate('/subjects')
+        navigate('/home')
       } else {
         console.error("Token não encontrado na resposta.");
       }
