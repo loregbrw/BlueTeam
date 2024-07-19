@@ -25,7 +25,7 @@ public class CourseSubjectController {
 
     @PostMapping("/auth")
     public ResponseEntity<CourseSubjectData> createCourseSubject(@RequestBody CourseSubjectRequest course) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm)) {
             return ResponseEntity.status(403).body(null);
         } else {
             CourseSubjectData classCreated = courseSubjectService.createCourseSubject(course);

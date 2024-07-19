@@ -31,7 +31,7 @@ public class CourseController {
 
     @PostMapping("/auth")
     public ResponseEntity<CourseData> createCourse(@RequestBody CourseRequest course) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm)) {
             return ResponseEntity.status(403).body(null);
         } else {
             CourseData classCreated = courseService.createCourse(new CourseRequest(course.name(), course.description()));
@@ -56,7 +56,7 @@ public class CourseController {
 
     @PatchMapping("auth/{id}")
     public ResponseEntity<CourseData> patchCourse(@PathVariable Long id, @RequestBody CourseRequest course) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm)) {
             return ResponseEntity.status(403).body(null);
         } else {
             CourseData coursUpdated = courseService.updateCourse(id, new CourseRequest(course.name(), course.description()));
@@ -67,7 +67,7 @@ public class CourseController {
     @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && userSession.getRole().equals(UserRoleEnum.Instructor) && userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm)) {
             return ResponseEntity.status(403).body(null);
         } else {
             courseService.deleteCourse(id);

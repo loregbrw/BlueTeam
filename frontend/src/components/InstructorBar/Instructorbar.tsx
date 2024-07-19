@@ -8,7 +8,7 @@ export const Instructorbar = () => {
 
     const navigate = useNavigate();
     const handleLogout = () => {
-        /*falta a lógica do logout*/
+        localStorage.clear()
         navigate('/')
     }
 
@@ -20,11 +20,11 @@ export const Instructorbar = () => {
                     {
                         display: 'flex',
                         gap: "30px"
-                    }
+                    }   
                 }>
-                    <StyledLink href="/profile">Perfil</StyledLink>
-                    <StyledLink href="/classes">Turmas</StyledLink>
-                    <StyledLink href="/subjects">Matérias</StyledLink>
+                    <StyledLink to={`/profile/${localStorage.getItem("id")}`}>Perfil</StyledLink>
+                    <StyledLink to={"/classes"}>Turmas</StyledLink>
+                    <StyledLink to={"/subjects"}>Matérias</StyledLink>
                     <StyledLogoutButton onClick={handleLogout}>
                         <img src={LogoutIcon} alt="logout"/>
                     </StyledLogoutButton>

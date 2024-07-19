@@ -40,16 +40,17 @@ export const MainContainer = styled.div`
 `
 
 export const StyledButton = styled.button`
-    padding: 15px;
-
-    background-color:  #005691;
-    color: white;
-    cursor: pointer;
-    border-radius: 15px;
-    font-weight: 600;
-    border: 1px #023E7D solid;
-    width: 30%
-    
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 150px;
+  &:hover {
+    background-color: #0056b3;
+  }
 `
 
 export const StyledDropdown = styled.select`

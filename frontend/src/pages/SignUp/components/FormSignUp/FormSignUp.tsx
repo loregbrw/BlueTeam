@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { StyledDropdown, StyledForm } from "../../../Login/components/loginForm/styled"
-import { StyledInput } from "../../../Login/components/loginForm/styled"
-import { MainContainer } from "../../../Login/components/loginForm/styled"
-import { StyledDateInput } from "../../../Login/components/loginForm/styled"
-import { StyledButton } from "../../../Login/components/loginForm/styled"
-import { StyledMiniBox } from "../../../Login/components/loginForm/styled"
 import { api } from "../../../../service/api"
+import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../../components/loginForm/styled"
+import { toast } from "react-toastify"
 
 export const FormSignUp = () => {
 
@@ -61,17 +57,18 @@ export const FormSignUp = () => {
     }
     console.log(FormValues)
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        const token = localStorage.getItem("token")
         e.preventDefault();
         try {
             const response = await api.post("user/auth", FormValues, {
-                // headers: {
-                //     auth: `Bearer ${token}`
-                // }
+                headers: {
+                    auth: `Bearer ${token}`
+                }
             });
-            alert("usuario criado!")
+            toast.success("Usuário criado!")
 
         } catch (error) {
-            console.error("Erro ao criar usuario:", error);
+            toast.error("Erro ao criar usuario");
         }
     }
 
