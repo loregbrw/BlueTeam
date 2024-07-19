@@ -157,12 +157,12 @@ export const StyledMain = () => {
                                     <StyledInput
                                         type="text"
                                         placeholder="Nome do aluno"
-                                        value={username}
+                                        value={user?.name}
                                         onChange={(e) => setUsername(e.target.value)}
                                         required
                                     />
                                     <StyledSelect
-                                        value={classSelected}
+                                        value={user?.classId.name}
                                         onChange={(e) => setClass(e.target.value)}
                                         required
                                     >
@@ -174,21 +174,21 @@ export const StyledMain = () => {
                                     <StyledInput
                                         type="text"
                                         placeholder="EDV"
-                                        value={edv}
+                                        value={user?.edv}
                                         onChange={(e) => setEdv(e.target.value)}
                                         required
                                     />
                                     <StyledInput
                                         type="text"
                                         placeholder="Email"
-                                        value={email}
+                                        value={user?.email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
 
-                                    {userType === "Adm" && (
+                                    {userType !== "Apprentice" && (
                                         <StyledSelect
-                                            value={role}
+                                            value={user?.role}
                                             onChange={(e) => setRole(e.target.value)}
                                             required
                                         >
@@ -199,21 +199,9 @@ export const StyledMain = () => {
                                             )}
                                         </StyledSelect>
                                     )}
-
-                                    {userType === "Instructor" && (
-                                        <StyledSelect
-                                            value={role}
-                                            onChange={(e) => setRole(e.target.value)}
-                                            required
-                                        >
-                                            <option value="">Selecione o Cargo</option>
-                                            <option value="Apprentice">Aprendiz</option>
-                                            <option value="Instructor">Instrutor</option>
-                                        </StyledSelect>
-                                    )}
                                     <StyledInput
                                         type="date"
-                                        value={birthDate}
+                                        value={user?.birthDate}
                                         onChange={(e) => setBirthDate(e.target.value)}
                                         required
                                     />
