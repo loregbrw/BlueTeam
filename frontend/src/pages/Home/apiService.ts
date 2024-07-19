@@ -1,28 +1,42 @@
 export interface ClassData{
     id: number;
+    courseId: {
+        id: number;
+        name: string;
+        description: string;
+    };
     name: string;
+    duration: number;
+    initialDate: string;
+}
+export interface Subject{
+    id: number;
+    name: string;
+    expectedDuration: number;
 }
 
 export interface SubjectClassData {
     id: number;
-    subjectId: number,
-    classId: number,
-    duration: number,
+    classId: ClassData;
+    subjectId: Subject;
+    duration: number;
   };
 
 export interface LessonData{
     id: number;
-    name: string;
+    title: string;
     date: Date;
     shift: string;
     description: string;
+    subjectClassId: number;
 }
 
 export interface LessonRequest {
-    name: string;
+    title: string;
     date: Date;
     shift: string;
     description: string;
+    subjectClassId: number;
 }
 
 const API_URL = 'http://localhost:8080'
@@ -52,11 +66,11 @@ export async function fetchAllLessons(subjectclassid: number) : Promise<LessonDa
     return response.json();
 } 
 
-//talvez precisem da header
 export async function createLesson(lessonRequest: LessonRequest) : Promise<LessonData> {
     const response = await fetch (`${API_URL}/lesson/auth`, { 
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
             auth: `Bearer ${token}`
         },
         body: JSON.stringify(lessonRequest)
@@ -65,7 +79,6 @@ export async function createLesson(lessonRequest: LessonRequest) : Promise<Lesso
     if (!response.ok){
         throw new Error('Erro ao criar aula.');
     }
-
     return response.json();
 } 
 
@@ -85,7 +98,10 @@ export async function updateLesson(id: number, lessonRequest: LessonRequest): Pr
 
 export async function deleteLesson(id: number): Promise<void> {
     const response = await fetch(`${API_URL}/lesson/auth/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            auth: `Bearer ${token}`
+        }
     });
     if (!response.ok) {
         throw new Error('Erro ao deletar aula.');
