@@ -35,7 +35,7 @@ export const Home = () => {
         id: 0,
         name: "",
         date: new Date(),
-        shift: "Manhã",
+        shift: "Selecione",
         description: ""
     });
 
@@ -45,7 +45,21 @@ export const Home = () => {
 
     useEffect(() => {
         if(selectedClassId != null){
-            fetchLessonsForClass(selectedClassId)
+            const fetchLessonsForClass = async () => {
+                try {
+                    const subjectClasses = await fetchAllSubjectClasses(selectedClassId);
+                    const lessonsDataPromises = subjectClasses.map(subjectClass => fetchAllLessons(subjectClass.id));
+                    const lessonsDataArrays = await Promise.all(lessonsDataPromises);
+                    const allLessons = lessonsDataArrays.flat().map(lesson => ({
+                        ...lesson,
+                        date: new Date(lesson.date)
+                    }));
+                    setLessons(allLessons);
+                } catch (error) {
+                    console.error('Erro ao carregar aulas:', error);
+                }
+            };
+            fetchLessonsForClass();
         }
     }, [selectedClassId])
 
@@ -55,18 +69,6 @@ export const Home = () => {
             setClasses(classesData);
         } catch (error) {
             console.error('Erro ao carregar turmas:', error);
-        }
-    };
-
-    const fetchLessonsForClass = async (classId: number) => {
-        try {
-            const subjectClasses = await fetchAllSubjectClasses(classId);
-            const lessonsDataPromises = subjectClasses.map(subjectClass => fetchAllLessons(subjectClass.id));
-            const lessonsDataArrays = await Promise.all(lessonsDataPromises);
-            const allLessons = lessonsDataArrays.flat();
-            setLessons(allLessons);
-        } catch (error) {
-            console.error('Erro ao carregar aulas:', error);
         }
     };
 
@@ -84,7 +86,7 @@ export const Home = () => {
         setModalLessonData(lesson || null);
         setModalMode(lesson ? "view" : "add");
         if (!lesson) {
-            setFormData({ id: 0, name: "", date: value, shift: "Manhã", description: "" });
+            setFormData({ id: 0, name: "", date: value, shift: "Selecione", description: "" });
         }
     };
 
@@ -94,6 +96,7 @@ export const Home = () => {
             return;
         }
         try {
+            console.log('Dados da nova aula: ', formData);
             if (modalLessonData) {
                 const updatedLesson = await updateLesson(modalLessonData.id, formData);
                 setLessons(lessons.map(lesson => (lesson.id === modalLessonData.id ? updatedLesson : lesson)));
@@ -101,7 +104,6 @@ export const Home = () => {
                 const newLesson = await createLesson(formData);
                 setLessons([...lessons, newLesson]);
             }
-            setShowModal(false);
         } catch (error) {
             console.error('Erro ao salvar aula:', error);
         }
@@ -138,7 +140,7 @@ export const Home = () => {
                 return "highlight";
             }
         }
-        return null;
+        return "";
     };
 
     return (
