@@ -17,6 +17,7 @@ import { Lessons } from './pages/Lessons/Lessons.tsx'
 import { Profile } from './pages/Profile/Profile.tsx'
 import { ToastContainer } from 'react-toastify'
 import { Classes } from './pages/Classes/Classes.tsx'
+import { Reports } from './pages/Reports/Reports.tsx';
 
 
 
@@ -75,6 +76,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <Profile/>
+    </App>
+  },
+  {
+    path: "/reports",
+    element:
+    <App>
+      <Reports/>
     </App>
   }
 ])

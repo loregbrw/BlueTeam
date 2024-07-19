@@ -2,7 +2,6 @@ import { api } from "../../../../service/api";
 import { StyledDropdownContainer } from "./style"
 import { StyledDropdownButton } from "./style"
 import { StyledDropdownContent } from "./style"
-import { StyledModalContent, StyledModalOverlay } from "./style"
 import React, { useEffect, useState } from 'react';
 
 export const Dropdown: React.FC = () => {
