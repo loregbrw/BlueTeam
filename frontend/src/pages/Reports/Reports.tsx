@@ -1,12 +1,9 @@
-import { toast } from "react-toastify";
 import { Title } from "./Components/Title/Title";
 import { PatternDiv, StyledContainer } from "./Components/Title/style";
 import { useEffect, useState } from "react";
-import { StyledCardButton } from "./Components/CardReport/style";
 import { CardReport } from "./Components/CardReport/CardReport";
 import { api } from "../../service/api";
 import { useParams } from "react-router-dom";
-import { fetchAllLessons } from "../Home/apiService";
 
 
 export const Reports = () => {
@@ -64,8 +61,7 @@ export const Reports = () => {
             try {
                 const response = await api.get(`report/user/${userId}`)
                 setReports(response.data)
-                console.log(response)
-                console.log(response.data)
+                
             } catch (error) {
                 console.error(error);
                 setReports([])

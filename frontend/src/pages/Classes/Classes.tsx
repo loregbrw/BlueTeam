@@ -25,8 +25,7 @@ export const Classes = () => {
         description: string | null
     }
 
-
-
+    // É preciso filtrar quem tem acesso as coisas
     const [classes, setClasses] = useState<classData[]>([])
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalCourseOpen, setIsModalCourseOpen] = useState(false);
