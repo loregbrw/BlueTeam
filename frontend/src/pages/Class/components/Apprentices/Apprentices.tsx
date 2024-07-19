@@ -5,6 +5,7 @@ import { StyledLink } from "../../style"
 import { StyledApprentices } from "../../style"
 import { StyledApprenticeText } from "../../style"
 import { api } from "../../../../service/api"
+import { useParams } from "react-router-dom"
 
 
 interface ApprenticeData {
@@ -36,14 +37,13 @@ interface CourseData {
 export const Apprentices = () => {
 
     const [apprentices, setApprentices] = useState<ApprenticeData[]>([])
+    const { classId } = useParams<{ classId: string }>()
 
     useEffect(() => {
 
         const getApprentices = async () => {
             try {
-                const response = await api.get(`user/class/1`)
-                console.log("response")
-                console.log(response)
+                const response = await api.get(`user/class/${classId}`)
                 setApprentices(response.data)
             } catch (error) {
                 console.error(error)
@@ -52,7 +52,7 @@ export const Apprentices = () => {
         }
 
         getApprentices()
-    }, [])
+    }, [classId])
 
     console.log(apprentices)
 
