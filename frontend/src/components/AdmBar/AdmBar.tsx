@@ -8,7 +8,8 @@ export const AdmBar = () => {
 
     const navigate = useNavigate();
     const handleLogout = () => {
-        /*falta a lógica do logout*/
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('id');
         navigate('/')
     }
 

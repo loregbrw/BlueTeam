@@ -2,6 +2,7 @@ import { useState } from "react";
 import { api } from "../../../service/api";
 import { MainContainer, StyledButton, StyledForm, StyledInput } from "../style"
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const FormPassword = () => {
 
@@ -29,14 +30,14 @@ export const FormPassword = () => {
             console.log(password)
 
             if (response.data) {
-                console.log("Senha alterada com sucesso!");
+                toast.success("Senha alterada com sucesso!");
                 navigate('/subjects')
 
             } else {
                 console.error("Token não encontrado na resposta.");
             }
         } catch (error) {
-            console.error("Erro ao trocar a senha:", error);
+            toast.error("Erro ao trocar a senha");
         }
     };
 

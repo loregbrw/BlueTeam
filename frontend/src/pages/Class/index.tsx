@@ -7,6 +7,8 @@ import { api } from "../../service/api"
 import { useEffect, useState } from "react"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
 import { Card } from "../Subjects/components/card/Card"
+import { toast } from "react-toastify"
+import AppBar from "../../components/AppBar/AppBar"
 
 interface ClassData {
     id: number;
@@ -122,17 +124,18 @@ export const Class = () => {
                 auth: token
               }
           });
-          alert("Matéria criada!")
+          toast.success("Matéria criada!")
             console.log(response)
           closeModal(); 
         } catch (error) {
-          console.error('Error adding subject:', error);
+          toast.error('Erro em adicionar matéria');
           alert("Erro ao criar matéria")
         }
       };  
 
     return (
         <>
+        <AppBar></AppBar>
             <StyledMain>
                 <h1>{classData?.name} - Aprendizes</h1>
                 <div style={{width: "100%", display: "flex", justifyContent: "space-between", flexWrap: "wrap", marginTop: "25px"}}>

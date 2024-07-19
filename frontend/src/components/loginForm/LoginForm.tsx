@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MainContainer, StyledForm, StyledInput, StyledButton } from "./styled";
 import { api } from "../../service/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const LoginForm = () => {
   const [edv, setEdv] = useState("");
@@ -23,7 +24,7 @@ export const LoginForm = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("id", response.data.id);
-        console.log("Login bem-sucedido. Token salvo no localStorage.");
+        toast.success("Login bem-sucedido");
 
         console.log(edv)
         console.log(password)
@@ -38,7 +39,7 @@ export const LoginForm = () => {
         console.error("Token não encontrado na resposta.");
       }
     } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      toast.error("Erro ao fazer login");
     }
   };
 
