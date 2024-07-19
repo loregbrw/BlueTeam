@@ -51,7 +51,7 @@ export const FormPassword = () => {
                     </div>
                     <p>Senha</p>
                     <StyledInput
-                        type="text"
+                        type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required

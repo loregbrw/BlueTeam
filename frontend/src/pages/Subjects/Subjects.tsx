@@ -151,7 +151,7 @@ export const Subjects = () => {
         <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
           <StyledBox>
             {subjects.map(subject => (
-              <Card key={subject.id} title={subject.name} plannedDuration={subject.expectedDuration} />
+              <Card key={subject.id} title={subject.name} duration={subject.expectedDuration} />
             ))}
           </StyledBox>
 

@@ -61,7 +61,7 @@ export const Apprentices = () => {
             <StyledApprentices>
                 {apprentices.map((apprentice) => (
 
-                    <StyledLink to="" key={apprentice.id} id={apprentice.id.toString()}>
+                    <StyledLink to={`/profile/${apprentice.id}`} key={apprentice.id} id={apprentice.id.toString()}>
                         <StyledApprentice>
                             <StyledImg src={apprentice.foto}></StyledImg>
                             <StyledApprenticeText>{apprentice.name}</StyledApprenticeText>

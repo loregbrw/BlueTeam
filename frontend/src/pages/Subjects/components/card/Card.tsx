@@ -3,18 +3,19 @@ import { StyledCard } from "./style";
 
 
 interface CardProps {
+    id: number;
     title: string;
-    plannedDuration: number;
+    duration: number;
 }
 
-export const Card: React.FC<CardProps> = ({ title, plannedDuration}) => {
+export const Card: React.FC<CardProps> = ({ id, title, duration: duration}) => {
     return(
         <>  
-            <StyledLink to ="">
+            <StyledLink to ={`/subjectclass/${id}`}>
                 <StyledCard>
                     <h3>{title}</h3>
                     <hr  style={{width: "100%"}}/>
-                    <p><b>Duração planejada:</b> {plannedDuration} horas</p>
+                    <p><b>Duração:</b> {duration} horas</p>
 
                 </StyledCard>
             </StyledLink>
