@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { StyledAddButton, StyledCloseButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
+import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSelect, StyledSubmitButton } from "./style";
 import { StyledBox } from './style';
 import { api } from '../../../service/api';
 
 export const StyledMain = () => {
-
+    
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const [username, setUsername] = useState('');
+        const [userType, setUserType] = useState('');
+        const [classSelected, setClass] = useState('');
+        const [edv, setEdv] = useState('');
+        const [email, setEmail] = useState('');
+        const [role, setRole] = useState('');
+        const [birthDate, setBirthDate] = useState('');
+    
+        const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
+    
     interface userData {
         id: number;
         classId: string;
@@ -50,13 +61,14 @@ export const StyledMain = () => {
         }
         getClass()
     },[])
-
+    
+    const id = localStorage.getItem("id");
     const [user, setUserData] = useState<userData>()
 
     useEffect(() => {
         const getUser = async () =>{
             try{
-                const response = await api.get('user/id/2')
+                const response = await api.get(`user/id/${id}`)
                 setUserData(response.data)
                 setUsername(response.data.username)
                 setClass(response.data.classId)
@@ -72,17 +84,6 @@ export const StyledMain = () => {
         }
         getUser()
     },[])
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [username, setUsername] = useState('');
-    const [userType, setUserType] = useState('');
-    const [classSelected, setClass] = useState('');
-    const [edv, setEdv] = useState('');
-    const [email, setEmail] = useState('');
-    const [role, setRole] = useState('');
-    const [birthDate, setBirthDate] = useState('');
-
-    const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -100,6 +101,7 @@ export const StyledMain = () => {
         setAverageGraphOpen(false);
     }
 
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -115,7 +117,7 @@ export const StyledMain = () => {
         };
 
         try {
-            const response = await api.put("user/auth/2", updateUser, {
+            const response = await api.put("user/auth/1", updateUser, {
                 headers: {
                     auth: 'Bearer ${token}'
                 }});
@@ -141,7 +143,7 @@ export const StyledMain = () => {
                         </StyledModalContent>
                     </StyledModalOverlay>
                 )}
-
+                <StyledContainer>
                 {userType !== "Apprentice" && (
 
                     <StyledAddButton onClick={openModal}>Editar dados</StyledAddButton>
@@ -153,7 +155,7 @@ export const StyledMain = () => {
                                         <h2>Editar dados</h2>
                                         <StyledForm onSubmit={handleSubmit}>
                                         
-                                <div>
+                                <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
                                     <StyledInput
                                         type="text"
                                         placeholder="Nome do aluno"
@@ -225,22 +227,20 @@ export const StyledMain = () => {
                     </StyledModalContent>
                 </StyledModalOverlay>
             )}
+            </StyledContainer>
         </div>
 
-            <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', overflow: "auto", width: '100%', top: '40px'}}>
                 <StyledBox>
                     <h2>Dados do Usuário</h2>
                    
-            <div>
+            <div style={{display: "flex", flexDirection: 'column', gap: '20px'}}>
                 <p>Nome: {username}</p>
                 <p>Turma: {classSelected}</p>
                 <p>EDV: {edv}</p>
                 <p>Email: {email}</p>
                 <p>Data de Nascimento: {birthDate}</p>
-                {userType === "Adm" && (
-                    <p>Cargo: {role}</p>
-                )}
-                {userType === "Instructor" && (
+                {userType !== "Adm" && (
                     <p>Cargo: {role}</p>
                 )}
             </div>

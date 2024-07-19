@@ -32,6 +32,12 @@ export const StyledBox = styled.div`
     width: max-content;
     padding: 50px;
     justify-content: center;
+    flex-direction: column;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    background-color: #d7dae0;
+    align-self: center;
+    top: 40px;
 `
 
 export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
