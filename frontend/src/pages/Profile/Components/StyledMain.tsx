@@ -8,7 +8,6 @@ export const StyledMain = () => {
     
         const [isModalOpen, setIsModalOpen] = useState(false);
         const [username, setUsername] = useState('');
-        const [userType, setUserType] = useState('');
         const [classSelected, setClass] = useState('');
         const [edv, setEdv] = useState('');
         const [email, setEmail] = useState('');
@@ -66,8 +65,9 @@ export const StyledMain = () => {
         getClass()
     },[])
     
-    const id = localStorage.getItem("id");
     const [user, setUserData] = useState<userData>()
+
+    const userType = localStorage.getItem("role")
 
     useEffect(() => {
         const getUser = async () =>{
@@ -114,7 +114,7 @@ export const StyledMain = () => {
         };
 
         try {
-            const response = await api.put("user/auth/1", updateUser, {
+            const response = await api.put(`user/auth/${userId}`, updateUser, {
                 headers: {
                     auth: `${token}`
                 }});
@@ -131,8 +131,9 @@ export const StyledMain = () => {
         <> 
 
             <div style={{display: 'flex', justifyContent: 'end', padding: '10px'}}>
-                <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
-                
+                {user?.role === "Apprentice" && (userType !== "Apprentice" || userType === user.role)&&(
+                    <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
+                )}
                 {isAverageGraphOpen && (
                     <StyledModalOverlay>
                         <StyledModalContent>
