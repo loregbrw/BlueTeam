@@ -140,18 +140,31 @@ export const Home = () => {
                 description: "",
                 subjectClassId: selectedSubjectClassId || 0
             });
+        } else {
+            setFormData({
+                title: lesson.title,
+                date: new Date(lesson.date),
+                shift: lesson.shift,
+                description: lesson.description,
+                subjectClassId: lesson.subjectClassId
+            });
         }
+
+
     };
 
     const handleSaveLesson = async () => {
+        try {
+
         console.log('Dados do formulário:', formData);
 
         if (formData.title.trim() === "" || formData.description.trim() === "") {
             toast.error("Nome e descrição não podem estar vazios.");
             return;
         }
-        try {
+
             if (modalLessonData) {
+                console.log('Atualizando aula... ', modalLessonData.id);
                 const updatedLesson = await updateLesson(modalLessonData.id, formData);
                 setLessons(lessons.map(lesson => (lesson.id === modalLessonData.id ? updatedLesson : lesson)));
                 toast.success("Aula atualizada com sucesso!")
