@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
 export const StyledNavBar = styled.div`
-    width: 100vw;
-    position: fixed;
+    width: 100%;
+    height: 60px;
     background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px;
-    height: 75px;
+    padding: 10px;
 `;
 
 export const StyledLogoutButton = styled.button`
@@ -17,7 +16,7 @@ export const StyledLogoutButton = styled.button`
     border: none;
 
     &:hover{
-        background-color: gray;
+        scale: 1.05;
     }
 
     img{
