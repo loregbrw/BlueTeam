@@ -130,7 +130,6 @@ export const Class = () => {
 
     return (
         <>
-        <AppBar></AppBar>
             <StyledMain>
                 <h1>{classData?.name} - Aprendizes</h1>
                 <div style={{width: "100%", display: "flex", justifyContent: "space-between", flexWrap: "wrap", marginTop: "25px"}}>

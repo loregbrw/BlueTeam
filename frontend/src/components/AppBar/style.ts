@@ -11,7 +11,6 @@ export const StyledNav = styled.nav`
     border: none;
     border-bottom: 1px #023E7D solid;
     position: fixed;
-    z-index: 99;
     background-color: #e9e9e9;
     top: 0;
     padding:0;
@@ -27,6 +26,8 @@ export const StyledImage = styled.img`
 export const StyledAppbar = styled.header`
     position: fixed;
     width: 100%;
+
+    z-index: 100;
 
     display: flex;
     flex-direction: column;

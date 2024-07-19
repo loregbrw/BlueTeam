@@ -48,7 +48,7 @@ export const FormPassword = () => {
                 <StyledForm onSubmit={handleLogin}>
                     <div style={{ display: 'flex', justifyContent: 'center', flexDirection: "column", alignItems: "center" }}>
                         <h2>Trocar senha</h2>
-                        <span>Para o primeiro login, é necessário troca a sua senha.</span>
+                        <span>Para o primeiro login, é necessário trocar a sua senha.</span>
                     </div>
                     <p>Senha</p>
                     <StyledInput
@@ -64,6 +64,8 @@ export const FormPassword = () => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
+                    <span>** A senha precisa ter letas maiúsculas, minúsculas, números e no mínimo 8 caracteres</span>
+
                     <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
                         <StyledButton type="submit">Trocar senha</StyledButton>
                     </div>
