@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bosch.example.Enum.UserRoleEnum;
 import com.bosch.example.dto.dtoRequest.SubjectRequest;
 import com.bosch.example.model.SubjectData;
+import com.bosch.example.repositories.SubjectJpaRepository;
 import com.bosch.example.services.SubjectService;
 import com.bosch.example.sessions.UserSession;
 
@@ -26,6 +27,9 @@ public class SubjectController {
     
     @Autowired
     SubjectService subjectService;
+
+    @Autowired
+    SubjectJpaRepository repoSubject;
 
     @PostMapping("/auth")
     public ResponseEntity<SubjectData> createSubject(@RequestBody SubjectRequest subjectRequest) {
@@ -50,6 +54,11 @@ public class SubjectController {
     @GetMapping("/{id}")
     public ResponseEntity<List<SubjectData>> getSubjectByCourse(@PathVariable Long id) {
         return ResponseEntity.ok().body(subjectService.getSubjectByCourseSubject(id));
+    }
+
+    @GetMapping("id/{id}")
+    public ResponseEntity<SubjectData> getSubjectById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(repoSubject.findById(id).get());
     }
 
     @PatchMapping("auth/{id}")
