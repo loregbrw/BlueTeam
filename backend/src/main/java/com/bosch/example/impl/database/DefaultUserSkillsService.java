@@ -87,4 +87,14 @@ public class DefaultUserSkillsService implements UserSkillsService {
         }
     }
 
+    @Override
+    public List<UserSkillsData> getAll() {
+        try {
+            List<UserSkillsData> userSkills = repoUserSkills.findAll();
+            return userSkills;
+        } catch (Exception e) {
+            throw new InternalServerErrorException();
+        }
+    }
+
 }

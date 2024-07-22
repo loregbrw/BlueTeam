@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import 'react-toastify/dist/ReactToastify.css';
 
-import{
+import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
@@ -21,67 +21,71 @@ import { ChangePassword } from './pages/ChangePassword/index.tsx'
 import { Reports } from './pages/Reports/Reports.tsx';
 
 
+import { SubjectClass } from './pages/SubjectClass/index.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element:
-    <App>
-      <Login/>
-    </App>
+      <App>
+        <Login />
+      </App>
   },
   {
     path: "/password",
     element:
-    <App>
-      <ChangePassword />
-    </App>
+      <App>
+        <ChangePassword />
+      </App>
   },
   {
     path: "/home",
     element:
-    <App>
-      <Home/>
-    </App>
+      <App>
+        <Home />
+      </App>
   },
   {
     path: "/class/:classId",
     element:
-    <App>
-      <Class />
-    </App>
+      <App>
+        <Class />
+      </App>
   },
   {
-    path: "/subjectclass/:subjectclassId"
-
+    path: "/subjectclass/:subjectclassId",
+    element:
+      <App>
+        <SubjectClass />
+      </App>
   },
   {
     path: "/classes",
     element:
-    <App>
-      <Classes/>
-    </App>
+      <App>
+        <Classes />
+      </App>
   },
   {
     path: "/signup",
     element:
-    <App>
-      <SignUp/>
-    </App>
+      <App>
+        <SignUp />
+      </App>
   },
   {
     path: "/subjects",
     element:
-    <App>
-      <Subjects/>
-    </App>
+      <App>
+        <Subjects />
+      </App>
   },
   {
     path: "/lessons",
     element:
-    <App>
-      <Lessons/>
-    </App>
+      <App>
+        <Lessons />
+      </App>
   },
   {
     path: "/profile/:userId",
@@ -102,7 +106,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <ToastContainer/>
+    <ToastContainer />
   </React.StrictMode>,
 )
 
