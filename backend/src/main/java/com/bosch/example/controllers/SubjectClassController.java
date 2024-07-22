@@ -42,7 +42,7 @@ public class SubjectClassController {
     public ResponseEntity<List<SubjectClassData>> getSubjectClassByClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(subjectClassService.getSubjectClassByClass(id));
     }
-
+    
     @PutMapping("auth/{id}/{duration}")
     public ResponseEntity<SubjectClassData> putSubjectClass(@PathVariable Long id, @PathVariable Long duration) {
         if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)) {

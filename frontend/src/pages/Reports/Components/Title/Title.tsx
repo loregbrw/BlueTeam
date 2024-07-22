@@ -4,33 +4,108 @@ import { useEffect, useState } from "react";
 import { StyledDropdown } from "../../../Class/style";
 import { api } from "../../../../service/api";
 import { toast } from "react-toastify";
-import { LessonData } from "../../../Home/apiService";
+import { useParams } from "react-router-dom";
 
-export const Title = () =>{
+
+export const Title = () => {
+
+    interface reportData {
+        id: number,
+        userId: userData,
+        authorId: userData,
+        description: string,
+        lessonId: lessonData
+    }
+
+    interface userData {
+        id: number,
+        classId: classData
+        edv: number,
+        foto: string,
+        name: string,
+        email: string,
+        password: string,
+        role: string,
+        birthDate: string
+
+    }
+
+    interface classData {
+        id: number,
+        courseId: courseData,
+        name: string,
+        duration: number,
+        initialDate: string
+    }
+
+    interface courseData {
+        id: number,
+        name: string,
+        description: string | null
+    }
+
+    interface lessonData {
+        id: number,
+        subjectClassId: number,
+        title: string,
+        description: string,
+        shift: string,
+        date: string
+
+    }
+
+    interface subjectClass{
+        id: number,
+        name: string,
+        expectedDuration: number
+    }
+
+    interface subjectClassData{
+        id: number,
+        clasId: classData,
+        subjectId: subjectClass,
+        duration: number
+        
+    }
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [userId, setUserId] = useState('');
-    const [authorId, setAuthorId] = useState('');
     const [description, setDescription] = useState('')
     const [lessonId, setLessonId] = useState('')
-    const [lesson, setLesson] = useState<LessonData[]>([]);
-    
+    const [lesson, setLesson] = useState<lessonData[]>([]);
+    const [user, setUser] = useState<userData>()
+    const [subjectClasses, setSubjectClasses] = useState<subjectClassData[]>([])
+    const { userId } = useParams<{ userId: string }>();
+    const authorId = localStorage.getItem("id")
 
 
-    // É necessario implementar um getAll pra lessons no backend
-    // userId deve ser pego pelo url
-    // author id deve pegar o id do localStorage
     useEffect(() => {
-        const getClasses = async () => {
+        const getUsers = async () => {
             try {
-                const response = await api.get(`lesson`) // esse endopoint ainda não existe
-                setCourse(response.data)
+                const response = await api.get(`user/id/${userId}`)
+                setUser(response.data)
+                console.log(user)
             } catch (error) {
                 console.error(error);
-                setCourse([])
+                console.log("banana")
             }
         }
-        getClasses()
+        getUsers()
+    }, [isModalOpen])
+
+    useEffect(() => {
+        const getSubjectClass = async () => {
+            try {
+                const response = await api.get(`subjectclass/${user?.classId.id}`)
+                setSubjectClasses(response.data)
+                console.log(subjectClasses)
+            } catch (error) {
+                console.error(error);
+                setSubjectClasses([])
+                console.log(error)
+            }
+        }
+        getSubjectClass()
     }, [isModalOpen])
 
     const openModal = () => {
@@ -57,67 +132,54 @@ export const Title = () =>{
         console.log(newSubject)
 
         try {
-            const response = await api.post("class/auth", newSubject, {
+            const response = await api.post("report/auth", newSubject, {
                 headers: {
                     auth: token
                 }
             });
-            toast.success("Turma criada com sucesso!")
+            toast.success("Relatorio criado com sucesso!")
             console.log(response)
 
             closeModal();
         } catch (error) {
-            toast.error("Erro ao criar turma: " + error);
+            toast.error("Erro ao criar relatorio: " + error);
         }
     };
 
-    return(
+    return (
         <>
             <StyledHeader>
-                <h1>Relatorios</h1>
+                <h1>Relatorios {user?.name}</h1>
                 <StyledAddButton onClick={openModal}>Relatorio +</StyledAddButton>
                 {isModalOpen && (
-                <StyledModalOverlay>
-                    <StyledModalContent>
-                        <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
-                        <h2>Adicionar Novo Curso</h2>
-                        <StyledForm onSubmit={handleSubmit}>
-                            <StyledInput
-                                type="text"
-                                placeholder="Nome do usuario"
-                                value={userId}
-                                onChange={(e) => setUserId(e.target.value)}
-                                required
-                            />
-                            <StyledInput
-                                placeholder="Descrição"
-                                value={authorId}
-                                onChange={(e) => setAuthorId(e.target.value)}
-                                required
-                            />
-                            <StyledInput
-                                placeholder="Duração Planejada"
-                                type="date"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                                required
-                            />
-                            <StyledDropdown required value={lessonId} onChange={(e) => setLessonId(e.target.value)} name="class" id="class">
-                                <option value={""}>Selecione uma turma</option>
-                                {
-                                    course.map((courseItem) => (
-                                        <option key={courseItem.id} value={courseItem.id}>{courseItem.name}</option>
-                                    ))
-                                }
+                    <StyledModalOverlay>
+                        <StyledModalContent>
+                            <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
+                            <h2>Adicionar Novo Relatorio</h2>
+                            <StyledForm onSubmit={handleSubmit}>
 
-                            </StyledDropdown>
+                                <StyledInput
+                                    placeholder="Descrição"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    required
+                                />
+                                <StyledDropdown required value={lessonId} onChange={(e) => setLessonId(e.target.value)} name="class" id="class">
+                                    <option value={""}>Selecione uma aula</option>
+                                    {
+                                        subjectClasses.map((subjectClasses) => (
+                                            <option key={subjectClasses.id} value={subjectClasses.id}>{subjectClasses.subjectId.name}</option>
+                                        ))
+                                    }
+
+                                </StyledDropdown>
 
 
-                            <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
-                        </StyledForm>
-                    </StyledModalContent>
-                </StyledModalOverlay>
-            )}
+                                <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                            </StyledForm>
+                        </StyledModalContent>
+                    </StyledModalOverlay>
+                )}
 
             </StyledHeader>
         </>

@@ -27,5 +27,6 @@ export const StyledContainer = styled.div`
     justify-content: center;
     gap: 30px;
     padding: 90px 3% 3% 3%;
+    flex-wrap: wrap;
 `
 

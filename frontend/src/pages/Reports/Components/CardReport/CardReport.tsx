@@ -16,8 +16,8 @@ export const CardReport: React.FC<CardProps> = ({ id, authorName, description, l
                 <StyledCardButton>
                     <h3>{authorName}</h3>
                     <hr  style={{width: "100%"}}/>
-                    <p> Autor: {description}</p>
-                    <p style={{color: "#005691"}}>Materia: {lesson}</p>
+                    <p> Descrição: {description}</p>
+                    <p style={{color: "#005691"}}>Aula: {lesson}</p>
                 </StyledCardButton>
             
         </>

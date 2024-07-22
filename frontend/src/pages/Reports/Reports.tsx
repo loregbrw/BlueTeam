@@ -45,13 +45,28 @@ export const Reports = () => {
 
     interface lessonData {
         id: number,
-        subjectClassId: number,
+        subjectClassId: subjectClassData,
         title: string,
         description: string,
         shift: string,
         date: string
 
     }
+
+    interface subjectClass{
+        id: number,
+        name: string,
+        expectedDuration: number
+    }
+
+    interface subjectClassData{
+        id: number,
+        clasId: classData,
+        subjectId: subjectClass,
+        duration: number
+        
+    }
+
 
     const [reports, setReports] = useState<reportData[]>([])
     const { userId } = useParams<{ userId: string }>();
@@ -78,7 +93,7 @@ export const Reports = () => {
                 <StyledContainer style={{display: 'flex'}}>
                     {
                         reports.map((reportItem) => (
-                            <CardReport key={reportItem.id} id={reportItem.id} authorName={reportItem.authorId.name} description={reportItem.description} lesson={reportItem.lessonId.title}
+                            <CardReport key={reportItem.id} id={reportItem.id} authorName={reportItem.authorId.name} description={reportItem.description} lesson={reportItem.lessonId.title} 
                             />
                         ))
                     }

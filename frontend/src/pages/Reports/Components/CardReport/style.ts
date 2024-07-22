@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const StyledCardButton = styled.button`
+export const StyledCardButton = styled.div`
 
     flex: 0 0 auto;
     display: flex;
