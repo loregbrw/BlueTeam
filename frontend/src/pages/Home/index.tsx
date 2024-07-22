@@ -38,6 +38,11 @@ export const Home = () => {
         description: "",
         subjectClassId: 0
     });
+    const [title, setTitle] = useState();
+    const [date, setDate] = useState();
+    const [shift, setShift] = useState();
+    const [description, setDescription] = useState();
+    const [subClass, setSubClass] = useState();
 
     useEffect(() => {
         const fetchClasses = async () => {
@@ -195,13 +200,16 @@ export const Home = () => {
                 toast.error("ID da aula não encontrado.");
                 return;
             }
+
+            const updateLesson = {
+                subjectClassId: subClass,
+                title: title,
+                description: description,
+                shift: shift,
+                date: date
+            }
     
-            const response = await api.patch(`/lesson/auth/${modalLessonData.id}`, {
-                title: formData.title,
-                date: formData.date.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-                shift: formData.shift,
-                description: formData.description,
-                subjectClassId: formData.subjectClassId
+            const response = await api.patch(`/lesson/auth/${modalLessonData.id}`, { updateLesson
             }, {
                 headers: {
                     auth: `${token}`
@@ -211,7 +219,7 @@ export const Home = () => {
             if (!response.data) {
                 throw new Error('Erro ao atualizar aula.');
             }
-            fetchLessonsForClass(); // Atualize a lista de aulas
+            fetchLessonsForClass();
             toast.success("Aula atualizada com sucesso!");
             setShowModal(false);
     
@@ -317,7 +325,7 @@ export const Home = () => {
                                 </StyledForm>
                             </>
                         )}
-                        {modalMode !== "view" && (
+                        {modalMode == "view" && (
                             <>
                                 <StyledForm onSubmit={handleSubmitSave}>
                                     <h1>Aula</h1>
@@ -338,7 +346,7 @@ export const Home = () => {
                                     {selectedClassId && (
                                         <>
                                             <label htmlFor="subjectClassDropdown">Selecione a Matéria:</label>
-                                            <select id="subjectClassDropdown" onChange={handleSubjectClassChange}>
+                                            <select id="subjectClassDropdown" onChange={handleSubjectClassChange} value={formData.subjectClassId}>
                                                 <option value="">Selecione...</option>
                                                 {subjectClasses.map(subjectClass => (
                                                     <option key={subjectClass.id} value={subjectClass.id}>
@@ -351,6 +359,47 @@ export const Home = () => {
 
                                     <label>Descrição</label>
                                     <textarea name="description" value={formData.description} onChange={handleChange} />
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                        {(userType === "Adm" || userType === "Instructor") && (
+                                            <StyledButton type="submit">{modalMode === "add" ? "Salvar" : "Atualizar"}</StyledButton>)}
+                                    </div>
+                                </StyledForm>
+                            </>
+                        )}
+                        {modalMode == "edit" && (
+                            <>
+                                <StyledForm onSubmit={handleSubmitSave}>
+                                    <h1>Aula</h1>
+                                    <label>Nome</label>
+                                    <input type="text" name="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+
+                                    <label>Data</label>
+                                    <input type="date" name="date" value={date} onChange={(e) =>  setDate(e.target.value)} />
+
+                                    <label> Turno:</label>
+                                    <select name="shift" value={shift} onChange={(e) => setShift(e.target.value)}>
+                                        <option value="">Selecione...</option>
+                                        <option value="MORNING">Manhã</option>
+                                        <option value="AFTERNOON">Tarde</option>
+                                        <option value="ALLDAY">Dia inteiro</option>
+                                    </select>
+
+                                    {selectedClassId && (
+                                        <>
+                                            <label htmlFor="subjectClassDropdown">Selecione a Matéria:</label>
+                                            <select id="subjectClassDropdown" onChange={(e) => setSubClass(e.target.value)} value={subClass}>
+                                                <option value="">Selecione...</option>
+                                                {subjectClasses.map(subjectClass => (
+                                                    <option key={subjectClass.id} value={subjectClass.id}>
+                                                        {subjectClass.subjectId.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </>
+                                    )}
+
+                                    <label>Descrição</label>
+                                    <textarea name="description" value={description} onChange={(e) => setDescription(e.target.value)} />
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                                         {(userType === "Adm" || userType === "Instructor") && (
                                             <StyledButton type="submit">{modalMode === "add" ? "Salvar" : "Atualizar"}</StyledButton>)}
