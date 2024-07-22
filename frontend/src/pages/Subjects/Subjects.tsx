@@ -148,10 +148,10 @@ export const Subjects = () => {
           </StyledContainer>
         </StyledInputDiv>
 
-        <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
+        <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
           <StyledBox>
             {subjects.map(subject => (
-              <Card key={subject.id} title={subject.name} duration={subject.expectedDuration} />
+              <Card key={subject.id} title={subject.name} duration={subject.expectedDuration} id={subject.id} />
             ))}
           </StyledBox>
 

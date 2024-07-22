@@ -54,6 +54,7 @@ export const Header = () => {
         <>
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }} >
                 <h1>{subjectClass?.subjectId.name} - {subjectClass?.classId.name}</h1>
+                
             </div>
         </>
     )

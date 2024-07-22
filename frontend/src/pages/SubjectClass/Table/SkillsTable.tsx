@@ -79,37 +79,42 @@ export const SkillsTable = () => {
     const [apprentices, setApprentices] = useState<ApprenticeData[]>([]);
     const [skills, setSkills] = useState<SkillsData[]>([]);
     const [subjectClass, setSubjectClass] = useState<SubjectClassData | null>(null);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const subjectClassResponse = await api.get(`/subjectclass/id/${subjectclassId}`);
-                setSubjectClass(subjectClassResponse.data);
-
+                const subjectClassData = subjectClassResponse.data;
+                setSubjectClass(subjectClassData);
+    
                 const skillsResponse = await api.get(`skills/${subjectclassId}`);
-                setSkills(skillsResponse.data);
-
-                const apprenticesResponse = await api.get(`/user/class/${subjectClassResponse.data.classId.id}`);
-                setApprentices(apprenticesResponse.data);
-
-                apprenticesResponse.data.forEach(async (apprentice: ApprenticeData) => {
-                    console.log("apprentice");
-                    apprentice.skills = (await api.get(`/userskills/${apprentice.id}`)).data;
-                    apprentice.skills.map((skill) => (
-                        console.log(skill.value)
-                    ))
-                })
-
+                const skillsData = skillsResponse.data;
+                setSkills(skillsData);
+    
+                const apprenticesResponse = await api.get(`/user/class/${subjectClassData.classId.id}`);
+                const apprenticesData = apprenticesResponse.data;
+                setApprentices(apprenticesData);
+    
+                const updatedApprentices = apprenticesData.map(async (apprentice: ApprenticeData) => {
+                    const response = await api.get(`/userskills/${apprentice.id}`);
+                    apprentice.skills = response.data;
+                    return apprentice;
+                });
+    
+                // Esperando todas as atualizações terminarem
+                const updatedApprenticesWithData = await Promise.all(updatedApprentices);
+                setApprentices(updatedApprenticesWithData);
+    
             } catch (error) {
                 console.error(error);
             }
         };
-
+    
         fetchData();
     }, [subjectclassId]);
-
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -127,7 +132,7 @@ export const SkillsTable = () => {
 
     const columns: Column[] = [
         { id: 0, label: 'Aprendiz', minWidth: 170 },
-        ...skills.map(skill => ({ id: skill.id, label: skill.name, minWidth: 100 }))
+        ...(skills ? skills.map(skill => ({ id: skill.id, label: skill.name, minWidth: 100 })) : [])
     ];
 
     return (
@@ -140,7 +145,7 @@ export const SkillsTable = () => {
                                 <TableCell key="apprenticeName" align="left" style={{ background: "#007BFF" }} >
                                     <span style={{ color: "white", fontWeight: "600", fontSize: "1.15rem" }}>Aprendiz</span>
                                 </TableCell>
-                                {skills.map((skill) => (
+                                {skills && skills.map((skill) => (
                                     <TableCell
                                         key={skill.id}
                                         align="right"
@@ -154,10 +159,11 @@ export const SkillsTable = () => {
                         <TableBody>
                             {apprentices
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((apprentice) => (
+                                .map((apprentice, index) => (
                                     <TableRow hover key={apprentice.id}>
                                         <TableCell style={{ fontWeight: "600" }} align="left">{apprentice.name}</TableCell>
-                                        {apprentice.skills.map((skill) => (
+
+                                        {apprentice.skills && apprentice.skills.map((skill) => (
                                             <TableCell key={skill.id} style={{ fontWeight: "600" }} align="right">
                                                 {skill.value}
                                             </TableCell>
