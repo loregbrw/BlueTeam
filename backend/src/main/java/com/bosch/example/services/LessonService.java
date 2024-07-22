@@ -12,5 +12,4 @@ public interface LessonService {
     List<LessonData> getLessonByClass(Long classId);
     LessonData updateLesson(Long lessonId, LessonRequest lesson);
     HttpStatus deleteLesson(Long id);
-    List<LessonData> getLessonByUserId(Long id);
 }

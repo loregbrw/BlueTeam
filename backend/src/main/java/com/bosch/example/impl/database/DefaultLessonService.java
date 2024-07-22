@@ -101,10 +101,4 @@ public class DefaultLessonService implements LessonService {
             throw new NotFoundException();
         }
     }
-
-    @Override
-    public List<LessonData> getLessonByUserId(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLessonByUserId'");
-    }
 }
