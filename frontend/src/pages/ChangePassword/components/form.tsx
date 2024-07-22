@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { api } from "../../../service/api";
-import { MainContainer, PasswordWarning, ProgressBar, StyledButton, StyledForm, StyledInput } from "../style";
+import { MainContainer, ProgressBar, StyledButton, StyledForm, StyledInput } from "../style";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
