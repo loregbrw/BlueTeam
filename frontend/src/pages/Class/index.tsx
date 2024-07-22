@@ -1,6 +1,7 @@
 import { Apprentices } from "./components/Apprentices/Apprentices"
 import { StyledBox, StyledDiv, StyledDropdown, StyledMain } from "./style"
-import { useParams } from "react-router-dom"
+import { StyledButton } from "./components/SubjectClasses/style"
+import { useNavigate, useParams } from "react-router-dom"
 import { api } from "../../service/api"
 import { useEffect, useState } from "react"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
@@ -36,14 +37,20 @@ interface SubjectClassData {
 
 
 export const Class = () => {
-
   const { classId } = useParams<{ classId: string }>();
   const [classData, setClassData] = useState<ClassData | null>(null);
   const [subjects, setSubjects] = useState<SubjectData[]>([])
   const [subjectsClass, setSubjectsClass] = useState<SubjectClassData[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState<string>("");
   const [duration, setDuration] = useState('');
+  const [editName, setEditName] = useState('');
+  const [editDuration, setEditDuration] = useState('');
+  const [editInitialDate, setEditInitialDate] = useState('');
+  const userType = localStorage.getItem("role");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -51,6 +58,25 @@ export const Class = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const openEditModal = () => {
+    setEditName(classData?.name || '');
+    setEditDuration(String(classData?.duration || ''));
+    setEditInitialDate(classData?.initialDate || '');
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
   };
 
   useEffect(() => {
@@ -125,6 +151,58 @@ export const Class = () => {
     }
   };
 
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    const updatedClassData = {
+      courseId: classData?.courseId.id,
+      name: editName,
+      duration: parseFloat(editDuration),
+      initialDate: editInitialDate,
+    };
+
+    const updatedClassDataWithClass = {
+      courseId: classData?.courseId,
+      name: editName,
+      duration: parseFloat(editDuration),
+      initialDate: editInitialDate,
+    };
+
+    try {
+      const response = await api.patch(`/class/auth/${classId}`, updatedClassData, {
+        headers: {
+          auth: token
+        }
+      });
+      toast.success("Dados da turma atualizados!")
+      console.log(response)
+      setClassData(updatedClassDataWithClass as ClassData);
+      closeEditModal();
+    } catch (error) {
+      toast.error('Erro ao atualizar dados da turma');
+    }
+  };
+
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      await api.delete(`/class/auth/${classId}`, {
+        headers: {
+          auth: token
+        }
+      });
+      toast.success("Turma deletada com sucesso!");
+      navigate("/classes")
+      closeDeleteModal();
+    } catch (error) {
+      toast.error('Erro ao deletar a turma');
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <StyledMain>
@@ -173,8 +251,6 @@ export const Class = () => {
                 </StyledModalContent>
               </StyledModalOverlay>
             )}
-
-
           </StyledContainer>
         </div>
         <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
@@ -182,13 +258,57 @@ export const Class = () => {
             {subjectsClass.map((subject) => (
               <Card
                 key={subject.subjectId.id}
-                id={subject.subjectId.id}
+                subjectId={subject.subjectId.id}
                 title={subject.subjectId.name}
-                duration={subject.duration}
+                plannedDuration={subject.subjectId.expectedDuration}
               />
             ))}
           </StyledBox>
         </div>
+
+        {isEditModalOpen && (
+          <StyledModalOverlay>
+            <StyledModalContent>
+              <StyledCloseButton onClick={closeEditModal}>X</StyledCloseButton>
+              <h2>Editar Turma</h2>
+              <StyledForm onSubmit={handleEditSubmit}>
+                <StyledInput
+                  placeholder="Nome da Turma"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  required
+                />
+                <StyledInput
+                  placeholder="Duração"
+                  type="number"
+                  value={editDuration}
+                  onChange={(e) => setEditDuration(e.target.value)}
+                  required
+                />
+                <StyledInput
+                  placeholder="Data de Início"
+                  type="date"
+                  value={editInitialDate}
+                  onChange={(e) => setEditInitialDate(e.target.value)}
+                  required
+                />
+                <StyledSubmitButton type="submit">Salvar Alterações</StyledSubmitButton>
+              </StyledForm>
+            </StyledModalContent>
+          </StyledModalOverlay>
+        )}
+
+        {isDeleteModalOpen && (
+          <StyledModalOverlay>
+            <StyledModalContent>
+              <h3>Tem certeza que deseja deletar esta turma?</h3>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+                <StyledButton onClick={closeDeleteModal}>Cancelar</StyledButton>
+                <StyledButton onClick={handleDelete} style={{ backgroundColor: "red" }}>Deletar</StyledButton>
+              </div>
+            </StyledModalContent>
+          </StyledModalOverlay>
+        )}
       </StyledMain>
     </>
   )
