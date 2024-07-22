@@ -4,7 +4,9 @@ import {
     StyledModalContainer,
     StyledCloseButton,
     StyledForm,
-    StyledButton
+    StyledButton,
+    StyledSelectClass,
+    StyledOption
 } from "./style"
 import Calendar from "react-calendar"
 import { useEffect, useState } from "react"
@@ -17,6 +19,7 @@ import {
 } from "./apiService"
 import { toast } from "react-toastify"
 import { api } from "../../service/api"
+import { StyledSelect } from "../SubjectClass/Style"
 
 export const Home = () => {
 
@@ -279,15 +282,14 @@ export const Home = () => {
                     <h1 style={{ margin: "10px" }}>Calendário</h1>
                     {userType === "Adm" || userType === "Instructor" ? (
                         <div style={{ alignContent: 'center' }}>
-                            <label htmlFor="classDropdown">Selecione a Turma: </label>
-                            <select id="classDropdown" onChange={handleClassChange}>
-                                <option value="">Selecione...</option>
+                            <StyledSelectClass id="classDropdown" onChange={handleClassChange}>
+                                <StyledOption disabled value="">Selecione...</StyledOption>
                                 {classes.map(classData => (
-                                    <option key={classData.id} value={classData.id}>
+                                    <StyledOption key={classData.id} value={classData.id}>
                                         {classData.name}
-                                    </option>
+                                    </StyledOption>
                                 ))}
-                            </select>
+                            </StyledSelectClass>
                         </div>
                     ) : null}
                 </div>

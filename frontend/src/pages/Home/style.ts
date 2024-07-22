@@ -139,3 +139,26 @@ export const StyledButton = styled.button`
         background-color: brown;
     }
 `
+export const StyledSelectClass = styled.select`
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border 0.3s ease;
+
+  &:hover {
+    background-color: #e6e6e6;
+  }
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+`;
+
+export const StyledOption = styled.option`
+  font-size: 16px;
+`;
