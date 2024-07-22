@@ -57,9 +57,10 @@ export const StyledMain = () => {
 
 
     interface abilityUserData {
-        userId: userData;
-        name: string;
-        strength: string;
+        id: number
+        userId: userData
+        name: string
+        strength: string
     }
     
     const abilityData : string[] = [
@@ -215,19 +216,19 @@ export const StyledMain = () => {
 
         const updateAbility = {
             userId: userId,
-            name: username,
+            name: abilityName,
             strenght: strenght
         };
 
         try {
-            const response = await api.put(`ability/auth/${userId}`, updateAbility, {
+            const response = await api.patch(`ability/auth/${ability[].id}`, updateAbility, {
                 headers: {
                     auth: `${token}`
                 }});
             
             alert("Habilidade atualizada!")
             console.log(response)
-            closeAverageGraph();
+            closeEditAbility();
         } catch (error) {
             console.error("Erro ao atualizar a habilidade:", error);
         }
@@ -391,7 +392,8 @@ export const StyledMain = () => {
                 
                     <StyledBoxCard>
                         {Array.isArray(ability) && Array.isArray(ability) && ability.map(index => (
-                            <Card onClick={openEditAbility} name={index.name} strenght={index.strength} />
+                            <Card key={index.id} onClick={openEditAbility} name={index.name} strenght={index.strength} />
+                            
                         ))}
                     </StyledBoxCard>
 
@@ -425,7 +427,7 @@ export const StyledMain = () => {
                                             </>
                                     </StyledSelect>
 
-                                <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                                <StyledSubmitButton  type="submit">Salvar</StyledSubmitButton>
                             </div>
     
                         </StyledForm>
