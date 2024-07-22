@@ -9,25 +9,22 @@ import {
 import Calendar from "react-calendar"
 import { useEffect, useState } from "react"
 import {
-    fetchAllClasses,
-    fetchAllSubjectClasses,
-    fetchAllLessons,
-    createLesson,
-    updateLesson,
     deleteLesson,
     ClassData,
-    SubjectClassData,
+    SubjectClass,
     LessonRequest,
     LessonData
 } from "./apiService"
 import { toast } from "react-toastify"
+import { api } from "../../service/api"
 
 export const Home = () => {
 
+    const token = localStorage.getItem("token");
     const [userType, setUserType] = useState(localStorage.getItem("role"))
     const [lessons, setLessons] = useState<LessonData[]>([]);
     const [classes, setClasses] = useState<ClassData[]>([]);
-    const [subjectClasses, setSubjectClasses] = useState<SubjectClassData[]>([]);
+    const [subjectClasses, setSubjectClasses] = useState<SubjectClass[]>([]);
     const [selectedClassId, setSelectedClassId] = useState<number | null>(null);
     const [selectedSubjectClassId, setSelectedSubjectClassId] = useState<number | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -43,14 +40,24 @@ export const Home = () => {
     });
 
     useEffect(() => {
+        const fetchClasses = async () => {
+            try {
+                const classesData = await api.get('class');
+                setClasses(classesData.data);
+            } catch (error) {
+                console.error('Erro ao carregar turmas:', error);
+            }
+        };
         fetchClasses();
     }, []);
+
 
     useEffect(() => {
         if (selectedClassId != null) {
             fetchSubjectClasses(selectedClassId);
         }
     }, [selectedClassId]);
+
 
     useEffect(() => {
         if (selectedClassId != null) {
@@ -59,19 +66,11 @@ export const Home = () => {
     }, [selectedClassId]);
 
 
-    const fetchClasses = async () => {
-        try {
-            const classesData = await fetchAllClasses();
-            setClasses(classesData);
-        } catch (error) {
-            console.error('Erro ao carregar turmas:', error);
-        }
-    };
-
     const fetchSubjectClasses = async (classId: number) => {
         try {
-            const subjectClassesData = await fetchAllSubjectClasses(classId);
-            setSubjectClasses(subjectClassesData);
+            const response = await api.get(`subjectclass/${classId}`);
+            setSubjectClasses(response.data);
+            return response.data;
         } catch (error) {
             console.error('Erro ao carregar matérias da turma:', error);
         }
@@ -80,26 +79,27 @@ export const Home = () => {
     const fetchLessonsForClass = async () => {
         if (selectedClassId) {
             try {
-                // Buscar todas as matérias para a turma selecionada
-                const subjectClassesData = await fetchAllSubjectClasses(selectedClassId);
-                setSubjectClasses(subjectClassesData);
-    
-                // Buscar todas as aulas para todas as matérias da turma selecionada
-                const lessonsDataPromises = subjectClassesData.map(subjectClass => fetchAllLessons(subjectClass.id));
+                const subjectClassesData = await api.get(`subjectclass/${selectedClassId}`);
+                setSubjectClasses(subjectClassesData.data);
+                console.log(subjectClassesData.data);
+
+                const lessonsDataPromises = subjectClassesData.data.map((subjectClass: SubjectClass) => api.get(`lesson/${subjectClass.id}`));
                 const lessonsDataArrays = await Promise.all(lessonsDataPromises);
-    
-                // Unir todas as aulas em um único array
-                const allLessons = lessonsDataArrays.flat().map(lesson => ({
-                    ...lesson,
-                    date: new Date(lesson.date)
-                }));
+
+                const allLessons = lessonsDataArrays.flatMap((response: any) => 
+                    response.data.map((lesson: any) => ({
+                        ...lesson,
+                        date: new Date(`${lesson.date}T00:00:00Z`)
+                    }))
+                );
+
                 setLessons(allLessons);
+                console.log(allLessons);
             } catch (error) {
                 console.error('Erro ao carregar aulas:', error);
             }
         }
     };
-
 
     const handleClassChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId = Number(e.target.value);
@@ -107,8 +107,8 @@ export const Home = () => {
         setSelectedSubjectClassId(null);
         if (selectedId) {
             try {
-                const subjectClassesData = await fetchAllSubjectClasses(selectedId);
-                setSubjectClasses(subjectClassesData);
+                const response = await fetchSubjectClasses(selectedId);
+                setSubjectClasses(response.data);
             } catch (error) {
                 console.error('Erro ao carregar matérias da turma:', error);
             }
@@ -149,35 +149,75 @@ export const Home = () => {
                 subjectClassId: lesson.subjectClassId
             });
         }
-
-
     };
 
     const handleSaveLesson = async () => {
         try {
-
-        console.log('Dados do formulário:', formData);
-
-        if (formData.title.trim() === "" || formData.description.trim() === "") {
-            toast.error("Nome e descrição não podem estar vazios.");
-            return;
-        }
-
-            if (modalLessonData) {
-                console.log('Atualizando aula... ', modalLessonData.id);
-                const updatedLesson = await updateLesson(modalLessonData.id, formData);
-                setLessons(lessons.map(lesson => (lesson.id === modalLessonData.id ? updatedLesson : lesson)));
-                toast.success("Aula atualizada com sucesso!")
-            } else {
-                const newLesson = await createLesson(formData);
-                setLessons([...lessons, newLesson]);
-                toast.success("Aula criada com sucesso!")
-                console.log("Nova aula criada: ", newLesson);
+            if (formData.title.trim() === "" || formData.description.trim() === "") {
+                toast.error("Nome e descrição não podem estar vazios.");
+                return;
             }
-
+    
+            const response = await api.post('/lesson/auth', {
+                title: formData.title,
+                date: formData.date.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+                shift: formData.shift,
+                description: formData.description,
+                subjectClassId: formData.subjectClassId
+            }, {
+                headers: {
+                    auth: `${token}`
+                }
+            });
+            console.log(response.data);
+    
+            if (!response.data) {
+                throw new Error('Erro ao criar aula.');
+            }
+            fetchLessonsForClass(); // Atualize a lista de aulas
+            toast.success("Aula criada com sucesso!");
+            setShowModal(false);
+    
         } catch (error) {
-            console.error('Erro ao salvar aula:', error);
-            toast.error("Falha ao salvar a aula.");
+            console.error('Erro ao criar aula:', error);
+            toast.error("Falha ao criar a aula.");
+        }
+    };
+
+    const handleUpdateLesson = async () => {
+        try {
+            if (formData.title.trim() === "" || formData.description.trim() === "") {
+                toast.error("Nome e descrição não podem estar vazios.");
+                return;
+            }
+    
+            if (!modalLessonData?.id) {
+                toast.error("ID da aula não encontrado.");
+                return;
+            }
+    
+            const response = await api.patch(`/lesson/auth/${modalLessonData.id}`, {
+                title: formData.title,
+                date: formData.date.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
+                shift: formData.shift,
+                description: formData.description,
+                subjectClassId: formData.subjectClassId
+            }, {
+                headers: {
+                    auth: `${token}`
+                },
+            });
+    
+            if (!response.data) {
+                throw new Error('Erro ao atualizar aula.');
+            }
+            fetchLessonsForClass(); // Atualize a lista de aulas
+            toast.success("Aula atualizada com sucesso!");
+            setShowModal(false);
+    
+        } catch (error) {
+            console.error('Erro ao atualizar aula:', error);
+            toast.error("Falha ao atualizar a aula.");
         }
     };
 
@@ -209,7 +249,12 @@ export const Home = () => {
 
     const handleSubmitSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleSaveLesson();
+        if(modalMode === 'add'){
+            handleSaveLesson();
+
+        }else if(modalMode === 'edit'){
+            handleUpdateLesson();
+        }
     }
 
     const handleSubmitDelete = (e: React.FormEvent<HTMLFormElement>) => {
@@ -306,9 +351,9 @@ export const Home = () => {
 
                                     <label>Descrição</label>
                                     <textarea name="description" value={formData.description} onChange={handleChange} />
-                                    <div style={{ display: 'flex', justifyContent: 'center'}}>
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
                                         {(userType === "Adm" || userType === "Instructor") && (
-                                            <StyledButton onClick={handleSaveLesson}>Salvar</StyledButton>)}
+                                            <StyledButton type="submit">{modalMode === "add" ? "Salvar" : "Atualizar"}</StyledButton>)}
                                     </div>
                                 </StyledForm>
                             </>

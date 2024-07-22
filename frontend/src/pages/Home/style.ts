@@ -23,7 +23,6 @@ export const StyledCalendar = styled.div`
     .react-calendar__navigation__arrow{
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 
         Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        
     }
 
     .react-calendar {
