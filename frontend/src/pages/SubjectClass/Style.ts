@@ -15,6 +15,20 @@ export const StyledAddButton = styled.button`
   }
 `;
 
+export const StyledSkillButton = styled.button`
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+
+  font-weight: 500;
+  border: none;
+
+  background-color: transparent;
+
+  cursor: pointer;
+`
+
 export const StyledModalOverlay = styled.div`
   position: fixed;
   top: 0;

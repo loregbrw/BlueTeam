@@ -46,10 +46,6 @@ public class LessonController {
     public ResponseEntity<List<LessonData>> getLessonBySubjectClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(lessonService.getLessonByClass(id));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<List<LessonData>> getLessonByUserId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(lessonService.getLessonByClass(id));
-    }
 
     @PatchMapping("auth/{id}")
     public ResponseEntity<LessonData> patchLesson(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {

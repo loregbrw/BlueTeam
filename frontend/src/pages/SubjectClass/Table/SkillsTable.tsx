@@ -1,15 +1,9 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { api } from '../../../service/api';
+import { StyledCloseButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSkillButton, StyledSubmitButton } from '../Style';
+import { toast } from 'react-toastify';
 
 interface ApprenticeData {
     id: number;
@@ -21,13 +15,12 @@ interface ApprenticeData {
     password: string;
     role: string;
     birthDate: string;
-    skills: UserSkillsData[];
 }
 
 interface UserSkillsData {
     id: number;
-    userId: number;
-    skillsId: number;
+    userId: ApprenticeData;
+    skillsId: SkillsData;
     value: number;
 }
 
@@ -66,21 +59,29 @@ interface CourseData {
     description: string;
 }
 
-interface Column {
-    id: number;
-    label: string;
-    minWidth?: number;
-    align?: 'right';
-}
-
 export const SkillsTable = () => {
     const { subjectclassId } = useParams<{ subjectclassId: string }>();
 
     const [apprentices, setApprentices] = useState<ApprenticeData[]>([]);
     const [skills, setSkills] = useState<SkillsData[]>([]);
+    const [userSkills, setUserSkills] = useState<UserSkillsData[]>([]);
     const [subjectClass, setSubjectClass] = useState<SubjectClassData | null>(null);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const [value, setValue] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentApprentice, setCurrentApprentice] = useState<ApprenticeData | null>(null);
+    const [currentSkill, setCurrentSkill] = useState<SkillsData | null>(null);
+
+    const openModal = (apprentice: ApprenticeData, skill: SkillsData, skillValue: string) => {
+        setCurrentApprentice(apprentice);
+        setCurrentSkill(skill);
+        setValue(skillValue);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -88,102 +89,124 @@ export const SkillsTable = () => {
                 const subjectClassResponse = await api.get(`/subjectclass/id/${subjectclassId}`);
                 const subjectClassData = subjectClassResponse.data;
                 setSubjectClass(subjectClassData);
-    
-                const skillsResponse = await api.get(`skills/${subjectclassId}`);
+
+                const skillsResponse = await api.get(`/skills/${subjectclassId}`);
                 const skillsData = skillsResponse.data;
                 setSkills(skillsData);
-    
+
                 const apprenticesResponse = await api.get(`/user/class/${subjectClassData.classId.id}`);
                 const apprenticesData = apprenticesResponse.data;
                 setApprentices(apprenticesData);
-    
-                const updatedApprentices = apprenticesData.map(async (apprentice: ApprenticeData) => {
-                    const response = await api.get(`/userskills/${apprentice.id}`);
-                    apprentice.skills = response.data;
-                    return apprentice;
-                });
-    
-                // Esperando todas as atualizações terminarem
-                const updatedApprenticesWithData = await Promise.all(updatedApprentices);
-                setApprentices(updatedApprenticesWithData);
-    
+
+                const userSkillsResponse = await api.get(`/userskills/`);
+                const userSkillsData = userSkillsResponse.data;
+                setUserSkills(userSkillsData);
             } catch (error) {
                 console.error(error);
             }
         };
-    
+
         fetchData();
     }, [subjectclassId]);
-    
 
-    const handleChangePage = (
-        event: React.MouseEvent<HTMLButtonElement> | null,
-        newPage: number
-    ) => {
-        setPage(newPage);
+    const renderSkillValue = (apprenticeId: number, skillId: number) => {
+        const skill = userSkills.find(us => us.userId.id === apprenticeId && us.skillsId.id === skillId);
+        return skill ? skill.value : 'x';
     };
 
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-    const columns: Column[] = [
-        { id: 0, label: 'Aprendiz', minWidth: 170 },
-        ...(skills ? skills.map(skill => ({ id: skill.id, label: skill.name, minWidth: 100 })) : [])
-    ];
+        if (!currentApprentice || !currentSkill) return;
+
+        const existingUserSkill = userSkills.find(us => us.userId.id === currentApprentice.id && us.skillsId.id === currentSkill.id);
+        const token = localStorage.getItem("token")
+
+        try {
+            if (existingUserSkill) {
+                await api.put(`/userskills/auth/${existingUserSkill.id}/${value}`, [], {
+                    headers: {
+                        auth: token
+                    }
+                });
+
+                toast.success("Competência atualizada!");
+                setUserSkills(prev =>
+                    prev.map(us =>
+                        us.id === existingUserSkill.id
+                            ? { ...us, value: Number(value) }
+                            : us
+                    )
+                );
+            } else {
+
+                const newUserSkill = {
+                    userId: currentApprentice.id,
+                    skillsId: currentSkill.id,
+                    value: value
+                };
+
+                const response = await api.post(`/userskills/auth`, newUserSkill, {
+                    headers: {
+                        auth: token
+                    }
+                });
+                toast.success("Competência atualizada!");
+                setUserSkills(prev => [...prev, response.data]);
+            }
+            closeModal();
+        } catch (error) {
+            toast.error('Erro ao salvar a competência!');
+            console.error(error);
+            console.error(`/userskills/auth/${existingUserSkill.id}/${value}`);
+        }
+    };
 
     return (
-        <>
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell key="apprenticeName" align="left" style={{ background: "#007BFF" }} >
-                                    <span style={{ color: "white", fontWeight: "600", fontSize: "1.15rem" }}>Aprendiz</span>
+        <TableContainer component={Paper}>
+            <Table>
+                <TableHead>
+                    <TableRow style={{ backgroundColor: "#d7dae0" }}>
+                        <TableCell style={{ fontSize: "1rem", fontWeight: "700", cursor: "default" }}>Nome</TableCell>
+                        {skills.map(skill => (
+                            <TableCell align='right' style={{ fontSize: "1rem", fontWeight: "700", cursor: "default" }} key={skill.id}>{skill.name}</TableCell>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {apprentices.map(apprentice => (
+                        <TableRow key={apprentice.id}>
+                            <TableCell style={{ cursor: "default" }}>{apprentice.name}</TableCell>
+                            {skills.map(skill => (
+                                <TableCell align='right' key={skill.id}>
+                                    <StyledSkillButton onClick={() => openModal(apprentice, skill, renderSkillValue(apprentice.id, skill.id).toString())}>
+                                        {renderSkillValue(apprentice.id, skill.id)}
+                                    </StyledSkillButton>
                                 </TableCell>
-                                {skills && skills.map((skill) => (
-                                    <TableCell
-                                        key={skill.id}
-                                        align="right"
-                                        style={{ minWidth: 100, background: "#007BFF" }}
-                                    >
-                                        <span style={{ color: "white", fontWeight: "600", fontSize: "1.15rem" }}>{skill.name}</span>
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {apprentices
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((apprentice, index) => (
-                                    <TableRow hover key={apprentice.id}>
-                                        <TableCell style={{ fontWeight: "600" }} align="left">{apprentice.name}</TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
 
-                                        {apprentice.skills && apprentice.skills.map((skill) => (
-                                            <TableCell key={skill.id} style={{ fontWeight: "600" }} align="right">
-                                                {skill.value}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    style={{ backgroundColor: "#d7dae0" }}
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={apprentices.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
-        </>
+            {isModalOpen && (
+                <StyledModalOverlay>
+                    <StyledModalContent>
+                        <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
+                        <h2>Editar competência de {currentApprentice?.name} - {currentSkill?.name}</h2>
+                        <StyledForm onSubmit={handleSubmit}>
+                            <StyledInput
+                                placeholder="Digite um valor"
+                                type="number"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                                required
+                            />
+                            <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                        </StyledForm>
+                    </StyledModalContent>
+                </StyledModalOverlay>
+            )}
+        </TableContainer>
     );
 };
