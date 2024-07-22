@@ -23,7 +23,7 @@ interface CourseData {
   description: string;
 }
 
-interface Subject {
+interface SubjectData {
   id: number;
   name: string;
   expectedDuration: number;
@@ -31,13 +31,13 @@ interface Subject {
 
 interface SubjectClass {
     id: number,
-    subjectId: Subject,
+    subjectId: SubjectData,
     classId: number,
     duration: number,
 };
 
 interface SubjectClassName {
-    subjectId: Subject,
+    subjectId: SubjectData,
     classId: ClassData,
     duration: number,
 };
