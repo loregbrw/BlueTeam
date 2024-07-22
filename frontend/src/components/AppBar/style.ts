@@ -27,7 +27,7 @@ export const StyledImage = styled.img`
 export const StyledAppbar = styled.header`
     position: fixed;
     width: 100%;
-
+    z-index: 999;
     display: flex;
     flex-direction: column;
 `

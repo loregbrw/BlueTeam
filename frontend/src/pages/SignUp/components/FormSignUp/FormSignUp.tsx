@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { StyledDropdown, StyledForm } from "../../../Login/components/loginForm/styled"
-import { StyledInput } from "../../../Login/components/loginForm/styled"
-import { MainContainer } from "../../../Login/components/loginForm/styled"
-import { StyledDateInput } from "../../../Login/components/loginForm/styled"
-import { StyledButton } from "../../../Login/components/loginForm/styled"
-import { StyledMiniBox } from "../../../Login/components/loginForm/styled"
 import { api } from "../../../../service/api"
-import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../Login/components/loginForm/styled"
 import { toast } from "react-toastify"
+import { StyledInput } from "../../../Subjects/components/dropdown/style"
+import { MainContainer, StyledMiniBox } from "../../../../components/loginForm/styled"
+import { StyledSelect, StyledSubmitButton } from "../../../Profile/Components/style"
+import { StyledForm } from "./style"
 
 export const FormSignUp = () => {
 
@@ -98,7 +95,7 @@ export const FormSignUp = () => {
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>Turma</p>
-                        <StyledDropdown required value={classId} onChange={(e) => setClassId(e.target.value)} name="class" id="class">
+                        <StyledSelect required value={classId} onChange={(e) => setClassId(e.target.value)} name="class" id="class">
                             <option value={""}>Selecione uma turma</option>
                             {
                                 classes.map((classItem) => (
@@ -106,7 +103,7 @@ export const FormSignUp = () => {
                                 ))
                             }
 
-                        </StyledDropdown>
+                        </StyledSelect>
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>E-mail</p>
@@ -114,20 +111,20 @@ export const FormSignUp = () => {
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>Tipo</p>
-                        <StyledDropdown required value={role} onChange={(e) => setrole(e.target.value)}>
+                        <StyledSelect required value={role} onChange={(e) => setrole(e.target.value)}>
                             <option value={""}>Selecione um tipo</option>
                             {
                                 roleData.map((roleItem) =>
                                     <option key={roleItem} value={roleItem}>{roleItem}</option>
                                 )
                             }
-                        </StyledDropdown>
+                        </StyledSelect>
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>Data de nascimento</p>
-                        <StyledDateInput required type="date" value={birthDate} onChange={(e) => setbirthDate(e.target.value)} />
+                        <StyledInput required type="date" value={birthDate} onChange={(e) => setbirthDate(e.target.value)} />
                     </StyledMiniBox>
-                    <StyledButton type="submit">Criar</StyledButton>
+                    <StyledSubmitButton type="submit">Criar</StyledSubmitButton>
                 </StyledForm>
             </MainContainer>
 

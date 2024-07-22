@@ -6,6 +6,7 @@ import { api } from "../../service/api";
 import { StyledAddButton, StyledCloseButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "../Subjects/components/dropdown/style";
 import { StyledDropdown } from "../../components/loginForm/styled";
 import { toast } from "react-toastify";
+import { StyledSelect } from "../Profile/Components/style";
 
 export const Classes = () => {
 
@@ -132,21 +133,21 @@ export const Classes = () => {
                                 required
                             />
                             <StyledInput
-                                placeholder="Duração Planejada"
+                                placeholder="Data  Inicial"
                                 type="date"
                                 value={iniitialDate}
                                 onChange={(e) => setIniitialDate(e.target.value)}
                                 required
                             />
-                            <StyledDropdown required value={courseId} onChange={(e) => setCourseId(e.target.value)} name="class" id="class">
-                                <option value={""}>Selecione uma turma</option>
+                            <StyledSelect required value={courseId} onChange={(e) => setCourseId(e.target.value)} name="class" id="class">
+                                <option disabled value={""}>Selecione uma turma</option>
                                 {
                                     course.map((courseItem) => (
                                         <option key={courseItem.id} value={courseItem.id}>{courseItem.name}</option>
                                     ))
                                 }
 
-                            </StyledDropdown>
+                            </StyledSelect>
 
 
                             <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
