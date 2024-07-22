@@ -20,6 +20,7 @@ export const StyledMain = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
     const [isAbilityModalOpen, setAbilityModalOpen] = useState(false);
+    const [isEditAbilityModalOpen, setEditAbilityModalOpen] = useState(false);
     
     interface userData {
         id: number;
@@ -146,6 +147,14 @@ export const StyledMain = () => {
         setAbilityModalOpen(false);
     }
 
+    const openEditAbility = () => {
+        setEditAbilityModalOpen(true);
+    }
+
+    const closeEditAbility = () => {
+        setEditAbilityModalOpen(false);
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -196,6 +205,31 @@ export const StyledMain = () => {
             closeAbility()
         } catch (error) {
             console.error("Erro ao atualizar os dados:", error);
+        }
+      };
+
+      const handleEdit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        const token = localStorage.getItem("token");
+
+        const updateAbility = {
+            userId: userId,
+            name: username,
+            strenght: strenght
+        };
+
+        try {
+            const response = await api.put(`ability/auth/${userId}`, updateAbility, {
+                headers: {
+                    auth: `${token}`
+                }});
+            
+            alert("Habilidade atualizada!")
+            console.log(response)
+            closeAverageGraph();
+        } catch (error) {
+            console.error("Erro ao atualizar a habilidade:", error);
         }
       };
 
@@ -356,12 +390,48 @@ export const StyledMain = () => {
                 <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
                 
                     <StyledBoxCard>
-                        {ability.map(index => (
-                            <Card name={index.name} strenght={index.strength} />
+                        {Array.isArray(ability) && ability.map(index => (
+                            <Card onClick={openEditAbility} name={index.name} strenght={index.strength} />
                         ))}
                     </StyledBoxCard>
 
                 </div>
+                 {isEditAbilityModalOpen && (
+            <StyledModalOverlay>
+                <StyledModalContent>
+                    <StyledCloseButton onClick={closeEditAbility}>X</StyledCloseButton>
+                        <h2>Editar habilidade</h2>
+                        <StyledForm onSubmit={handleEdit}>
+                        
+                            <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+                                <StyledInput
+                                    type="text"
+                                    placeholder="Nome da habilidade"
+                                    value={abilityName}
+                                    onChange={(e) => setAbilityName(e.target.value)}
+                                    required
+                                />
+                              
+                                    <StyledSelect
+                                        value={strenght}
+                                        onChange={(e) => setStrenght(e.target.value)}
+                                        required
+                                    >   
+                                            <><option value="">Selecione um nível</option>
+                                                {abilityData.map((i) =>(
+                                                <option value={i}>{i}</option>  
+                                                ))}
+                                            
+                                            </>
+                                    </StyledSelect>
+
+                                <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                            </div>
+    
+                        </StyledForm>
+                    </StyledModalContent>
+                </StyledModalOverlay>
+            )}
                 </>
             )}
 

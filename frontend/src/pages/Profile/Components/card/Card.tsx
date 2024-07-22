@@ -5,12 +5,18 @@ import { StyledCard } from "./style";
 interface CardProps {
     name: string;
     strenght: string;
+    onClick?: () => void;
 }
 
-export const Card: React.FC<CardProps> = ({ name, strenght}) => {
+export const Card: React.FC<CardProps> = ({ name, strenght, onClick}) => {
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        }
+    }
     return(
         <>  
-            <StyledLink to ="">
+            <StyledLink to ="" onClick={handleClick}>
                 <StyledCard>
                     <h3>{name}</h3>
                     <hr  style={{width: "100%"}}/>
