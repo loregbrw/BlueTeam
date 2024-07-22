@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { MainContainer, StyledForm, StyledInput, StyledButton } from "./styled";
+import { MainContainer, StyledForm, } from "./styled";
 import { api } from "../../service/api";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { StyledInput } from "../../pages/Profile/Components/style";
+import { StyledButton } from "../../pages/Class/components/SubjectClasses/style";
 
 export const LoginForm = () => {
   const [edv, setEdv] = useState("");

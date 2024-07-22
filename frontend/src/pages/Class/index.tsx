@@ -5,8 +5,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import { api } from "../../service/api"
 import { useEffect, useState } from "react"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
-import { Card } from "../Subjects/components/card/Card"
 import { toast } from "react-toastify"
+import AppBar from "../../components/AppBar/AppBar"
+import { Card } from "./components/card/Card"
 
 interface ClassData {
   id: number;
@@ -28,11 +29,17 @@ interface SubjectData {
   expectedDuration: number;
 }
 
-interface SubjectClassData {
-  id: number;
-  classId: ClassData,
-  subjectId: SubjectData,
-  duration: number,
+interface SubjectClass {
+    id: number,
+    subjectId: SubjectData,
+    classId: number,
+    duration: number,
+};
+
+interface SubjectClassName {
+    subjectId: SubjectData,
+    classId: ClassData,
+    duration: number,
 };
 
 
@@ -223,48 +230,51 @@ export const Class = () => {
           <StyledContainer>
             <StyledAddButton onClick={openModal}>+ Matéria</StyledAddButton>
 
-            {isModalOpen && (
-              <StyledModalOverlay>
-                <StyledModalContent>
-                  <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
-                  <h2>Adicionar Nova Matéria</h2>
-                  <StyledForm onSubmit={handleSubmit}>
-                    <StyledDropdown
-                      value={selectedSubject}
-                      onChange={handleSubjectChange}
-                    >
-                      <option value="" disabled>Select a Subject</option>
-                      {subjects.map((subject) => (
-                        <option key={subject.id} value={subject.id}>
-                          {subject.name}
-                        </option>
-                      ))}
-                    </StyledDropdown>
-                    <StyledInput
-                      placeholder="Duração Planejada"
-                      value={duration}
-                      onChange={(e) => setDuration(e.target.value)}
-                      required
-                    />
-                    <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
-                  </StyledForm>
-                </StyledModalContent>
-              </StyledModalOverlay>
-            )}
-          </StyledContainer>
-        </div>
-        <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
-          <StyledBox>
-            {subjectsClass.map((subject) => (
-              <Card
-                key={subject.subjectId.id}
-                subjectId={subject.subjectId.id}
-                title={subject.subjectId.name}
-                plannedDuration={subject.subjectId.expectedDuration}
-              />
-            ))}
-          </StyledBox>
-        </div>
+                        {isModalOpen && (
+                            <StyledModalOverlay>
+                                <StyledModalContent>
+                                    <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
+                                    <h2>Adicionar Nova Matéria</h2>
+                                    <StyledForm onSubmit={handleSubmit}>
+                                        <StyledDropdown
+                                            value={selectedSubject}
+                                            onChange={handleSubjectChange}
+                                        >
+                                            <option value="" disabled>Select a Subject</option>
+                                            {subjects.map((subject) => (
+                                                <option key={subject.id} value={subject.id}>
+                                                    {subject.name}
+                                                </option>
+                                            ))}
+                                        </StyledDropdown>
+                                        <StyledInput
+                                            placeholder="Duração Planejada"
+                                            value={duration}
+                                            onChange={(e) => setDuration(e.target.value)}
+                                            required
+                                        />
+                                        <StyledSubmitButton type="submit">Salvar</StyledSubmitButton>
+                                    </StyledForm>
+                                </StyledModalContent>
+                            </StyledModalOverlay>
+                        )}
+                    </StyledContainer>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
+                    <StyledBox>
+                        {subjectsClass.map((subject) => (
+                            <Card
+                                key={subject.id}
+                                title={subject.subjectId.name}
+                                plannedDuration={subject.duration}
+                                subjectId={subject.id}
+                                onEdit={newDuration => {
+                                  subject.subjectId.expectedDuration = newDuration;
+                                }}
+                            />
+                        ))}
+                    </StyledBox>
+                </div>
 
         {isEditModalOpen && (
           <StyledModalOverlay>
