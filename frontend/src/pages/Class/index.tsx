@@ -23,7 +23,7 @@ interface CourseData {
   description: string;
 }
 
-interface SubjectData {
+interface Subject {
   id: number;
   name: string;
   expectedDuration: number;
