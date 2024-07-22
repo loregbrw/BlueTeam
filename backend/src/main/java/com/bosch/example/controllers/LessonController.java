@@ -22,13 +22,14 @@ import com.bosch.example.sessions.UserSession;
 public class LessonController {
     @Autowired
     UserSession userSession;
-    
+
     @Autowired
     LessonService lessonService;
 
     @PostMapping("/auth")
     public ResponseEntity<LessonData> createLesson(@RequestBody LessonRequest lessonRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)
+                && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             LessonData lessonCreated = lessonService.createLesson(lessonRequest);
@@ -45,10 +46,15 @@ public class LessonController {
     public ResponseEntity<List<LessonData>> getLessonBySubjectClass(@PathVariable Long id) {
         return ResponseEntity.ok().body(lessonService.getLessonByClass(id));
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<List<LessonData>> getLessonByUserId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(lessonService.getLessonByClass(id));
+    }
 
     @PatchMapping("auth/{id}")
     public ResponseEntity<LessonData> patchLesson(@PathVariable Long id, @RequestBody LessonRequest lessonRequest) {
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)
+                && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             LessonData lessonUpdated = lessonService.updateLesson(id, lessonRequest);
@@ -59,7 +65,8 @@ public class LessonController {
     @DeleteMapping("auth/{id}")
     public ResponseEntity<?> deleteLesson(@PathVariable Long id) {
 
-        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor) && !userSession.getRole().equals(UserRoleEnum.Server)) {
+        if (!userSession.getRole().equals(UserRoleEnum.Adm) && !userSession.getRole().equals(UserRoleEnum.Instructor)
+                && !userSession.getRole().equals(UserRoleEnum.Server)) {
             return ResponseEntity.status(403).body(null);
         } else {
             lessonService.deleteLesson(id);

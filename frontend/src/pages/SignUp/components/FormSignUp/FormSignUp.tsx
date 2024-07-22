@@ -60,12 +60,12 @@ export const FormSignUp = () => {
     }
     console.log(FormValues)
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const token = 
         e.preventDefault();
+        const token = localStorage.getItem("token")
         try {
             const response = await api.post("user/auth", FormValues, {
                 headers: {
-                    auth: `Bearer ${token}`
+                    auth: `${token}`
                 }
             });
             toast.success("Usuário criado!")
