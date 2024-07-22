@@ -60,7 +60,6 @@ export const FormSignUp = () => {
     }
     console.log(FormValues)
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const token = 
         e.preventDefault();
         const token = localStorage.getItem("token")
         try {
