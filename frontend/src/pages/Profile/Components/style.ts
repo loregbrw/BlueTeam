@@ -26,6 +26,21 @@ export const StyledDropdownButton = styled.button`
 
 `;
 
+export const RedButton = styled.button`
+  background-color: #d4141b;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 150px;
+  &:hover {
+    background-color: #b4273b;
+  }
+
+`;
+
 export const StyledBox = styled.div`
     display: inline-flex;
     flex-wrap: wrap;

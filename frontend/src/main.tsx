@@ -18,6 +18,8 @@ import { Profile } from './pages/Profile/Profile.tsx'
 import { ToastContainer } from 'react-toastify'
 import { Classes } from './pages/Classes/Classes.tsx'
 import { ChangePassword } from './pages/ChangePassword/index.tsx'
+import { Reports } from './pages/Reports/Reports.tsx';
+
 
 
 const router = createBrowserRouter([
@@ -86,6 +88,13 @@ const router = createBrowserRouter([
     element:
     <App>
       <Profile/>
+    </App>
+  },
+  {
+    path: "/reports/:userId",
+    element:
+    <App>
+      <Reports/>
     </App>
   }
 ])
