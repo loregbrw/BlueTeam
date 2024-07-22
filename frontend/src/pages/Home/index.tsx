@@ -309,7 +309,6 @@ export const Home = () => {
                                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', gap: "10px" }}>
                                         {(userType === "Adm" || userType === "Instructor") && (
                                             <>
-                                                <StyledButton onClick={() => setModalMode("edit")}>Editar</StyledButton>
                                                 <StyledButton onClick={handleDeleteLesson}>Excluir</StyledButton>
                                             </>
                                         )}
