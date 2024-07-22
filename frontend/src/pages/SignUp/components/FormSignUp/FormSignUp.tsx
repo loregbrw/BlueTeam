@@ -96,7 +96,7 @@ export const FormSignUp = () => {
                     <StyledMiniBox>
                         <p>Turma</p>
                         <StyledSelect required value={classId} onChange={(e) => setClassId(e.target.value)} name="class" id="class">
-                            <option value={""}>Selecione uma turma</option>
+                            <option disabled value={""}>Selecione uma turma</option>
                             {
                                 classes.map((classItem) => (
                                     <option key={classItem.id} value={classItem.id}>{classItem.name}</option>
@@ -112,7 +112,7 @@ export const FormSignUp = () => {
                     <StyledMiniBox>
                         <p>Tipo</p>
                         <StyledSelect required value={role} onChange={(e) => setrole(e.target.value)}>
-                            <option value={""}>Selecione um tipo</option>
+                            <option disabled value={""}>Selecione um tipo</option>
                             {
                                 roleData.map((roleItem) =>
                                     <option key={roleItem} value={roleItem}>{roleItem}</option>
