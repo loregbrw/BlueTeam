@@ -120,7 +120,7 @@ export const StyledMain = () => {
             }
         }
         getAbilities()
-    }, [])
+    }, [isAbilityModalOpen])
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -356,7 +356,7 @@ export const StyledMain = () => {
                 <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
                 
                     <StyledBoxCard>
-                        {ability.map(index => (
+                        {Array.isArray(ability) && ability.map(index => (
                             <Card name={index.name} strenght={index.strength} />
                         ))}
                     </StyledBoxCard>
