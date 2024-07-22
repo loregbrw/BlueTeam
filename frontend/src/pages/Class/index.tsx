@@ -6,9 +6,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import { api } from "../../service/api"
 import { useEffect, useState } from "react"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton } from "./components/dropdown/style"
-import { Card } from "../Subjects/components/card/Card"
 import { toast } from "react-toastify"
 import AppBar from "../../components/AppBar/AppBar"
+import { Card } from "./components/card/Card"
 
 interface ClassData {
     id: number;
@@ -31,6 +31,7 @@ interface Subject {
 }
 
 interface SubjectClass {
+    id: number,
     subjectId: Subject,
     classId: number,
     duration: number,
@@ -278,9 +279,13 @@ export const Class = () => {
                     <StyledBox>
                         {subjectsClass.map((subject) => (
                             <Card
-                                key={subject.subjectId.id}
+                                key={subject.id}
                                 title={subject.subjectId.name}
-                                plannedDuration={subject.subjectId.expectedDuration}
+                                plannedDuration={subject.duration}
+                                subjectId={subject.id}
+                                onEdit={newDuration => {
+                                  subject.subjectId.expectedDuration = newDuration;
+                                }}
                             />
                         ))}
                     </StyledBox>
