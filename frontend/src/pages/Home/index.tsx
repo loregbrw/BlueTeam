@@ -4,9 +4,9 @@ import {
     StyledModalContainer,
     StyledCloseButton,
     StyledForm,
-    StyledButton,
     StyledSelectClass,
-    StyledOption
+    StyledOption,
+    StyledCalendarOk
 } from "./style"
 import Calendar from "react-calendar"
 import { useEffect, useState } from "react"
@@ -19,7 +19,8 @@ import {
 } from "./apiService"
 import { toast } from "react-toastify"
 import { api } from "../../service/api"
-import { StyledSelect } from "../SubjectClass/Style"
+import { StyledInput, StyledSelect } from "../SubjectClass/Style"
+import { StyledButton } from "../ChangePassword/style"
 
 export const Home = () => {
 
@@ -123,7 +124,7 @@ export const Home = () => {
         setSelectedSubjectClassId(selectedId);
         setFormData((prevData) => ({
             ...prevData,
-            subject_class_id: selectedId,
+            subjectClassId: selectedId,
         }));
     };
 
@@ -160,8 +161,46 @@ export const Home = () => {
                 toast.error("Nome e descrição não podem estar vazios.");
                 return;
             }
-
+    
             const response = await api.post('/lesson/auth', {
+                subjectClassId: formData.subjectClassId,
+                title: formData.title,
+                description: formData.description,
+                shift: formData.shift,
+                date: formData.date.toISOString().split('T')[0] // Data no formato YYYY-MM-DD
+            }, {
+                headers: {
+                    auth: `${token}`
+                }
+            });
+            console.log(response.data);
+    
+            if (!response.data) {
+                throw new Error('Erro ao criar aula.');
+            }
+            fetchLessonsForClass(); // Atualize a lista de aulas
+            toast.success("Aula criada com sucesso!");
+            setShowModal(false);
+    
+        } catch (error) {
+            console.error('Erro ao criar aula:', error);
+            toast.error("Falha ao criar a aula.");
+        }
+    };
+
+    const handleUpdateLesson = async () => {
+        try {
+            if (formData.title.trim() === "" || formData.description.trim() === "") {
+                toast.error("Nome e descrição não podem estar vazios.");
+                return;
+            }
+    
+            if (!modalLessonData?.id) {
+                toast.error("ID da aula não encontrado.");
+                return;
+            }
+    
+            const response = await api.patch(`/lesson/auth/${modalLessonData.id}`, {
                 title: formData.title,
                 date: formData.date.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
                 shift: formData.shift,
@@ -170,20 +209,19 @@ export const Home = () => {
             }, {
                 headers: {
                     auth: `${token}`
-                }
+                },
             });
-            console.log(response.data);
-
+    
             if (!response.data) {
-                throw new Error('Erro ao criar aula.');
+                throw new Error('Erro ao atualizar aula.');
             }
             fetchLessonsForClass(); // Atualize a lista de aulas
-            toast.success("Aula criada com sucesso!");
+            toast.success("Aula atualizada com sucesso!");
             setShowModal(false);
-
+    
         } catch (error) {
-            console.error('Erro ao criar aula:', error);
-            toast.error("Falha ao criar a aula.");
+            console.error('Erro ao atualizar aula:', error);
+            toast.error("Falha ao atualizar a aula.");
         }
     };
 
@@ -215,8 +253,12 @@ export const Home = () => {
 
     const handleSubmitSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleSaveLesson();
+        if(modalMode === 'add'){
+            handleSaveLesson();
 
+        }else if(modalMode === 'edit'){
+            handleUpdateLesson();
+        }
     }
 
     const handleSubmitDelete = (e: React.FormEvent<HTMLFormElement>) => {
@@ -242,7 +284,7 @@ export const Home = () => {
                     {userType === "Adm" || userType === "Instructor" ? (
                         <div style={{ alignContent: 'center' }}>
                             <StyledSelectClass id="classDropdown" onChange={handleClassChange}>
-                                <StyledOption disabled value="">Selecione...</StyledOption>
+                                <StyledOption value="">Selecione...</StyledOption>
                                 {classes.map(classData => (
                                     <StyledOption key={classData.id} value={classData.id}>
                                         {classData.name}
@@ -253,7 +295,7 @@ export const Home = () => {
                     ) : null}
                 </div>
                 <StyledCalendar>
-                    <Calendar locale="pt-BR" onClickDay={handleDateClick} tileClassName={tileClassName} />
+                    <StyledCalendarOk locale="pt-BR" onClickDay={handleDateClick} tileClassName={tileClassName} />
                 </StyledCalendar>
 
                 <StyledModalContainer show={showModal}>
@@ -282,35 +324,35 @@ export const Home = () => {
                                 <StyledForm onSubmit={handleSubmitSave}>
                                     <h1>Aula</h1>
                                     <label>Nome</label>
-                                    <input type="text" name="title" value={formData.title} onChange={handleChange} />
+                                    <StyledInput type="text" name="title" value={formData.title} onChange={handleChange} />
 
                                     <label>Data</label>
-                                    <input type="date" name="date" value={formData.date.toISOString().split('T')[0]} onChange={handleChange} />
+                                    <StyledInput type="date" name="date" value={formData.date.toISOString().split('T')[0]} onChange={handleChange} />
 
                                     <label> Turno:</label>
-                                    <select name="shift" value={formData.shift} onChange={handleChange}>
+                                    <StyledSelect name="shift" value={formData.shift} onChange={handleChange}>
                                         <option value="">Selecione...</option>
                                         <option value="MORNING">Manhã</option>
                                         <option value="AFTERNOON">Tarde</option>
                                         <option value="ALLDAY">Dia inteiro</option>
-                                    </select>
+                                    </StyledSelect>
 
                                     {selectedClassId && (
                                         <>
                                             <label htmlFor="subjectClassDropdown">Selecione a Matéria:</label>
-                                            <select id="subjectClassDropdown" onChange={handleSubjectClassChange}>
+                                            <StyledSelect id="subjectClassDropdown" onChange={handleSubjectClassChange}>
                                                 <option value="">Selecione...</option>
                                                 {subjectClasses.map(subjectClass => (
                                                     <option key={subjectClass.id} value={subjectClass.id}>
                                                         {subjectClass.subjectId.name}
                                                     </option>
                                                 ))}
-                                            </select>
+                                            </StyledSelect>
                                         </>
                                     )}
 
                                     <label>Descrição</label>
-                                    <textarea name="description" value={formData.description} onChange={handleChange} />
+                                    <StyledInput name="description" value={formData.description} onChange={handleChange} />
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                                         {(userType === "Adm" || userType === "Instructor") && (
                                             <StyledButton type="submit">{modalMode === "add" ? "Salvar" : "Atualizar"}</StyledButton>)}

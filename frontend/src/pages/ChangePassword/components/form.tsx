@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { api } from "../../../service/api";
-import { MainContainer, ProgressBar, StyledButton, StyledForm, StyledInput } from "../style";
+import { MainContainer, ProgressBar, StyledForm } from "../style";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { StyledInput } from "../../Profile/Components/style";
+import { StyledButton } from "../../../components/loginForm/styled";
 
 export const FormPassword: React.FC = () => {
   const [password, setPassword] = useState("");
@@ -116,7 +118,6 @@ export const FormPassword: React.FC = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
-          style={{padding:'0px'}}
         />
         <div className="progress" style={{ height: "20px", width: "100%", marginBottom: "10px" }}>
           <ProgressBar

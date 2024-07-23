@@ -1,3 +1,4 @@
+import Calendar from "react-calendar";
 import styled from "styled-components"
 
 interface StyledModalContainerProps {
@@ -116,13 +117,13 @@ export const StyledCloseButton = styled.button`
         color: black;
     }
 `
-
 export const StyledForm = styled.form`
-    padding: 80px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 30px;
+`;
 
 export const StyledButton = styled.button`
     margin-top: 20px;
@@ -138,7 +139,34 @@ export const StyledButton = styled.button`
         color: white;
         background-color: brown;
     }
+
 `
+
+export const StyledCalendarOk = styled(Calendar)`
+  .react-calendar__navigation__label {
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .react-calendar__navigation__arrow {
+    color: #007bff;
+    font-size: 18px;
+  }
+
+  .react-calendar__month-view__days__day {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .react-calendar__tile:enabled:hover {
+    background-color: #f0f8ff;
+  }
+`;
+
+
 export const StyledSelectClass = styled.select`
   padding: 8px;
   border-radius: 5px;
