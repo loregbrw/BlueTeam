@@ -256,7 +256,7 @@ export const StyledMain = () => {
                     </StyledModalOverlay>
                 )}
                 <StyledContainer>
-                    {userType !== "Apprentice" && (
+                    {userType !== "Apprentice" && role !== "Apprentice" && (
 
                     <>
                         <StyledDropdownButton onClick={openAbility}>+ Habilidade</StyledDropdownButton>
@@ -390,9 +390,9 @@ export const StyledMain = () => {
 
             </div>
 
-            <hr style={{ margin: "25px 0" }} />
-            {userType !== "Apprentice"  &&(
+            {userType !== "Apprentice" && role !== "Apprentice" &&(
                 <>
+                <hr style={{ margin: "25px 0" }} />
                 <h1>Habilidades</h1>
                 <div style={{ display: "flex", justifyContent: "center", overflow: "auto" }}>
                 

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { api } from "../../../../service/api"
-import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../../components/loginForm/styled"
+import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledMiniBox } from "../../../../components/loginForm/styled"
 import { toast } from "react-toastify"
-import { StyledSelect, StyledSubmitButton } from "../../../Profile/Components/style"
+import { StyledInput, StyledSelect, StyledSubmitButton } from "../../../Profile/Components/style"
+import { useNavigate } from "react-router-dom"
 
 export const FormSignUp = () => {
 
@@ -33,6 +34,7 @@ export const FormSignUp = () => {
     const [email, setemail] = useState("")
     const [role, setrole] = useState("")
     const [birthDate, setbirthDate] = useState("")
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getClasses = async () => {
@@ -67,6 +69,7 @@ export const FormSignUp = () => {
                 }
             });
             toast.success("Usuário criado!")
+            navigate("/home");
 
         } catch (error) {
             console.error("Erro ao criar usuario:", error);
