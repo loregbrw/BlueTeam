@@ -26,16 +26,14 @@ def get_data(conn, user_id):
     cursor = conn.cursor()
     data = []
     try:
-        cursor.execute('''SELECT 
-                            s.name AS SkillName, 
-                            us.value AS SkillValueWithWeight 
-                       FROM user_skills_data us 
-                       JOIN user_data ud 
-                       ON us.user_id = ud.id 
-                       JOIN skills_data s 
-                       ON us.skills_id = s.id 
-                       WHERE ud.id = ? 
-                       ORDER BY s.name;''', user_id)
+        cursor.execute('''select sub.name, avg(usk.value) from
+                            subject_data sub
+                            join subject_class_data subc on subc.subject_id = sub.id
+                            join skills_data sk on sk.subject_class_id = subc.id
+                            join user_skills_data usk on usk.skills_id = sk.id
+                            join user_data us on us.id = usk.user_id
+                            group by subc.id, us.id, sub.name
+                            having us.id = ?''', user_id)
         for row in cursor:
             data.append((row[0], row[1]))  
         num_rows = len(data)

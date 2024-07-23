@@ -107,7 +107,7 @@ export const SkillsTable = () => {
         };
 
         fetchData();
-    }, [subjectclassId]);
+    }, [subjectclassId, isModalOpen]);
 
     const renderSkillValue = (apprenticeId: number, skillId: number) => {
         const skill = userSkills.find(us => us.userId.id === apprenticeId && us.skillsId.id === skillId);
