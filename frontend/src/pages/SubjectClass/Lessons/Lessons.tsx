@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../../service/api";
 import { StyledCard, StyledLink } from "./Style";
+import { CenturyView } from "react-calendar";
 
 interface LessonData {
     id: number;
@@ -72,17 +73,20 @@ export const Lessons = () => {
 
     return (
         <>
-            {lessons.map((lesson) => (
-                <StyledLink to={""}>
-                    <StyledCard>
-                        <span style={{ fontSize: "1.2rem", fontWeight: "700" }}>{lesson.title}</span>
-                        <hr style={{ width: "100%" }} />
-                        <span>{lesson.description}</span>
-                        <span>{lesson.shift} - {convertToBrazilianDate(lesson.date)}</span>
-                    </StyledCard>
-                </StyledLink>
+            <div style={{ width: "100%", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+                {lessons.map((lesson) => (
+                    <StyledLink to={""} key={lesson.id}>
+                        <StyledCard>
+                            <span style={{ fontSize: "1.2rem", fontWeight: "700" }}>{lesson.title}</span>
+                            <hr style={{ width: "100%" }} />
+                            <span>{lesson.description}</span>
+                            <span>{lesson.shift} - {convertToBrazilianDate(lesson.date)}</span>
+                        </StyledCard>
+                    </StyledLink>
 
-            ))}
+                ))}
+            </div>
+
         </>
     )
 }

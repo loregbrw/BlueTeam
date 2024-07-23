@@ -1,7 +1,10 @@
 import { Header } from "./Header/Header"
 import { Lessons } from "./Lessons/Lessons"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledDropdown, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton, StyledTextArea } from "./Style"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { api } from "../../service/api"
+import { toast } from "react-toastify"
+import { useParams } from "react-router-dom"
 
 export const SubjectClass = () => {
 
@@ -11,12 +14,41 @@ export const SubjectClass = () => {
     const [shift, setShift] = useState('');
     const [date, setDate] = useState('');
 
+    const { subjectclassId } = useParams<{ subjectclassId: string }>();
+
     const openModal = () => {
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        const newLesson = {
+            subjectClassId: subjectclassId,
+            title: title,
+            description: description,
+            shift: shift,
+            date: date,
+        };
+
+        try {
+            const response = await api.post('/lesson/auth', newLesson, {
+                headers: {
+                    auth: token
+                }
+            });
+            toast.success("Aula criada!")
+            console.log(response)
+            closeModal();
+        } catch (error) {
+            toast.error('Erro em adicionar aula!');
+        }
     };
 
 
@@ -36,7 +68,7 @@ export const SubjectClass = () => {
                                 <StyledModalContent>
                                     <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
                                     <h2>Adicionar Nova Aula</h2>
-                                    <StyledForm>
+                                    <StyledForm onSubmit={handleSubmit}>
                                         <StyledInput
                                             placeholder="Título da aula"
                                             value={title}
@@ -58,6 +90,7 @@ export const SubjectClass = () => {
                                             <option value={"ALLDAY"}>Dia inteiro</option>
                                         </StyledDropdown>
                                         <StyledInput
+                                            id="date"
                                             type="date"
                                             value={date}
                                             onChange={(e) => setDate(e.target.value)}
