@@ -14,7 +14,7 @@ export const ApprendiceBar = () => {
     return(
         <>
             <StyledNavBar>
-                <img src={BoschLogo} alt="" style={{width: "150px"}} />
+            <a href="/home"><img src={BoschLogo} alt="" style={{width: "150px"}} /></a>
                 <div style={
                     {
                         display: 'flex',

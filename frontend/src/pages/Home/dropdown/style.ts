@@ -1,3 +1,4 @@
+
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
@@ -6,7 +7,7 @@ export const StyledContainer = styled.div`
   gap: 10px; 
 `;
 
-export const StyledDropdownContainer = styled.div`
+ export const StyledDropdownContainer = styled.div`
   position: relative;
   display: inline-block;
 `;
@@ -26,42 +27,6 @@ export const StyledDropdownButton = styled.button`
 
 `;
 
-export const RedButton = styled.button`
-  background-color: #d4141b;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-  width: 150px;
-  &:hover {
-    background-color: #b4273b;
-  }
-
-`;
-
-export const StyledBox = styled.div`
-    display: inline-flex;
-    flex-wrap: wrap;
-    max-width: 500px;
-    width: 100%;
-    padding: 25px;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 20px;
-    background-color: #d7dae0;
-    align-self: center;
-`
-
-export const StyledBoxCard = styled.div`
-    display: inline-flex;
-    flex-wrap: wrap;
-    width: max-content;
-    padding: 50px;
-    justify-content: center;
-`
-
 export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: absolute;
@@ -73,7 +38,7 @@ export const StyledDropdownContent = styled.div<{ isOpen: boolean }>`
   border-radius: 4px;
   right: 0; 
   
-  & a {
+  & option {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -97,7 +62,6 @@ export const StyledAddButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
   width: 150px;
-  margin: 0px 10px 0px 10px;
 
   &:hover {
     background-color: #0056b3;
@@ -122,7 +86,7 @@ export const StyledModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 900px;
+  max-width: 500px;
   width: 100%;
 `;
 
@@ -144,6 +108,7 @@ export const StyledCloseButton = styled.button`
     background-color: #e60000;
   }
 `;
+
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -181,21 +146,3 @@ export const StyledSubmitButton = styled.button`
     background-color: #218838;
   }
 `;
-
-export const StyledDateInput = styled.input.attrs({ type: 'date' })`
-
-width: 100%;
-  padding: 8px;
-  background-color: #d7dae0;
-  font-size: 16px;
-  color: #333;
-  border: none;
-  border-bottom: 1px solid;
-
-
-  &:focus {
-    border-color: #007BFF;
-    outline: none;
-    background-color: #d7dae0;
-  }
-`

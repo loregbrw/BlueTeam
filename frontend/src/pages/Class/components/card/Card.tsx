@@ -16,10 +16,11 @@ import { toast } from "react-toastify";
 interface CardProps {
     title: string;
     plannedDuration: number;
-    subjectId: number; 
+    subjectId: number;
+    onEdit: (newDuration: number) => void;
 }
 
-export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId }) => {
+export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId, onEdit }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editName, setEditName] = useState(title);
     const [editDuration, setEditDuration] = useState(plannedDuration);
@@ -38,18 +39,17 @@ export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId })
         e.preventDefault();
 
         const token = localStorage.getItem("token");
+        console.log("Token:", token);
 
         try {
-            const response = await api.patch(`/subject/auth/${subjectId}`, {
-                name: editName,
-                expectedDuration: editDuration,
-            }, {
+            const response = await api.put(`/subjectclass/auth/${subjectId}/${editDuration}`, {}, {
                 headers: {
                     auth: token
                 }
             });
             toast.success("Matéria atualizada com sucesso!");
             console.log(response);
+            onEdit(editDuration)
             closeEditModal();
         } catch (error) {
             toast.error('Erro ao atualizar a matéria');
@@ -63,7 +63,7 @@ export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId })
                 <StyledCard>
                     <h3>{title}</h3>
                     <hr style={{ width: "100%" }} />
-                    <p><b>Duração planejada:</b> {plannedDuration} horas</p>
+                    <p><b>Duração planejada:</b> {editDuration} horas</p>
                     <StyledAddButton onClick={openEditModal}>Editar</StyledAddButton>
                 </StyledCard>
             </StyledLink>
@@ -74,11 +74,11 @@ export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId })
                         <StyledCloseButton onClick={closeEditModal}>X</StyledCloseButton>
                         <h2>Editar Matéria</h2>
                         <StyledForm onSubmit={handleEditSubmit}>
-                            <StyledInput
+                            <StyledInput 
                                 placeholder="Nome da Matéria"
                                 value={editName}
                                 onChange={(e) => setEditName(e.target.value)}
-                                required
+                                disabled
                             />
                             <StyledInput
                                 placeholder="Duração"

@@ -1,4 +1,5 @@
-import { api } from "../../../../service/api";
+
+import { api } from "../../../service/api";
 import { StyledDropdownContainer } from "./style"
 import { StyledDropdownButton } from "./style"
 import { StyledDropdownContent } from "./style"
@@ -7,13 +8,19 @@ import React, { useEffect, useState } from 'react';
 export const Dropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [courses, setCourses] = useState<courseData[]>([])
+  const [classes, setClasses] = useState<ClassData[]>([]);
 
-  interface courseData {
-    id: number,
-    name: string,
-    description: string | null
-  }
+ interface ClassData{
+    id: number;
+    courseId: {
+        id: number;
+        name: string;
+        description: string;
+    };
+    name: string;
+    duration: number;
+    initialDate: string;
+}
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -28,16 +35,16 @@ export const Dropdown: React.FC = () => {
   };
 
   useEffect(() => {
-    const getCourses = async () => {
+    const getClasses = async () => {
       try {
-        const response = await api.get(`course`)
-        setCourses(response.data)
+        const response = await api.get(`class`)
+        setClasses(response.data)
       } catch (error) {
         console.error(error);
-        setCourses([])
+        setClasses([])
       }
     }
-    getCourses()
+    getClasses()
   }, [])
 
   return (
@@ -46,11 +53,11 @@ export const Dropdown: React.FC = () => {
         Cursos
       </StyledDropdownButton>
       <StyledDropdownContent isOpen={isOpen}>
-        {courses.map((courseItem, index) => (
-          <option key={index} value={courseItem.id}>
-            {courseItem.name}
-          </option>
-        ))}
+      {classes.map(classData => (
+        <option key={classData.id} value={classData.id}>
+            {classData.name}
+        </option>
+      ))}
       </StyledDropdownContent>
     </StyledDropdownContainer>
   );

@@ -13,22 +13,16 @@ export const StyledButton = styled.button`
     background-color: #0056b3;
   }
 `
-
 export const StyledForm = styled.form`
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    background-color: #d7dae0;
-    width: 30%;
-    min-width: 350px;
-    padding: 30px;
-    gap: 30px;
-    border-radius: 10px;
-
-    
-`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+  padding: 30px;
+  width: 40%;
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+`;
 
 export const StyledInput = styled.input`
 

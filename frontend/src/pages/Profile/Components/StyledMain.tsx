@@ -77,26 +77,26 @@ export const StyledMain = () => {
     const { userId } = useParams<{ userId: string }>();
 
     useEffect(() => {
-        const getClass = async () =>{
-            try{
+        const getClass = async () => {
+            try {
                 const response = await api.get('class')
                 setClassData(response.data)
-            } catch(error){
+            } catch (error) {
                 console.error(error);
                 setClassData([])
             }
         }
         getClass()
-    },[])
-    
+    }, [])
+
     const [user, setUserData] = useState<userData>()
     const [ability, setAbilityData] = useState<abilityUserData[]>([])
 
     const userType = localStorage.getItem("role")
 
     useEffect(() => {
-        const getUser = async () =>{
-            try{
+        const getUser = async () => {
+            try {
                 const response = await api.get(`user/id/${userId}`)
                 setUserData(response.data)
                 setUsername(response.data.name)
@@ -106,7 +106,7 @@ export const StyledMain = () => {
                 setEmail(response.data.email)
                 setRole(response.data.role)
                 console.log(response.data)
-            } catch(error){
+            } catch (error) {
                 console.error(error);
             }
         }
@@ -129,7 +129,7 @@ export const StyledMain = () => {
     const openModal = () => {
         setIsModalOpen(true);
     };
-    
+
     const closeModal = () => {
         setIsModalOpen(false);
     };
@@ -161,7 +161,7 @@ export const StyledMain = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         const token = localStorage.getItem("token");
 
         const updateUser = {
@@ -177,13 +177,64 @@ export const StyledMain = () => {
             const response = await api.put(`user/auth/${userId}`, updateUser, {
                 headers: {
                     auth: `${token}`
-                }});
-            
+                }
+            });
+
             alert("Dados atualizados!")
             console.log(response)
             closeAverageGraph();
         } catch (error) {
             console.error("Erro ao atualizar os dados:", error);
+        }
+    };
+
+      const handleAbility = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const token = localStorage.getItem("token");
+
+        const setAbility = {
+            userId: userId,
+            name: abilityName,
+            strenght: strenght,
+        };
+
+        try {
+            const response = await api.post(`ability/auth`, setAbility,{
+                headers: {
+                    auth: `${token}`
+                }});
+            setAbilityData(response.data)
+            alert("Dados atualizados!")
+            console.log(response)
+            closeAbility()
+        } catch (error) {
+            console.error("Erro ao atualizar os dados:", error);
+        }
+      };
+
+      const handleEdit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        const token = localStorage.getItem("token");
+
+        const updateAbility = {
+            userId: userId,
+            name: abilityName,
+            strenght: strenght
+        };
+
+        try {
+            const response = await api.patch(`ability/auth/${selectedAbility}`, updateAbility, { //possivel bug
+                headers: {
+                    auth: `${token}`
+                }});
+            
+            alert("Habilidade atualizada!")
+            console.log(response)
+            closeEditAbility();
+        } catch (error) {
+            console.error("Erro ao atualizar a habilidade:", error);
         }
       };
 
@@ -238,22 +289,23 @@ export const StyledMain = () => {
       };
 
     return (
-        <> 
+        <>
 
-            <div style={{display: 'flex', justifyContent: 'end', padding: '10px'}}>
-                {user?.role === "Apprentice" && (userType !== "Apprentice" || userType === user.role)&&(
+            <div style={{ display: 'flex', justifyContent: 'end', padding: '10px' }}>
+                {user?.role === "Apprentice" && (userType !== "Apprentice" || userType === user.role) && (
                     <StyledDropdownButton onClick={openAverageGraph}>Médias</StyledDropdownButton>
+
                 )}
                 {isAverageGraphOpen && (
                     <StyledModalOverlay>
                         <StyledModalContent>
                             <StyledCloseButton onClick={closeAverageGraph}>x</StyledCloseButton>
-                            <img width={'100%'} src={`http://127.0.0.1:4040/student/${userId}`}></img>
+                            <img width={'100%'} src={`http://127.0.0.1:5050/student/${userId}`}></img>
                         </StyledModalContent>
                     </StyledModalOverlay>
                 )}
                 <StyledContainer>
-                {userType !== "Apprentice" && (
+                    {userType !== "Apprentice" && (
 
                     <>
                         <StyledDropdownButton onClick={openAbility}>+ Habilidade</StyledDropdownButton>
@@ -368,21 +420,21 @@ export const StyledMain = () => {
             </StyledContainer>
         </div>
 
-            <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', overflow: "auto", width: '100%', height: '100%'}}>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: 'center', overflow: "auto", width: '100%', height: '100%' }}>
                 <StyledBox>
                     <h2>Dados do Usuário</h2>
-                   
-            <div style={{display: "flex", flexDirection: 'column', gap: '20px'}}>
-                <p>Nome: {user?.name}</p>
-                <p>Turma: {user?.classId.name}</p>
-                <p>EDV: {user?.edv}</p>
-                <p>Email: {user?.email}</p>
-                <p>Data de Nascimento: {user?.birthDate}</p>
-                {userType !== "Apprentice" && (
-                    <p>Cargo: {user?.role}</p>
-                )}
-            </div>
-        
+
+                    <div style={{ display: "flex", flexDirection: 'column', gap: '20px' }}>
+                        <p>Nome: {user?.name}</p>
+                        <p>Turma: {user?.classId.name}</p>
+                        <p>EDV: {user?.edv}</p>
+                        <p>Email: {user?.email}</p>
+                        <p>Data de Nascimento: {user?.birthDate}</p>
+                        {userType !== "Apprentice" && (
+                            <p>Cargo: {user?.role}</p>
+                        )}
+                    </div>
+
                 </StyledBox>
 
             </div>

@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react"
 import { api } from "../../../../service/api"
 import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../../components/loginForm/styled"
 import { toast } from "react-toastify"
+import { StyledInput } from "../../../Subjects/components/dropdown/style"
+import { MainContainer, StyledMiniBox } from "../../../../components/loginForm/styled"
+import { StyledSelect, StyledSubmitButton } from "../../../Profile/Components/style"
+import { StyledForm } from "./style"
 
 export const FormSignUp = () => {
 
@@ -57,12 +61,12 @@ export const FormSignUp = () => {
     }
     console.log(FormValues)
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const token = 
         e.preventDefault();
+        const token = localStorage.getItem("token")
         try {
             const response = await api.post("user/auth", FormValues, {
                 headers: {
-                    auth: `Bearer ${token}`
+                    auth: `${token}`
                 }
             });
             toast.success("Usuário criado!")
@@ -92,15 +96,15 @@ export const FormSignUp = () => {
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>Turma</p>
-                        <StyledDropdown required value={classId} onChange={(e) => setClassId(e.target.value)} name="class" id="class">
-                            <option value={""}>Selecione uma turma</option>
+                        <StyledSelect required value={classId} onChange={(e) => setClassId(e.target.value)} name="class" id="class">
+                            <option disabled value={""}>Selecione uma turma</option>
                             {
                                 classes.map((classItem) => (
                                     <option key={classItem.id} value={classItem.id}>{classItem.name}</option>
                                 ))
                             }
 
-                        </StyledDropdown>
+                        </StyledSelect>
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>E-mail</p>
@@ -108,20 +112,20 @@ export const FormSignUp = () => {
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>Tipo</p>
-                        <StyledDropdown required value={role} onChange={(e) => setrole(e.target.value)}>
-                            <option value={""}>Selecione um tipo</option>
+                        <StyledSelect required value={role} onChange={(e) => setrole(e.target.value)}>
+                            <option disabled value={""}>Selecione um tipo</option>
                             {
                                 roleData.map((roleItem) =>
                                     <option key={roleItem} value={roleItem}>{roleItem}</option>
                                 )
                             }
-                        </StyledDropdown>
+                        </StyledSelect>
                     </StyledMiniBox>
                     <StyledMiniBox>
                         <p>Data de nascimento</p>
-                        <StyledDateInput required type="date" value={birthDate} onChange={(e) => setbirthDate(e.target.value)} />
+                        <StyledInput required type="date" value={birthDate} onChange={(e) => setbirthDate(e.target.value)} />
                     </StyledMiniBox>
-                    <StyledButton type="submit">Criar</StyledButton>
+                    <StyledSubmitButton type="submit">Criar</StyledSubmitButton>
                 </StyledForm>
             </MainContainer>
 

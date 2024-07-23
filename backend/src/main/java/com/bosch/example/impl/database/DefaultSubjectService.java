@@ -11,9 +11,11 @@ import com.bosch.example.dto.dtoRequest.SubjectRequest;
 import com.bosch.example.exception.NotFoundException;
 import com.bosch.example.model.CourseData;
 import com.bosch.example.model.CourseSubjectData;
+import com.bosch.example.model.SubjectClassData;
 import com.bosch.example.model.SubjectData;
 import com.bosch.example.repositories.CourseJpaRepository;
 import com.bosch.example.repositories.CourseSubjectJpaRepository;
+import com.bosch.example.repositories.SubjectClassJpaRepository;
 import com.bosch.example.repositories.SubjectJpaRepository;
 import com.bosch.example.services.SubjectService;
 
@@ -27,6 +29,9 @@ public class DefaultSubjectService implements SubjectService {
 
     @Autowired 
     CourseJpaRepository repoCourse;
+
+    @Autowired
+    SubjectClassJpaRepository repoSubClass;
     
     @Override
     public SubjectData createSubject(SubjectRequest subject) {
@@ -86,8 +91,10 @@ public class DefaultSubjectService implements SubjectService {
 
             List<CourseSubjectData> courseSub =  repoSubjectCourse.findBySubjectId(subjectSearch);
 
-            for (CourseSubjectData courseSubject : courseSub) {
-                repoSubjectCourse.delete(courseSubject);
+            if (courseSub.size() > 0) {
+                for (CourseSubjectData courseSubject : courseSub) {
+                    repoSubjectCourse.delete(courseSubject);
+                }
             }
 
             repoSubject.delete(subjectSearch);
