@@ -160,7 +160,7 @@ export const Home = () => {
                 toast.error("Nome e descrição não podem estar vazios.");
                 return;
             }
-    
+
             const response = await api.post('/lesson/auth', {
                 title: formData.title,
                 date: formData.date.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
@@ -173,54 +173,17 @@ export const Home = () => {
                 }
             });
             console.log(response.data);
-    
+
             if (!response.data) {
                 throw new Error('Erro ao criar aula.');
             }
             fetchLessonsForClass(); // Atualize a lista de aulas
             toast.success("Aula criada com sucesso!");
             setShowModal(false);
-    
+
         } catch (error) {
             console.error('Erro ao criar aula:', error);
             toast.error("Falha ao criar a aula.");
-        }
-    };
-
-    const handleUpdateLesson = async () => {
-        try {
-            if (formData.title.trim() === "" || formData.description.trim() === "") {
-                toast.error("Nome e descrição não podem estar vazios.");
-                return;
-            }
-    
-            if (!modalLessonData?.id) {
-                toast.error("ID da aula não encontrado.");
-                return;
-            }
-    
-            const response = await api.patch(`/lesson/auth/${modalLessonData.id}`, {
-                title: formData.title,
-                date: formData.date.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-                shift: formData.shift,
-                description: formData.description,
-                subjectClassId: formData.subjectClassId
-            }, {
-                headers: {
-                    auth: `${token}`
-                },
-            });
-    
-            if (!response.data) {
-                throw new Error('Erro ao atualizar aula.');
-            }
-            fetchLessonsForClass(); // Atualize a lista de aulas
-            toast.success("Aula atualizada com sucesso!");
-            setShowModal(false);
-    
-        } catch (error) {
-            console.error('Erro ao atualizar aula:', error);
-            toast.error("Falha ao atualizar a aula.");
         }
     };
 
@@ -252,12 +215,8 @@ export const Home = () => {
 
     const handleSubmitSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(modalMode === 'add'){
-            handleSaveLesson();
+        handleSaveLesson();
 
-        }else if(modalMode === 'edit'){
-            handleUpdateLesson();
-        }
     }
 
     const handleSubmitDelete = (e: React.FormEvent<HTMLFormElement>) => {
