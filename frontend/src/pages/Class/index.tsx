@@ -214,6 +214,14 @@ export const Class = () => {
     <>
       <StyledMain>
         <h1>{classData?.name} - Aprendizes</h1>
+        {userType === "Adm" && (
+          <>
+          <div style={{display: "flex", alignItems: "center", justifyContent: "end", flexWrap: "wrap"}}> 
+            <StyledButton onClick={openEditModal}>Editar</StyledButton>
+            <StyledButton onClick={openDeleteModal} style={{ marginLeft: "10px", backgroundColor: "#ff4d4d" }}>Deletar</StyledButton>
+          </div>
+          </>
+        )}
         <div style={{ width: "100%", display: "flex", justifyContent: "space-between", flexWrap: "wrap", marginTop: "25px" }}>
           <StyledDiv>
             <span>Curso: {classData?.courseId.name}</span>
