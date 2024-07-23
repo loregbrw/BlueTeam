@@ -124,3 +124,12 @@ export const StyledDropdown = styled.select`
     border-color: #007bff;
   }
 `;
+
+export const StyledGraphContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  width: 100%;
+`;

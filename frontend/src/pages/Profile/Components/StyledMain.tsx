@@ -21,6 +21,8 @@ export const StyledMain = () => {
     const [isAverageGraphOpen, setAverageGraphOpen] = useState(false);
     const [isAbilityModalOpen, setAbilityModalOpen] = useState(false);
     const [isEditAbilityModalOpen, setEditAbilityModalOpen] = useState(false);
+
+    const [selectedAbility, setSelectedAbility] = useState<number>()
     
     interface userData {
         id: number;
@@ -122,7 +124,7 @@ export const StyledMain = () => {
             }
         }
         getAbilities()
-    }, [isAbilityModalOpen])
+    }, [isAbilityModalOpen, isEditAbilityModalOpen])
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -148,7 +150,8 @@ export const StyledMain = () => {
         setAbilityModalOpen(false);
     }
 
-    const openEditAbility = () => {
+    const openEditAbility = (id: number) => {
+        setSelectedAbility(id)
         setEditAbilityModalOpen(true);
     }
 
@@ -221,7 +224,7 @@ export const StyledMain = () => {
         };
 
         try {
-            const response = await api.patch(`ability/auth/${ability[].id}`, updateAbility, {
+            const response = await api.patch(`ability/auth/${selectedAbility}`, updateAbility, { //possivel bug
                 headers: {
                     auth: `${token}`
                 }});
@@ -392,7 +395,7 @@ export const StyledMain = () => {
                 
                     <StyledBoxCard>
                         {Array.isArray(ability) && Array.isArray(ability) && ability.map(index => (
-                            <Card key={index.id} onClick={openEditAbility} name={index.name} strenght={index.strength} />
+                            <Card key={index.id} onClick={openEditAbility} id={index.id} name={index.name} strenght={index.strength} />
                             
                         ))}
                     </StyledBoxCard>

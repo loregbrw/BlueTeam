@@ -3,15 +3,17 @@ import { StyledCard } from "./style";
 
 
 interface CardProps {
+    id: number
     name: string;
     strenght: string;
-    onClick?: () => void;
+    onClick?: (id: number
+) => void;
 }
 
-export const Card: React.FC<CardProps> = ({ name, strenght, onClick}) => {
+export const Card: React.FC<CardProps> = ({ id, name, strenght, onClick}) => {
     const handleClick = () => {
         if (onClick) {
-            onClick();
+            onClick(id);
         }
     }
     return(
