@@ -4,6 +4,7 @@ import { StyledBox } from './style';
 import { api } from '../../../service/api';
 import { useParams } from 'react-router-dom';
 import { Card } from './card/Card';
+import { toast } from 'react-toastify';
 
 export const StyledMain = () => {
     
@@ -150,7 +151,7 @@ export const StyledMain = () => {
         setAbilityModalOpen(false);
     }
 
-    const openEditAbility = (id: number) => {
+    const  openEditAbility = async (id: number) =>  {
         setSelectedAbility(id)
         setEditAbilityModalOpen(true);
     }
@@ -180,11 +181,11 @@ export const StyledMain = () => {
                 }
             });
 
-            alert("Dados atualizados!")
+            toast.success("Dados atualizados!")
             console.log(response)
             closeAverageGraph();
         } catch (error) {
-            console.error("Erro ao atualizar os dados:", error);
+            toast.error("Erro ao atualizar os dados!");
         }
     };
 
@@ -205,11 +206,11 @@ export const StyledMain = () => {
                     auth: `${token}`
                 }});
             setAbilityData(response.data)
-            alert("Dados atualizados!")
+            toast.success("Dados atualizados!")
             console.log(response)
             closeAbility()
         } catch (error) {
-            console.error("Erro ao atualizar os dados:", error);
+            toast.error("Erro ao atualizar os dados!");
         }
       };
 
@@ -230,61 +231,11 @@ export const StyledMain = () => {
                     auth: `${token}`
                 }});
             
-            alert("Habilidade atualizada!")
+            toast.success("Habilidade atualizada!")
             console.log(response)
             closeEditAbility();
         } catch (error) {
-            console.error("Erro ao atualizar a habilidade:", error);
-        }
-      };
-
-      const handleAbility = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const token = localStorage.getItem("token");
-
-        const setAbility = {
-            userId: userId,
-            name: abilityName,
-            strenght: strenght,
-        };
-
-        try {
-            const response = await api.post(`ability/auth`, setAbility,{
-                headers: {
-                    auth: `${token}`
-                }});
-            setAbilityData(response.data)
-            alert("Dados atualizados!")
-            console.log(response)
-            closeAbility()
-        } catch (error) {
-            console.error("Erro ao atualizar os dados:", error);
-        }
-      };
-
-      const handleEdit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        const token = localStorage.getItem("token");
-
-        const updateAbility = {
-            userId: userId,
-            name: abilityName,
-            strenght: strenght
-        };
-
-        try {
-            const response = await api.patch(`ability/auth/${selectedAbility}`, updateAbility, { //possivel bug
-                headers: {
-                    auth: `${token}`
-                }});
-            
-            alert("Habilidade atualizada!")
-            console.log(response)
-            closeEditAbility();
-        } catch (error) {
-            console.error("Erro ao atualizar a habilidade:", error);
+            toast.error("Erro ao atualizar a habilidade!");
         }
       };
 

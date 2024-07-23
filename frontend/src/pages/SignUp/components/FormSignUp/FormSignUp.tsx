@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react"
 import { api } from "../../../../service/api"
 import { MainContainer, StyledButton, StyledDateInput, StyledDropdown, StyledForm, StyledInput, StyledMiniBox } from "../../../../components/loginForm/styled"
 import { toast } from "react-toastify"
-import { StyledInput } from "../../../Subjects/components/dropdown/style"
-import { MainContainer, StyledMiniBox } from "../../../../components/loginForm/styled"
 import { StyledSelect, StyledSubmitButton } from "../../../Profile/Components/style"
-import { StyledForm } from "./style"
 
 export const FormSignUp = () => {
 
