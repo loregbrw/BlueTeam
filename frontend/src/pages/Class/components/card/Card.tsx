@@ -64,34 +64,8 @@ export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId, o
                     <h3>{title}</h3>
                     <hr style={{ width: "100%" }} />
                     <p><b>Duração planejada:</b> {editDuration} horas</p>
-                    <StyledAddButton onClick={openEditModal}>Editar</StyledAddButton>
                 </StyledCard>
             </StyledLink>
-
-            {isEditModalOpen && (
-                <StyledModalOverlay>
-                    <StyledModalContent>
-                        <StyledCloseButton onClick={closeEditModal}>X</StyledCloseButton>
-                        <h2>Editar Matéria</h2>
-                        <StyledForm onSubmit={handleEditSubmit}>
-                            <StyledInput 
-                                placeholder="Nome da Matéria"
-                                value={editName}
-                                onChange={(e) => setEditName(e.target.value)}
-                                disabled
-                            />
-                            <StyledInput
-                                placeholder="Duração"
-                                type="number"
-                                value={editDuration}
-                                onChange={(e) => setEditDuration(e.target.value)}
-                                required
-                            />
-                            <StyledSubmitButton type="submit">Salvar Alterações</StyledSubmitButton>
-                        </StyledForm>
-                    </StyledModalContent>
-                </StyledModalOverlay>
-            )}
         </>
     );  
 }

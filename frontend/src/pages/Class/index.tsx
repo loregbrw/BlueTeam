@@ -212,7 +212,6 @@ export const Class = () => {
           <>
           <div style={{display: "flex", alignItems: "center", justifyContent: "end", flexWrap: "wrap"}}> 
             <StyledButton onClick={openEditModal}>Editar</StyledButton>
-            <StyledButton onClick={openDeleteModal} style={{ marginLeft: "10px", backgroundColor: "#ff4d4d" }}>Deletar</StyledButton>
           </div>
           </>
         )}

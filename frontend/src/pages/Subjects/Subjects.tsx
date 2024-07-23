@@ -149,7 +149,6 @@ export const Subjects = () => {
                             </StyledModalOverlay>
                         )}
 
-                        <Dropdown />
                     </StyledContainer>
                 </StyledInputDiv>
 

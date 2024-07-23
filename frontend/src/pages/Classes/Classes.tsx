@@ -188,7 +188,7 @@ export const Classes = () => {
                 <StyledModalOverlay>
                     <StyledModalContent>
                         <StyledCloseButton onClick={closeModal}>X</StyledCloseButton>
-                        <h2>Adicionar Novo Curso</h2>
+                        <h2>Adicionar Nova Turma</h2>
                         <StyledForm onSubmit={handleSubmit}>
                             <StyledInput
                                 type="text"
@@ -211,7 +211,7 @@ export const Classes = () => {
                                 required
                             />
                             <StyledSelect required value={courseId} onChange={(e) => setCourseId(e.target.value)} name="class" id="class">
-                                <option disabled value={""}>Selecione uma turma</option>
+                                <option disabled value={""}>Selecione um curso</option>
                                 {
                                     course.map((courseItem) => (
                                         <option key={courseItem.id} value={courseItem.id}>{courseItem.name}</option>
