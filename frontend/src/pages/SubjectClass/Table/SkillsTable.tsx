@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { api } from '../../../service/api';
-import { StyledCloseButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSkillButton, StyledSubmitButton } from '../Style';
+import { StyledApprenticeButton, StyledCloseButton, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSkillButton, StyledSubmitButton } from '../Style';
 import { toast } from 'react-toastify';
 
 interface ApprenticeData {
@@ -163,7 +163,7 @@ export const SkillsTable = () => {
     };
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} style={{ overflowX: "scroll" }}>
             <Table>
                 <TableHead>
                     <TableRow style={{ backgroundColor: "#d7dae0" }}>
@@ -176,9 +176,9 @@ export const SkillsTable = () => {
                 <TableBody>
                     {apprentices.map(apprentice => (
                         <TableRow key={apprentice.id}>
-                            <TableCell style={{ cursor: "default" }}>{apprentice.name}</TableCell>
+                            <TableCell style={{ cursor: "default", minWidth: "350px" }}><StyledApprenticeButton to={`/profile/${apprentice.id}`} >{apprentice.name}</StyledApprenticeButton></TableCell>
                             {skills.map(skill => (
-                                <TableCell align='right' key={skill.id}>
+                                <TableCell align='right' key={skill.id} style={{ minWidth: "150px"}} >
                                     <StyledSkillButton onClick={() => openModal(apprentice, skill, renderSkillValue(apprentice.id, skill.id).toString())}>
                                         {renderSkillValue(apprentice.id, skill.id)}
                                     </StyledSkillButton>

@@ -59,7 +59,7 @@ export const Card: React.FC<CardProps> = ({ title, plannedDuration, subjectId })
 
     return (
         <>  
-            <StyledLink to={`/subjectclass/${subjectId}`}>
+            <StyledLink to={``}>
                 <StyledCard>
                     <h3>{title}</h3>
                     <hr style={{ width: "100%" }} />

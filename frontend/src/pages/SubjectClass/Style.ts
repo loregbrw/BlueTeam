@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const StyledAddButton = styled.button`
@@ -24,6 +25,21 @@ export const StyledSkillButton = styled.button`
   font-weight: 500;
   border: none;
 
+  background-color: transparent;
+
+  cursor: pointer;
+`
+
+export const StyledApprenticeButton = styled(Link)`
+  display: flex;
+  justify-content: flex-start;
+
+  text-decoration: none;
+
+  width: 100%;
+
+  font-weight: 700;
+  border: none;
   background-color: transparent;
 
   cursor: pointer;
