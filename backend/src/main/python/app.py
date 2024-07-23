@@ -14,7 +14,7 @@ CORS(app, origins='*')
 def connect():
     try:
         conn = pyodbc.connect('Driver={SQL Server};'
-                              'Server=CA-C-00651\\SQLEXPRESS;'
+                              'Server=CA-C-0064T\\SQLEXPRESS;'
                               'Database=blueteam;'
                               'Trusted_Connection=yes;')
         return conn
@@ -27,15 +27,15 @@ def get_data(conn, user_id):
     data = []
     try:
         cursor.execute('''SELECT 
-                            s.nome AS SkillName, 
-                            us.valor * s.peso AS SkillValueWithWeight 
-                       FROM UserSkills us 
-                       JOIN UserData ud 
-                       ON us.userId = ud.id 
-                       JOIN Skills s 
-                       ON us.skillId = s.id 
+                            s.name AS SkillName, 
+                            us.value AS SkillValueWithWeight 
+                       FROM user_skills_data us 
+                       JOIN user_data ud 
+                       ON us.user_id = ud.id 
+                       JOIN skills_data s 
+                       ON us.skills_id = s.id 
                        WHERE ud.id = ? 
-                       ORDER BY s.nome;''', user_id)
+                       ORDER BY s.name;''', user_id)
         for row in cursor:
             data.append((row[0], row[1]))  
         num_rows = len(data)
@@ -50,13 +50,13 @@ def get_average(conn, class_id):
     data = []
     try:
         cursor.execute('''SELECT 
-                            ud.nome, 
-                            AVG(us.valor * s.peso) AS MediaSkillValue
-                        FROM UserSkills us
-                        JOIN UserData ud ON us.userId = ud.id
-                        JOIN Skills s ON us.skillId = s.id
-                        WHERE ud.classId = ?
-                        GROUP BY ud.id, ud.nome;''', class_id)
+                            ud.name, 
+                            AVG(us.value * s.weight) AS MediaSkillValue
+                        FROM user_skills_data_data us
+                        JOIN user_data ud ON us.user_id = ud.id
+                        JOIN skills_data s ON us.skills_id = s.id
+                        WHERE ud.class_id = ?
+                        GROUP BY ud.id, ud.name;''', class_id)
 
         for row in cursor:
             data.append((row[0], row[1]))  
@@ -71,19 +71,19 @@ def get_scores(conn, subject_name, class_name):
     data = []
     try:
         sql_query = '''SELECT
-                            u.nome AS NomeAluno,
-                            (us.valor * sk.peso) AS NotaMedia
-                        FROM UserData u
-                        JOIN UserSkills us ON u.id = us.userId
-                        JOIN Skills sk ON us.skillId = sk.id
-                        JOIN CourseSubject cs ON sk.subjectClassId = cs.subjectId
-                        JOIN Subject s ON cs.subjectId = s.id
-                        JOIN Classes c ON u.classId = c.id
+                            u.name AS nameAluno,
+                            (us.value * sk.weight) AS NotaMedia
+                        FROM user_data u
+                        JOIN user_skills_data_data us ON u.id = us.user_id
+                        JOIN skills_data sk ON us.skills_id = sk.id
+                        JOIN course_subject_data cs ON sk.subjectclass_id = cs.subject_id
+                        JOIN subject_data s ON cs.subject_id = s.id
+                        JOIN class_data c ON u.class_id = c.id
                         WHERE
-                            s.nome LIKE ?
-                            AND c.nome LIKE ?
+                            s.name LIKE ?
+                            AND c.name LIKE ?
                         GROUP BY
-                        u.nome, s.nome;'''
+                        u.name, s.name;'''
 
         cursor.execute(sql_query, ('%' + subject_name + '%', '%' + class_name + '%'))
 
@@ -116,7 +116,7 @@ def create_figure(labels, data, title='Radar Chart', color='blue', legend_label=
     Plota um gráfico de radar.
     
     :param labels: Lista de categorias ou etiquetas para o gráfico.
-    :param data: Lista de valores correspondentes a cada etiqueta.
+    :param data: Lista de valuees correspondentes a cada etiqueta.
     :param title: Título do gráfico.
     :param color: Cor da linha e preenchimento do gráfico.
     :param legend_label: Rótulo da legenda para a série de dados.
@@ -166,9 +166,9 @@ def home(id):
     try:
         conn = connect()
         dados = get_data(conn, id)
-        skills = [skill[0] for skill in dados]
+        skills_data = [skill[0] for skill in dados]
         values = [value[1] for value in dados]
-        fig = create_figure(skills, values, title='Notas do Aluno', color='red')
+        fig = create_figure(skills_data, values, title='Notas do Aluno', color='red')
         output = io.BytesIO()
         FigureCanvas(fig).print_png(output)
         return Response(output.getvalue(), mimetype='image/png')

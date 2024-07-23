@@ -145,7 +145,7 @@ export const StyledMain = () => {
                     <StyledModalOverlay>
                         <StyledModalContent>
                             <StyledCloseButton onClick={closeAverageGraph}>x</StyledCloseButton>
-                            <img width={'100%'} src={`http://127.0.0.1:4040/student/${userId}`}></img>
+                            <img width={'100%'} src={`http://127.0.0.1:5050/student/${userId}`}></img>
                         </StyledModalContent>
                     </StyledModalOverlay>
                 )}

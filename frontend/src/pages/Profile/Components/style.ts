@@ -114,7 +114,7 @@ export const StyledModalContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 700px;
+  max-width: 900px;
   width: 100%;
 `;
 

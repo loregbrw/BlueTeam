@@ -1,4 +1,5 @@
 import { Header } from "./Header/Header"
+import { SkillsTable } from "./Table/SkillsTable"
 import { Lessons } from "./Lessons/Lessons"
 import { StyledAddButton, StyledCloseButton, StyledContainer, StyledDropdown, StyledForm, StyledInput, StyledModalContent, StyledModalOverlay, StyledSubmitButton, StyledTextArea } from "./Style"
 import { useEffect, useState } from "react"
@@ -56,7 +57,7 @@ export const SubjectClass = () => {
         <>
             <main style={{ padding: "90px 3% 3% 3%", display: "flex", flexDirection: "column", alignItems: "center", gap: "25px" }}>
                 <Header />
-                
+                <SkillsTable />
                 <hr style={{ margin: "25px 0", width: "100%" }} />
                 <div style={{ width: "100%", display: "flex", justifyContent: "space-between" }} >
                     <h1>Aulas</h1>

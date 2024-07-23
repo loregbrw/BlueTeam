@@ -158,7 +158,7 @@ export const SkillsTable = () => {
         } catch (error) {
             toast.error('Erro ao salvar a competência!');
             console.error(error);
-            console.error(`/userskills/auth/${existingUserSkill.id}/${value}`);
+            console.error(`/userskills/auth/${existingUserSkill?.id}/${value}`);
         }
     };
 

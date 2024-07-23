@@ -29,14 +29,8 @@ interface SubjectData {
   expectedDuration: number;
 }
 
-interface SubjectClass {
-    id: number,
-    subjectId: SubjectData,
-    classId: number,
-    duration: number,
-};
-
-interface SubjectClassName {
+interface SubjectClassData {
+    id: number;
     subjectId: SubjectData,
     classId: ClassData,
     duration: number,
